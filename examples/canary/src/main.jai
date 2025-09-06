@@ -8,7 +8,6 @@ main :: () {
     Karakuri.init(.{
         title = "Canary",
         target_fps = 60,
-        pixels_per_unit = 100,
     });
 
     Karakuri.run();

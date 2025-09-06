@@ -8,10 +8,9 @@ GLFW :: #import "GLFW";
 #load "vertex_shader.jai";
 #load "fragment_shader.jai";
 
-init :: (window: *GLFW.Window, pixels_per_unit: u32) {
+init :: (window: *GLFW.Window) {
     renderer = .{
         window = window,
-        pixels_per_unit = pixels_per_unit,
         quad_mesh = create_quad_mesh(),
         shader = create_shader(VERTEX_SHADER, FRAGMENT_SHADER),
     };
@@ -98,7 +97,7 @@ draw :: (
     batch := table_find_pointer(*renderer.sprite_batches, texture.id);
     payload: Sprite_Instance = .{
         position = position,
-        scale = scale,
+        scale = scale * Vector2.{xx texture.width, xx texture.height},
         rotation = rotation,
         color = color,
     };
@@ -128,7 +127,6 @@ draw :: (
 
 Renderer :: struct {
     window: *GLFW.Window;
-    pixels_per_unit: u32;
     projection: Matrix4;
     view: Matrix4;
     quad_mesh: Quad_Mesh;
