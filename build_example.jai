@@ -50,6 +50,8 @@ DONE
     }
 
     build(config.example, config.optimization_type, build_options_dc);
+
+    reset_temporary_storage();
 }
 
 make_config_from_args :: (args: []string) -> Config {
@@ -105,7 +107,7 @@ build :: (
         output_type = .EXECUTABLE;
         output_executable_name = example_name;
         output_path, intermediate_path = build_dir_path;
-        // import_path = ???
+        import_path = make_import_paths(import_path);
     }
     set_optimization(*build_options, optimization_type);
 
@@ -127,4 +129,17 @@ build :: (
 terminate :: (format_string: string, args: .. Any) {
     print(format_string, ..args, to_standard_error = true);
     exit(1);
+}
+
+make_import_paths :: (import_paths: []string) -> []string {
+    result: [..]string;
+    result.allocator = temp;
+
+    for path: import_paths {
+        array_add(*result, path);
+    }
+
+    array_add(*result, "..");
+
+    return result;
 }
