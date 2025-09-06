@@ -14,6 +14,8 @@ init :: (title: string) {
     assert(manager.window != null, "Failed to create GLFW window");
 
     GLFW.make_context_current(manager.window);
+
+    gl_load(*gl, GLFW.get_proc_address);
 }
 
 deinit :: () {
@@ -42,4 +44,5 @@ Window_Manager :: struct {
 manager: Window_Manager = ---;
 
 #import "Basic";
+#import "GL";
 GLFW :: #import "GLFW";
