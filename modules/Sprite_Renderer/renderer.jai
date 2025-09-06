@@ -8,6 +8,10 @@ init :: () {
     };
 }
 
+deinit :: () {
+    destroy_quad_mesh(renderer.quad_mesh);
+}
+
 start_drawing :: () {}
 
 finish_drawing :: () {}

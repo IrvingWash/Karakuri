@@ -5,6 +5,7 @@ init :: (config: Engine_Config) {
 }
 
 deinit :: () {
+    Sprite_Renderer.deinit();
     Window_Manager.deinit();
 }
 

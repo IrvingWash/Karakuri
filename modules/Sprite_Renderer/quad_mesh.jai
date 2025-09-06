@@ -74,3 +74,9 @@ create_quad_mesh :: () -> Quad_Mesh {
 
     return mesh;
 }
+
+destroy_quad_mesh :: (mesh: Quad_Mesh) {
+    glDeleteVertexArrays(1, *mesh.vao);
+    glDeleteBuffers(1, *mesh.vbo);
+    glDeleteBuffers(1, *mesh.ebo);
+}
