@@ -10,7 +10,7 @@ init :: (target_fps: u32) {
     };
 }
 
-cap_frame_rate :: () -> float {
+cap_frame_rate :: () -> delta_time: float {
     time_to_wait := manager.target_delta_time - (seconds_since_init() - manager.last_time);
 
     if time_to_wait > 0 && time_to_wait <= manager.target_delta_time {
@@ -18,14 +18,14 @@ cap_frame_rate :: () -> float {
     }
 
     now := seconds_since_init();
-    dt := now - manager.last_time;
-    if dt > manager.max_delta_time {
-        dt = manager.max_delta_time;
+    delta_time := now - manager.last_time;
+    if delta_time > manager.max_delta_time {
+        delta_time = manager.max_delta_time;
     }
 
     manager.last_time = now;
 
-    return xx dt;
+    return xx delta_time;
 }
 
 #scope_file
