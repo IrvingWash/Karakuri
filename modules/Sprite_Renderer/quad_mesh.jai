@@ -1,6 +1,6 @@
 #scope_module
 
-DYNAMIC_BUFFER_SIZE :: 1000;
+DYNAMIC_BUFFER_SIZE :: 100_000;
 
 Quad_Mesh :: struct {
     vertices: [16]float : .[
@@ -43,7 +43,7 @@ create_quad_mesh :: () -> Quad_Mesh {
     glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
     glBufferData(
         GL_ARRAY_BUFFER,
-        size_of(type_of(mesh.vertices.data)) * mesh.vertices.count, // @TODO try size_of(type_of(mesh.vertices))
+        size_of(type_of(mesh.vertices.data)) * mesh.vertices.count,
         mesh.vertices.data,
         GL_STATIC_DRAW,
     );

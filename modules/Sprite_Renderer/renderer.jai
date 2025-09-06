@@ -1,6 +1,6 @@
 #import "GL";
 GLFW :: #import "GLFW";
-using Hash_Table :: #import "Hash_Table";
+#import "Hash_Table";
 
 #load "quad_mesh.jai";
 #load "shader.jai";
@@ -15,48 +15,61 @@ init :: (window: *GLFW.Window, pixels_per_unit: u32) {
         quad_mesh = create_quad_mesh(),
         shader = create_shader(VERTEX_SHADER, FRAGMENT_SHADER),
     };
-    renderer.projection = make_projection_matrix();
+
+    GLFW.set_framebuffer_size_callback(window, on_framebuffer_size_change);
 }
 
 deinit :: () {
     destroy_quad_mesh(renderer.quad_mesh);
     destroy_shader(renderer.shader);
 
-    Hash_Table.deinit(*renderer.sprites); // @TODO figure out what to do with memory of the table and it's arrays
+    deinit(*renderer.sprite_batches);
 
     renderer = .{};
 }
 
-start_drawing :: () {
+start_drawing :: (
+    clear_color: Vector4,
+    camera_position: Vector2,
+    camera_front: Vector3,
+    camera_up: Vector3
+) {
     using gl;
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glClearColor(0, 1, 0, 1);
+    {
+        using clear_color;
+        glClearColor(x, y, z, w);
+    }
     glClear(GL_COLOR_BUFFER_BIT);
+
+    renderer.projection = make_projection_matrix();
+    renderer.view = make_view_matrix(camera_position, camera_front, camera_up);
 
     use_shader(renderer.shader);
     set_uniform(renderer.shader, "projection", renderer.projection);
+    set_uniform(renderer.shader, "view", renderer.view);
 }
 
 finish_drawing :: () {
     using gl;
 
-    for sprites, texture : renderer.sprites {
+    for batch, id : renderer.sprite_batches {
         glBindBuffer(GL_ARRAY_BUFFER, renderer.quad_mesh.instance_vbo);
         glBufferSubData(
             GL_ARRAY_BUFFER,
             0,
-            sprites.count * size_of(Sprite_Instance),
-            sprites.data,
+            batch.sprites.count * size_of(Sprite_Instance),
+            batch.sprites.data,
         );
 
         use_shader(renderer.shader);
         glBindVertexArray(renderer.quad_mesh.vao);
 
         glActiveTexture(GL_TEXTURE0);
-        bind_texture(texture);
+        bind_texture(batch.texture);
         set_uniform(renderer.shader, "spriteTexture", cast(s32) 0);
 
         glDrawElementsInstanced(
@@ -64,7 +77,7 @@ finish_drawing :: () {
             6,
             GL_UNSIGNED_INT,
             cast(*void) 0,
-            xx sprites.count,
+            xx batch.sprites.count,
         );
 
         glBindVertexArray(0);
@@ -72,7 +85,7 @@ finish_drawing :: () {
 
     GLFW.swap_buffers(renderer.window);
 
-    table_reset(*renderer.sprites); // @TODO temp?
+    table_reset(*renderer.sprite_batches);
 }
 
 draw :: (
@@ -82,7 +95,7 @@ draw :: (
     color: Vector4,
     texture: Texture
 ) {
-    texture_sprites := table_find_pointer(*renderer.sprites, texture.id);
+    batch := table_find_pointer(*renderer.sprite_batches, texture.id);
     payload: Sprite_Instance = .{
         position = position,
         scale = scale,
@@ -90,19 +103,22 @@ draw :: (
         color = color,
     };
 
-    if (texture_sprites == null) {
+    if (batch == null) {
         sprites: [..]Sprite_Instance;
         sprites.allocator = temp;
         array_add(*sprites, payload);
 
         table_add(
-            *renderer.sprites,
+            *renderer.sprite_batches,
             texture.id,
-            sprites,
+            .{
+                texture = texture,
+                sprites = sprites,
+            },
         );
     } else {
         array_add(
-            texture_sprites,
+            *batch.sprites,
             payload,
         );
     }
@@ -114,15 +130,19 @@ Renderer :: struct {
     window: *GLFW.Window;
     pixels_per_unit: u32;
     projection: Matrix4;
+    view: Matrix4;
     quad_mesh: Quad_Mesh;
     shader: Shader;
-    sprites: Table(u32, [..]Sprite_Instance);
+    sprite_batches: Table(u32, Sprite_Batch);
 }
 
-// @TODO do this also when resizing window
+Sprite_Batch :: struct {
+    texture: Texture;
+    sprites: [..]Sprite_Instance;
+}
+
 make_projection_matrix :: () -> Matrix4 {
     width, height: s32;
-
     GLFW.get_frame_buffer_size(renderer.window, *width, *height);
 
     return orthographic_projection_matrix(
@@ -133,6 +153,27 @@ make_projection_matrix :: () -> Matrix4 {
         -1,
         1,
     );
+}
+
+make_view_matrix :: (camera_position: Vector2, camera_front: Vector3, camera_up: Vector3) -> Matrix4 {
+    position_3d: Vector3 = .{
+        camera_position.x,
+        camera_position.y,
+        0,
+    };
+
+    return make_look_at_matrix(
+        position_3d,
+        position_3d + camera_front,
+        camera_up,
+        false,
+    );
+}
+
+on_framebuffer_size_change :: (window: *GLFW.Window, width: s32, height: s32) #c_call {
+    using gl;
+
+    glViewport(0, 0, xx width, xx height);
 }
 
 renderer: Renderer = ---;

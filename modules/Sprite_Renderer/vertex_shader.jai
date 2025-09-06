@@ -15,6 +15,7 @@ out vec2 TexCoord;
 out vec4 InstanceColor;
 
 uniform mat4 projection;
+uniform mat4 view;
 
 void main()
 {
@@ -29,7 +30,7 @@ void main()
     vec2 rotated = rotation * scaled;
     vec2 worldPos = iPos + rotated;
 
-    gl_Position = projection * vec4(worldPos, 0.0, 1.0);
+    gl_Position = projection * view * vec4(worldPos, 0.0, 1.0);
 
     TexCoord = aTex;
     InstanceColor = iColor;
