@@ -13,6 +13,8 @@ create_shader :: (vertex_src: string, fragment_src: string) -> Shader {
     c_vertex_src   := temp_c_string(vertex_src);
     c_fragment_src := temp_c_string(fragment_src);
 
+    using gl;
+
     vertex := glCreateShader(GL_VERTEX_SHADER);
     defer glDeleteShader(vertex);
     glShaderSource(vertex, 1, *c_vertex_src, null);

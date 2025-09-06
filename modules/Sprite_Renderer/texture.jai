@@ -28,6 +28,8 @@ create_texture :: (image_path: string, flip := false) -> Texture {
     }
     defer stbi_image_free(data);
 
+    using gl;
+
     glGenTextures(1, *texture.id);
 
     glBindTexture(GL_TEXTURE_2D, texture.id);
@@ -67,4 +69,9 @@ destroy_texture :: (texture: Texture) {
 
 bind_texture :: (texture: Texture) {
     glBindTexture(GL_TEXTURE_2D, texture.id);
+}
+
+// @TODO remove this hack
+bind_texture :: (texture: u32) {
+    glBindTexture(GL_TEXTURE_2D, texture);
 }

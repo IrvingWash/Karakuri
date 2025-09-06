@@ -32,10 +32,6 @@ poll_events :: inline () {
     GLFW.poll_events();
 }
 
-swap_buffers :: inline () {
-    GLFW.swap_buffers(manager.window);
-}
-
 get_window :: inline () -> *GLFW.Window {
     return manager.window;
 }
