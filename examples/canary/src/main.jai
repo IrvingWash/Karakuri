@@ -1,8 +1,18 @@
 #import "Basic"()(MEMORY_DEBUGGER = true, TEMP_ALLOCATOR_POISON_FREED_MEMORY = true);
 #load "../../utils.jai";
+Karakuri :: #import "Karakuri";
 
 main :: () {
     setup_formatting();
 
-    print("Hello, Canary!\n");
+    Karakuri.init(.{
+        name = "Canary",
+        target_fps = 60,
+    });
+
+    Karakuri.run();
+
+    Karakuri.deinit();
+
+    report_memory_leaks();
 }
