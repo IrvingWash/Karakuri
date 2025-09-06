@@ -1,6 +1,8 @@
 #import "GL";
 
 #load "quad_mesh.jai";
+#load "shader.jai";
+#load "texture.jai";
 
 init :: () {
     renderer = .{
