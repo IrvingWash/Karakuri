@@ -38,8 +38,8 @@ update :: (delta_time: float) {
 
 render :: () {
     Sprite_Renderer.start_drawing(
-        .{1, 1, 1, 1},
-        .{0, 0}, // @TODO dummy data while we don't have camera
+        .{1, 1, 1, 1}, // @TODO dummy data while we don't have camera
+        .{0, 0},
         .{0, 0, -1},
         .{0, 1, 0},
     );
