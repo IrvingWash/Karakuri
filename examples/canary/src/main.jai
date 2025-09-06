@@ -6,7 +6,7 @@ main :: () {
     setup_formatting();
 
     Karakuri.init(.{
-        name = "Canary",
+        title = "Canary",
         target_fps = 60,
     });
 

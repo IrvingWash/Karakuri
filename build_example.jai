@@ -2,6 +2,7 @@
 #import "Compiler";
 #import "String";
 #import "File";
+#import "File_Utilities";
 
 Config :: struct {
     should_show_help: bool;
@@ -12,6 +13,21 @@ Config :: struct {
 BUILD_PATH_BASE :: "build";
 ENTRY_POINT_PATH_BASE :: "examples";
 MAIN_FILE_PATH :: "src/main.jai";
+
+#if OS == .MACOS {
+    BINARY_SUB_DIR_NAME :: "macos";
+    GLFW_BINARY_NAME :: "libglfw.3.dylib";
+} else #if OS == .LINUX {
+    BINARY_SUB_DIR_NAME :: "linux";
+    GLFW_BINARY_NAME :: "libglfw.so";
+}
+
+GLFW_BINARY_PATH :: #run tprint(
+    "./modules/GLFW/%/%",
+    BINARY_SUB_DIR_NAME,
+    GLFW_BINARY_NAME,
+);
+
 
 HELP_TEXT :: #string DONE
 Karakuri examples builder
@@ -115,6 +131,8 @@ build :: (
 
     make_directory_if_it_does_not_exist(build_dir_path, recursive = true);
 
+    copy_binaries(build_dir_path);
+
     add_build_file(
         tprint(
             "%/%/%",
@@ -142,4 +160,11 @@ make_import_paths :: (import_paths: []string) -> []string {
     array_add(*result, "..");
 
     return result;
+}
+
+copy_binaries :: (build_path: string) {
+    copy_file(
+        GLFW_BINARY_PATH,
+        tprint("%/%", build_path, GLFW_BINARY_NAME)
+    );
 }
