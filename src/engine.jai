@@ -1,11 +1,12 @@
 init :: (config: Engine_Config) {
     Window_Manager.init(config.title);
     FPS_Manager.init(config.target_fps);
-    Sprite_Renderer.init();
+    Sprite_Renderer.init(Window_Manager.get_window(), config.pixels_per_unit);
 }
 
 deinit :: () {
     Sprite_Renderer.deinit();
+    FPS_Manager.deinit();
     Window_Manager.deinit();
 }
 
@@ -39,6 +40,7 @@ render :: () {
 Engine_Config :: struct {
     title: string = "Karakuri";
     target_fps: u32 = 60;
+    pixels_per_unit: u32 = 100;
 }
 
 #import "Basic";

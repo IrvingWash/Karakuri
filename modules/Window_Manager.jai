@@ -21,6 +21,7 @@ init :: (title: string) {
 deinit :: () {
     GLFW.destroy_window(manager.window);
     GLFW.terminate();
+    manager = .{};
 }
 
 should_window_close :: inline () -> bool {
@@ -33,6 +34,10 @@ poll_events :: inline () {
 
 swap_buffers :: inline () {
     GLFW.swap_buffers(manager.window);
+}
+
+get_window :: inline () -> *GLFW.Window {
+    return manager.window;
 }
 
 #scope_file

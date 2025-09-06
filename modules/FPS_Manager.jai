@@ -10,6 +10,10 @@ init :: (target_fps: u32) {
     };
 }
 
+deinit :: () {
+    manager = .{};
+}
+
 cap_frame_rate :: () -> delta_time: float {
     time_to_wait := manager.target_delta_time - (seconds_since_init() - manager.last_time);
 

@@ -1,3 +1,5 @@
+#scope_module
+
 #import "Basic";
 #import "GL";
 #import "stb_image";
@@ -62,8 +64,6 @@ create_texture :: (image_path: string, flip := false) -> Texture {
 destroy_texture :: (texture: Texture) {
     glDeleteTextures(1, *texture.id);
 }
-
-#scope_module
 
 bind_texture :: (texture: Texture) {
     glBindTexture(GL_TEXTURE_2D, texture.id);
