@@ -18,6 +18,8 @@ run :: () {
         update(delta_time);
 
         render();
+
+        reset_temporary_storage();
     }
 }
 
