@@ -14,7 +14,7 @@ deinit :: () {
     manager = .{};
 }
 
-cap_frame_rate :: () -> delta_time: float {
+cap_frame_rate :: () {
     time_to_wait := manager.target_delta_time - (seconds_since_init() - manager.last_time);
 
     if time_to_wait > 0 && time_to_wait <= manager.target_delta_time {
@@ -22,22 +22,26 @@ cap_frame_rate :: () -> delta_time: float {
     }
 
     now := seconds_since_init();
-    delta_time := now - manager.last_time;
-    if delta_time > manager.max_delta_time {
-        delta_time = manager.max_delta_time;
+
+    manager.delta_time = now - manager.last_time;
+    if manager.delta_time > manager.max_delta_time {
+        manager.delta_time = manager.max_delta_time;
     }
 
     manager.last_time = now;
+}
 
-    return xx delta_time;
+get_delta_time :: () -> float {
+    return xx manager.delta_time;
 }
 
 #scope_file
 
-FPS_Manager :: struct {
+Time_Manager :: struct {
     target_delta_time: float64;
     last_time: float64;
     max_delta_time: float64;
+    delta_time: float64;
 }
 
-manager: FPS_Manager = ---;
+manager: Time_Manager = ---;

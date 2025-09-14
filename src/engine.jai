@@ -1,6 +1,6 @@
 init :: (config: Engine_Config) {
     Window_Manager.init(config.title);
-    FPS_Manager.init(config.target_fps);
+    Time_Manager.init(config.target_fps);
     Sprite_Renderer.init(Window_Manager.get_window());
     Asset_Manager.init();
 }
@@ -8,17 +8,17 @@ init :: (config: Engine_Config) {
 deinit :: () {
     Asset_Manager.deinit();
     Sprite_Renderer.deinit();
-    FPS_Manager.deinit();
+    Time_Manager.deinit();
     Window_Manager.deinit();
 }
 
 run :: () {
     while !Window_Manager.should_window_close() {
-        delta_time := FPS_Manager.cap_frame_rate();
+        Time_Manager.cap_frame_rate();
 
         process_input();
 
-        update(delta_time);
+        update();
 
         render();
 
@@ -32,8 +32,8 @@ process_input :: () {
     Window_Manager.poll_events();
 }
 
-update :: (delta_time: float) {
-    print("%\n", delta_time);
+update :: () {
+    print("%\n", Time_Manager.get_delta_time());
 }
 
 render :: () {
@@ -54,6 +54,6 @@ Engine_Config :: struct {
 
 #import "Basic";
 Window_Manager :: #import "Window_Manager";
-FPS_Manager :: #import "FPS_Manager";
+Time_Manager :: #import "Time_Manager";
 Sprite_Renderer :: #import "Sprite_Renderer";
 Asset_Manager :: #import "Asset_Manager";
