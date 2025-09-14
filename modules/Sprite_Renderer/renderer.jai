@@ -97,7 +97,7 @@ draw :: (
     batch := table_find_pointer(*renderer.sprite_batches, texture.id);
     payload: Sprite_Instance = .{
         position = position,
-        scale = scale * Vector2.{xx texture.width, xx texture.height},
+        scale = scale,
         rotation = rotation,
         color = color,
     };
