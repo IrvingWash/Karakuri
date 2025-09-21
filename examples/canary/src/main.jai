@@ -1,6 +1,6 @@
 #import "Basic"()(MEMORY_DEBUGGER = true, TEMP_ALLOCATOR_POISON_FREED_MEMORY = true);
 #load "../../utils.jai";
-Karakuri :: #import "Karakuri";
+Karakuri :: #import "Karakuri"()(DEBUG = true);
 
 main :: () {
     setup_formatting();

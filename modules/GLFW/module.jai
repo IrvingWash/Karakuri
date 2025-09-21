@@ -1,3 +1,5 @@
+#import "Basic";
+
 Window :: struct {}
 
 Monitor :: struct {}
@@ -153,8 +155,6 @@ set_scroll_callback :: (
 ) #foreign glfw "glfwSetScrollCallback";
 
 #scope_file;
-
-#import "Basic";
 
 glfwCreateWindow :: (
     width:   s32,

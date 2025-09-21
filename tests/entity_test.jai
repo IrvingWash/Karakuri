@@ -1,5 +1,4 @@
 #import "Basic";
-#load "../src/entity.jai";
 
 test_entity_creation :: () {
     mario := create_mario(1, 2);
@@ -25,43 +24,43 @@ test_entity_destruction :: () {
     mario := create_mario(1, 2);
     destroy_entity(*mario);
 
-    assert(mario.name == "Mario");
+    assert(mario.name == "Mario"); // @TODO: how to free this string if it was dynamically allocated?
     assert(mario.tags.count == 0);
     assert(mario.flags == 0);
-    assert(mario.on_start == null);
-    assert(mario.on_update == null);
-    assert(mario.on_destroy == null);
 } @Test
 
-create_mario :: (id: u32, generation: u32) -> Entity {
-    mario_tags: [..]string;
-    array_add(
-        *mario_tags,
-        "player",
-        "controllable",
-    );
+test_is_alive :: () {
+    mario := create_mario(1, 2);
 
-    on_start :: (entity: *Entity) {
-        print("It's a-me!\n");
-    }
+    assert(is_alive(mario));
 
-    on_destroy :: (entity: *Entity) {
-        print("Uwaaaaah\n");
-    }
+    destroy_entity(*mario);
 
-    return create_entity(
-        Entity_Params.{
-            name = "Mario",
-            tags = mario_tags,
-            flags = .ALIVE | .SPRITE,
-            transform = .{
-                position = .{100, 200},
-                scale = .{2, 3},
-                rotation = 0.785398,
-            },
-            on_start = on_start,
-            on_destroy = on_destroy,
-        },
-        .{id, generation},
-    );
-}
+    assert(!is_alive(mario));
+} @Test
+
+test_entity_comparison :: () {
+    mario := create_mario(1, 2);
+
+    assert(mario == mario);
+} @Test
+
+test_entity_has_flags :: () {
+    mario := create_mario(1, 2);
+
+    assert(entity_has_flags(mario, .ALIVE));
+    assert(entity_has_flags(mario, .SPRITE));
+    assert(entity_has_flags(mario, .ALIVE | .SPRITE));
+
+    destroy_entity(*mario);
+
+    assert(!entity_has_flags(mario, .ALIVE));
+    assert(!entity_has_flags(mario, .SPRITE));
+    assert(!entity_has_flags(mario, .ALIVE | .SPRITE));
+
+    mario.flags = .SPRITE;
+
+    assert(!entity_has_flags(mario, .ALIVE));
+    assert(entity_has_flags(mario, .SPRITE));
+    assert(!entity_has_flags(mario, .ALIVE | .SPRITE));
+} @Test

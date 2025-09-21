@@ -1,11 +1,18 @@
+Engine_Config :: struct {
+    title: string = "Karakuri";
+    target_fps: u32 = 60;
+}
+
 init :: (config: Engine_Config) {
     Window_Manager.init(config.title);
     Time_Manager.init(config.target_fps);
     Sprite_Renderer.init(Window_Manager.get_window());
     Asset_Manager.init();
+    init_world();
 }
 
 deinit :: () {
+    deinit_world();
     Asset_Manager.deinit();
     Sprite_Renderer.deinit();
     Time_Manager.deinit();
@@ -23,6 +30,10 @@ run :: () {
         render();
 
         reset_temporary_storage();
+
+        #if DEBUG {
+            memory_visualizer_per_frame_update();
+        }
     }
 }
 
@@ -33,7 +44,7 @@ process_input :: () {
 }
 
 update :: () {
-    print("%\n", Time_Manager.get_delta_time());
+    update_world();
 }
 
 render :: () {
@@ -47,12 +58,8 @@ render :: () {
     Sprite_Renderer.finish_drawing();
 }
 
-Engine_Config :: struct {
-    title: string = "Karakuri";
-    target_fps: u32 = 60;
-}
-
 #import "Basic";
+
 Window_Manager :: #import "Window_Manager";
 Time_Manager :: #import "Time_Manager";
 Sprite_Renderer :: #import "Sprite_Renderer";
