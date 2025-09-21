@@ -1,4 +1,5 @@
 #load "../src/world.jai";
+#load "../src/scene.jai";
 
 test_deinit_world :: () {
     init_world();

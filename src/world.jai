@@ -13,6 +13,24 @@ init_world :: () {
     world = .{};
 }
 
+set_scene_into_world :: (scene: Scene) {
+    assert(
+        scene.load_entities != null,
+        tprint("The scene with id `%` doesn't have a `load_entities` procedure.", scene.id)
+    );
+
+    scene_entities := scene.load_entities();
+    defer array_free(scene_entities);
+
+    for entity: scene_entities {
+        spawn_entity(entity);
+    }
+
+    for *entity: world.entities {
+        start_entity(entity);
+    }
+}
+
 deinit_world :: () {
     for *entity: world.entities {
         destroy_entity(entity);
