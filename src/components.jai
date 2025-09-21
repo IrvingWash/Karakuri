@@ -5,3 +5,7 @@ Transform :: struct {
     scale: Vector2 = .{ 1, 1 };
     rotation: float;
 }
+
+Sprite :: struct {
+    // @Todo
+}

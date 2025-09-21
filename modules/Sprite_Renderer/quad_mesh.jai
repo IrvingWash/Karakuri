@@ -153,7 +153,9 @@ destroy_quad_mesh :: (mesh: Quad_Mesh) {
 
 offset_of :: ($T: Type, $member: string) -> int {
     for type_info(T).members {
-        if it.name == member return it.offset_in_bytes;
+        if it.name == member{
+            return it.offset_in_bytes;
+        }
     }
 
     assert(false, "Type '%' does not have member '%'", T, member);
