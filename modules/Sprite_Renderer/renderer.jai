@@ -22,6 +22,7 @@ deinit :: () {
     destroy_quad_mesh(renderer.quad_mesh);
     destroy_shader(renderer.shader);
 
+    table_reset(*renderer.sprite_batches);
     deinit(*renderer.sprite_batches);
 
     renderer = .{};

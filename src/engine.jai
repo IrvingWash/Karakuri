@@ -1,6 +1,7 @@
 Engine_Config :: struct {
     title: string = "Karakuri";
     target_fps: u32 = 60;
+    initial_scene: Scene = DEFAULT_SCENE_LOADER;
 }
 
 init :: (config: Engine_Config) {
@@ -8,7 +9,10 @@ init :: (config: Engine_Config) {
     Time_Manager.init(config.target_fps);
     Sprite_Renderer.init(Window_Manager.get_window());
     Asset_Manager.init();
-    init_world();
+
+    initial_entities := config.initial_scene();
+    defer array_free(*initial_entities);
+    init_world(initial_entities);
 }
 
 deinit :: () {

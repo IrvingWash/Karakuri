@@ -2,7 +2,8 @@
 #load "../src/scene.jai";
 
 test_deinit_world :: () {
-    init_world();
+    init_world(DEFAULT_SCENE_LOADER());
+    defer deinit_world();
 
     spawn_entity_into_world(.{});
     spawn_entity_into_world(.{});
@@ -14,12 +15,10 @@ test_deinit_world :: () {
     spawn_entity_into_world(.{});
     spawn_entity_into_world(.{});
     despawn_entity_from_world(.{ id = 1, generation = 0 });
-
-    deinit_world();
 } @Test
 
 test_world :: () {
-    init_world();
+    init_world(DEFAULT_SCENE_LOADER());
     defer deinit_world();
 
     spawn_entity_into_world(create_mario_params());
@@ -36,13 +35,13 @@ test_world :: () {
 
     update_world();
 
-    assert(get_world_entities().count == 2);
+    assert(get_world_entities().count == 3);
 
-    despawn_entity_from_world(.{ 0, 0 });
+    despawn_entity_from_world(.{ 1, 0 });
 
     update_world();
 
-    assert(get_world_entities().count == 2);
+    assert(get_world_entities().count == 3);
 
     peach_tags: [..]string;
     array_add(*peach_tags, "humanoid");
@@ -59,10 +58,10 @@ test_world :: () {
 
     entities := get_world_entities();
 
-    assert(entities.count == 2);
-    assert(entities[1].name == "Peach");
-    assert(entities[1].id == 1);
-    assert(entities[1].generation == 1);
+    assert(entities.count == 3);
+    assert(entities[2].name == "Peach");
+    assert(entities[2].id == 2);
+    assert(entities[2].generation == 1);
 
     spawn_entity_into_world(create_mario_params());
     spawn_entity_into_world(.{ name = "Finish Line" });
@@ -70,7 +69,7 @@ test_world :: () {
     update_world();
 
     alive_entities := get_world_entities(.ALIVE);
-    assert(alive_entities.count == 3);
+    assert(alive_entities.count == 4);
 
     entities_with_sprites := get_world_entities(.SPRITE);
     assert(entities_with_sprites.count == 2);

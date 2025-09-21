@@ -9,20 +9,10 @@ World :: struct {
     entities_to_despawn: [..]Entity_Token;
 }
 
-init_world :: () {
+init_world :: (entities: []Entity_Params) {
     world = .{};
-}
 
-set_scene_into_world :: (scene: Scene) {
-    assert(
-        scene.load_entities != null,
-        tprint("The scene with id `%` doesn't have a `load_entities` procedure.", scene.id)
-    );
-
-    scene_entities := scene.load_entities();
-    defer array_free(scene_entities);
-
-    for entity: scene_entities {
+    for entity: entities {
         spawn_entity(entity);
     }
 
@@ -133,6 +123,8 @@ update_world :: () {
 
 #scope_file
 
+world: World = ---;
+
 despawn_entities :: () {
     defer array_reset(*world.entities_to_despawn);
 
@@ -194,5 +186,3 @@ spawn_entity :: (params: Entity_Params) -> Entity_Token {
 
     return token;
 }
-
-world: World = ---; // @no_commit
