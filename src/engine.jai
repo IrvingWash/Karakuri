@@ -10,8 +10,10 @@ init :: (config: Engine_Config) {
     Sprite_Renderer.init(Window_Manager.get_window());
     Asset_Manager.init();
 
+    print("= 1\n"); // @TODO everything crashes without this call
+
     initial_entities := config.initial_scene();
-    defer array_free(*initial_entities);
+    defer array_free(initial_entities);
     init_world(initial_entities);
 }
 
@@ -52,14 +54,18 @@ update :: () {
 }
 
 render :: () {
-    Sprite_Renderer.start_drawing(
-        .{1, 1, 1, 1}, // @TODO dummy data while we don't have camera
-        .{0, 0},
-        .{0, 0, -1},
-        .{0, 1, 0},
-    );
+    cameras := get_world_entities(.CAMERA);
 
-    Sprite_Renderer.finish_drawing();
+    for camera: cameras {
+        Sprite_Renderer.start_drawing(
+            camera.camera.color,
+            camera.transform.position,
+            camera.camera.front,
+            camera.camera.up,
+        );
+
+        Sprite_Renderer.finish_drawing();
+    }
 }
 
 #import "Basic";
