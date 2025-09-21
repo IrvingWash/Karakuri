@@ -6,6 +6,7 @@ Entity :: struct {
 Entity_Flags :: enum_flags u64 {
     ALIVE;
     SPRITE;
+    CAMERA;
 }
 
 Entity_Params :: struct {
@@ -15,6 +16,7 @@ Entity_Params :: struct {
 
     transform: Transform;
     sprite: Sprite;
+    camera: Camera;
 
     on_start: (self: *Entity);
     on_update: (self: *Entity);
