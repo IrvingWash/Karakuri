@@ -33,7 +33,7 @@ scene :: () -> [..]Karakuri.Entity_Params {
             name = "Sonic",
             transform = .{
                 position = .{ 50, 30 },
-                scale = .{ 100, 100 },
+                scale = .{ 50, 50 },
             },
             sprite = .{
                 texture_path = "examples/canary/assets/square.png",
@@ -43,6 +43,18 @@ scene :: () -> [..]Karakuri.Entity_Params {
             on_start = on_sonic_start,
             on_update = on_sonic_update,
             on_destroy = on_sonic_destroy,
+        },
+        Karakuri.Entity_Params.{
+            name = "Tails",
+            transform = .{
+                position = .{ 100, 100 },
+                scale = .{ 50, 50 },
+            },
+            sprite = .{
+                texture_path = "examples/canary/assets/square.png",
+                color = .{ 1, 1, 0, 1 },
+            },
+            flags = .SPRITE,
         }
     );
 
