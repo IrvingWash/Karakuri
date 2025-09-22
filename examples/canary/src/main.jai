@@ -25,16 +25,19 @@ scene :: () -> [..]Karakuri.Entity_Params {
         *result,
         Karakuri.Entity_Params.{
             flags = .CAMERA,
+            camera = .{
+                color = .{ 0.3, 0.3, 0.3, 1 },
+            }
         },
         Karakuri.Entity_Params.{
             name = "Sonic",
             transform = .{
-                position = .{ 500, 300 },
-                scale = .{ 10, 10 },
+                position = .{ 50, 30 },
+                scale = .{ 100, 100 },
             },
             sprite = .{
                 texture_path = "examples/canary/assets/square.png",
-                color = .{ 1, 0, 0, 1 },
+                color = .{ 0, 0, 1, 1 },
             },
             flags = .SPRITE,
             on_start = on_sonic_start,

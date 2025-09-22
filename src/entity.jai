@@ -39,6 +39,10 @@ entity_has_flags :: inline (entity: Entity, flags: Entity_Flags) -> bool {
     return (flags & entity.flags) == flags;
 }
 
+entity_has_flags :: inline (entity: Entity_Params, flags: Entity_Flags) -> bool {
+    return (flags & entity.flags) == flags;
+}
+
 #scope_module
 
 Entity_Token :: struct {

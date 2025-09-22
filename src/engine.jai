@@ -12,7 +12,15 @@ init :: (config: Engine_Config) {
 
     print("= 1\n"); // @TODO everything crashes without this call
 
+    // @TODO Move this into a separate function
     initial_entities := config.initial_scene();
+
+    for entity: initial_entities {
+        if entity_has_flags(entity, .SPRITE) {
+            Asset_Manager.add_texture(entity.sprite.texture_path);
+        }
+    }
+
     defer array_free(initial_entities);
     init_world(initial_entities);
 }
@@ -71,7 +79,6 @@ render :: () {
                 #if DEBUG {
                     log("Texture `%` not loaded into the Asset Manager", entity.sprite.texture_path);
                 }
-
                 continue;
             }
 
