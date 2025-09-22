@@ -30,8 +30,12 @@ scene :: () -> [..]Karakuri.Entity_Params {
             name = "Sonic",
             transform = .{
                 position = .{ 500, 300 },
+                scale = .{ 10, 10 },
             },
-            sprite = .{},
+            sprite = .{
+                texture_path = "examples/canary/assets/square.png",
+                color = .{ 1, 0, 0, 1 },
+            },
             flags = .SPRITE,
             on_start = on_sonic_start,
             on_update = on_sonic_update,

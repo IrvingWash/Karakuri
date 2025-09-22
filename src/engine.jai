@@ -64,6 +64,26 @@ render :: () {
             camera.camera.up,
         );
 
+        drawable_entities := get_world_entities(.SPRITE);
+        for entity: drawable_entities {
+            ok, texture := Asset_Manager.get_texture(entity.sprite.texture_path);
+            if !ok {
+                #if DEBUG {
+                    log("Texture `%` not loaded into the Asset Manager", entity.sprite.texture_path);
+                }
+
+                continue;
+            }
+
+            Sprite_Renderer.draw(
+                entity.transform.position,
+                entity.transform.scale,
+                entity.transform.rotation,
+                entity.sprite.color,
+                texture,
+            );
+        }
+
         Sprite_Renderer.finish_drawing();
     }
 }

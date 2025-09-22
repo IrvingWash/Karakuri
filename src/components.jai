@@ -7,7 +7,8 @@ Transform :: struct {
 }
 
 Sprite :: struct {
-    // @Todo
+    texture_path: string;
+    color: Vector4 = .{ 1, 1, 1, 1 };
 }
 
 Camera :: struct {
