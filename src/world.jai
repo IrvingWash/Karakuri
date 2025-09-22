@@ -184,5 +184,9 @@ spawn_entity :: (params: Entity_Params) -> Entity_Token {
         );
     }
 
+    if entity_has_flags(params, .SPRITE) {
+        Asset_Manager.add_texture(params.sprite.texture_path);
+    }
+
     return token;
 }

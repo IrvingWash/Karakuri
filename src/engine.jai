@@ -16,16 +16,9 @@ init :: (config: Engine_Config) {
 
     print("= 1\n"); // @TODO everything crashes without this call
 
-    // @TODO Move this into a separate function
     initial_entities := config.initial_scene();
-
-    for entity: initial_entities {
-        if entity_has_flags(entity, .SPRITE) {
-            Asset_Manager.add_texture(entity.sprite.texture_path);
-        }
-    }
-
     defer array_free(initial_entities);
+
     init_world(initial_entities);
 }
 
@@ -55,6 +48,10 @@ run :: () {
         }
     }
 }
+
+#scope_module
+
+Asset_Manager :: #import "Asset_Manager";
 
 #scope_file
 
@@ -104,4 +101,3 @@ render :: () {
 
 Window_Manager :: #import "Window_Manager";
 Sprite_Renderer :: #import "Sprite_Renderer";
-Asset_Manager :: #import "Asset_Manager";
