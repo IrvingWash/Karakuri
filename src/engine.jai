@@ -1,3 +1,6 @@
+Input_Manager :: #import "Input_Manager";
+Time_Manager :: #import "Time_Manager";
+
 Engine_Config :: struct {
     title: string = "Karakuri";
     target_fps: u32 = 60;
@@ -100,7 +103,5 @@ render :: () {
 #import "Basic";
 
 Window_Manager :: #import "Window_Manager";
-Time_Manager :: #import "Time_Manager";
 Sprite_Renderer :: #import "Sprite_Renderer";
 Asset_Manager :: #import "Asset_Manager";
-Input_Manager :: #import "Input_Manager";

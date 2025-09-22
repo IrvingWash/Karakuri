@@ -66,7 +66,18 @@ on_sonic_start :: (entity: *Karakuri.Entity) {
 }
 
 on_sonic_update :: (entity: *Karakuri.Entity) {
-    print("Sonic updated\n");
+    if Karakuri.Input_Manager.get_key_state(.W) == Karakuri.Input_Manager.Key_State.PRESS {
+        entity.transform.position.y += 100 * Karakuri.Time_Manager.get_delta_time();
+    }
+    if Karakuri.Input_Manager.get_key_state(.S) == Karakuri.Input_Manager.Key_State.PRESS {
+        entity.transform.position.y -= 100 * Karakuri.Time_Manager.get_delta_time();
+    }
+    if Karakuri.Input_Manager.get_key_state(.A) == Karakuri.Input_Manager.Key_State.PRESS {
+        entity.transform.position.x -= 100 * Karakuri.Time_Manager.get_delta_time();
+    }
+    if Karakuri.Input_Manager.get_key_state(.D) == Karakuri.Input_Manager.Key_State.PRESS {
+        entity.transform.position.x += 100 * Karakuri.Time_Manager.get_delta_time();
+    }
 }
 
 on_sonic_destroy :: (entity: *Karakuri.Entity) {
