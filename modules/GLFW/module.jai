@@ -120,7 +120,8 @@ set_framebuffer_size_callback :: (
 ) #foreign glfw "glfwSetFramebufferSizeCallback";
 
 get_key :: (
-    window: *Window, key: Key
+    window: *Window,
+    key: Key
 ) -> Key_Action #foreign glfw "glfwGetKey";
 
 set_window_should_close :: (

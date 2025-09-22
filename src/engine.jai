@@ -9,6 +9,7 @@ init :: (config: Engine_Config) {
     Time_Manager.init(config.target_fps);
     Sprite_Renderer.init(Window_Manager.get_window());
     Asset_Manager.init();
+    Input_Manager.init(Window_Manager.get_window());
 
     print("= 1\n"); // @TODO everything crashes without this call
 
@@ -27,6 +28,7 @@ init :: (config: Engine_Config) {
 
 deinit :: () {
     deinit_world();
+    Input_Manager.deinit();
     Asset_Manager.deinit();
     Sprite_Renderer.deinit();
     Time_Manager.deinit();
@@ -101,3 +103,4 @@ Window_Manager :: #import "Window_Manager";
 Time_Manager :: #import "Time_Manager";
 Sprite_Renderer :: #import "Sprite_Renderer";
 Asset_Manager :: #import "Asset_Manager";
+Input_Manager :: #import "Input_Manager";
