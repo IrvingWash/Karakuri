@@ -19,3 +19,5 @@ Camera :: struct {
     up :: Vector3.{ 0, 1, 0 };
     right :: Vector3.{ 1, 1, 0 };
 }
+
+Behavior :: struct {}
