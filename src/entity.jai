@@ -87,6 +87,10 @@ destroy_entity :: (using entity: *Entity) {
 destroy_entity_params :: (using entity_params: *Entity_Params) {
     array_reset(*tags);
     flags = 0;
+
+    if behavior {
+        free(behavior);
+    }
 }
 
 #scope_file
