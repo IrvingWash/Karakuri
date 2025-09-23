@@ -21,6 +21,7 @@ Player :: struct {
 #scope_file
 
 on_update :: (entity: *Karakuri.Entity) {
+    shoot(entity);
     move(entity);
 }
 
@@ -38,5 +39,12 @@ move :: (entity: *Karakuri.Entity) {
     }
     if Karakuri.Input_Manager.get_key_state(.D) == .PRESS {
         entity.transform.position.x += disposition;
+    }
+}
+
+shoot :: (entity: *Karakuri.Entity) {
+    // @TODO this is not a oneshot...
+    if Karakuri.Input_Manager.get_key_state(.SPACE) == .PRESS {
+        Karakuri.spawn_entity_into_world(projectile_prefab(entity.transform.position));
     }
 }

@@ -3,6 +3,7 @@ Karakuri :: #import "Karakuri"()(DEBUG = true);
 #load "../../utils.jai";
 #load "camera_prefab.jai";
 #load "player_prefab.jai";
+#load "projectile_prefab.jai";
 
 main :: () {
     setup_formatting();
