@@ -10,6 +10,7 @@ layout (location = 2) in vec2 iPosition;
 layout (location = 3) in vec2 iScale;
 layout (location = 4) in float iRotation;
 layout (location = 5) in vec4 iColor;
+layout (location = 6) in vec2 iOrigin;
 
 out vec2 textureCoordinates;
 out vec4 instanceColor;
@@ -29,7 +30,9 @@ void main()
         cos(iRotation)
     );
 
-    vec2 scaled = aPosition * iScale * vec2(textureWidth / pixelsPerUnit, textureHeight / pixelsPerUnit);
+    vec2 scaled = (aPosition - iOrigin)
+        * iScale
+        * vec2(textureWidth / pixelsPerUnit, textureHeight / pixelsPerUnit);
     vec2 rotated = rotation * scaled;
     vec2 worldPosition = iPosition + rotated;
 

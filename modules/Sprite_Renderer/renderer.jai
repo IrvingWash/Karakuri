@@ -115,6 +115,7 @@ draw :: (
         scale           = scale,
         rotation        = rotation,
         color           = color,
+        origin          = origin,
     };
 
     if (batch == null) {

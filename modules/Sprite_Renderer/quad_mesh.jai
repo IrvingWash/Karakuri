@@ -25,6 +25,7 @@ Sprite_Instance :: struct {
     scale:    Vector2;
     rotation: float;
     color:    Vector4;
+    origin:   Vector2;
 }
 
 create_quad_mesh :: () -> Quad_Mesh {
@@ -135,6 +136,18 @@ create_quad_mesh :: () -> Quad_Mesh {
     );
     glEnableVertexAttribArray(5);
     glVertexAttribDivisor(5, 1);
+
+    // Origin
+    glVertexAttribPointer(
+        6,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        size_of(Sprite_Instance),
+        cast(*void) offset_of(Sprite_Instance, "origin"),
+    );
+    glEnableVertexAttribArray(6);
+    glVertexAttribDivisor(6, 1);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
