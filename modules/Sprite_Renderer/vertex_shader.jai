@@ -3,16 +3,16 @@
 VERTEX_SHADER :: #string GLSL
 #version 330 core
 
-layout (location = 0) in vec2 aPos;
-layout (location = 1) in vec2 aTex;
+layout (location = 0) in vec2 aPosition;
+layout (location = 1) in vec2 aTexture;
 
-layout (location = 2) in vec2 iPos;
+layout (location = 2) in vec2 iPosition;
 layout (location = 3) in vec2 iScale;
 layout (location = 4) in float iRotation;
 layout (location = 5) in vec4 iColor;
 
-out vec2 TexCoord;
-out vec4 InstanceColor;
+out vec2 textureCoordinates;
+out vec4 instanceColor;
 
 uniform mat4 projection;
 uniform mat4 view;
@@ -26,13 +26,13 @@ void main()
         cos(iRotation)
     );
 
-    vec2 scaled = aPos * iScale;
+    vec2 scaled = aPosition * iScale;
     vec2 rotated = rotation * scaled;
-    vec2 worldPos = iPos + rotated;
+    vec2 worldPosition = iPosition + rotated;
 
-    gl_Position = projection * view * vec4(worldPos, 0.0, 1.0);
+    gl_Position = projection * view * vec4(worldPosition, 0.0, 1.0);
 
-    TexCoord = aTex;
-    InstanceColor = iColor;
+    textureCoordinates = aTexture;
+    instanceColor = iColor;
 }
 GLSL

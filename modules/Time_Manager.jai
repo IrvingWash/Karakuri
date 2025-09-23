@@ -39,9 +39,9 @@ get_delta_time :: () -> float {
 
 Time_Manager :: struct {
     target_delta_time: float64;
-    last_time: float64;
-    max_delta_time: float64;
-    delta_time: float64;
+    last_time:         float64;
+    max_delta_time:    float64;
+    delta_time:        float64;
 }
 
 manager: Time_Manager = ---;

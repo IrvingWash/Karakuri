@@ -3,15 +3,15 @@
 FRAGMENT_SHADER :: #string GLSL
 #version 330 core
 
-in vec2 TexCoord;
-in vec4 InstanceColor;
+in vec2 textureCoordinates;
+in vec4 instanceColor;
 
-out vec4 FragColor;
+out vec4 fragmentColor;
 
 uniform sampler2D spriteTexture;
 
 void main()
 {
-    FragColor = texture(spriteTexture, TexCoord) * InstanceColor;
+    fragmentColor = texture(spriteTexture, textureCoordinates) * instanceColor;
 }
 GLSL

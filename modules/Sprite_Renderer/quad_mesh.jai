@@ -14,17 +14,17 @@ Quad_Mesh :: struct {
         0, 1, 2,
         2, 3, 0
     ];
-    vao: u32;
-    vbo: u32;
-    ebo: u32;
+    vao:          u32;
+    vbo:          u32;
+    ebo:          u32;
     instance_vbo: u32;
 }
 
 Sprite_Instance :: struct {
     position: Vector2;
-    scale: Vector2;
+    scale:    Vector2;
     rotation: float;
-    color: Vector4;
+    color:    Vector4;
 }
 
 create_quad_mesh :: () -> Quad_Mesh {

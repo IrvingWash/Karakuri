@@ -29,10 +29,10 @@ deinit :: () {
 }
 
 start_drawing :: (
-    clear_color: Vector4,
+    clear_color:     Vector4,
     camera_position: Vector2,
-    camera_front: Vector3,
-    camera_up: Vector3
+    camera_front:    Vector3,
+    camera_up:       Vector3
 ) {
     using gl;
 
@@ -90,10 +90,10 @@ finish_drawing :: () {
 
 draw :: (
     position: Vector2,
-    scale: Vector2,
+    scale:    Vector2,
     rotation: float,
-    color: Vector4,
-    texture: Texture
+    color:    Vector4,
+    texture:  Texture
 ) {
     batch := table_find_pointer(*renderer.sprite_batches, texture.id);
     payload: Sprite_Instance = .{
@@ -127,11 +127,11 @@ draw :: (
 #scope_file
 
 Renderer :: struct {
-    window: *GLFW.Window;
-    projection: Matrix4;
-    view: Matrix4;
-    quad_mesh: Quad_Mesh;
-    shader: Shader;
+    window:         *GLFW.Window;
+    projection:     Matrix4;
+    view:           Matrix4;
+    quad_mesh:      Quad_Mesh;
+    shader:         Shader;
     sprite_batches: Table(u32, Sprite_Batch);
 }
 
@@ -154,7 +154,11 @@ make_projection_matrix :: () -> Matrix4 {
     );
 }
 
-make_view_matrix :: (camera_position: Vector2, camera_front: Vector3, camera_up: Vector3) -> Matrix4 {
+make_view_matrix :: (
+    camera_position: Vector2,
+    camera_front:    Vector3,
+    camera_up:       Vector3
+) -> Matrix4 {
     position_3d: Vector3 = .{
         camera_position.x,
         camera_position.y,
