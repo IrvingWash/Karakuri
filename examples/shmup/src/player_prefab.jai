@@ -2,7 +2,8 @@ player_prefab :: () -> Karakuri.Entity_Params {
     return .{
         name = "Player",
         transform = .{
-            scale = .{ 100, 100 },
+            position = .{ 0, -4 },
+            scale = .{ 3, 3 },
         },
         sprite = .{
             texture_path = "examples/shmup/assets/main_ship-1.png",
@@ -15,7 +16,7 @@ player_prefab :: () -> Karakuri.Entity_Params {
 
 Player :: struct {
     #as using behavior: Karakuri.Behavior;
-    speed := 100;
+    speed := 5;
 }
 
 #scope_file

@@ -7,8 +7,9 @@ Transform :: struct {
 }
 
 Sprite :: struct {
-    texture_path: string;
-    color:        Vector4 = .{ 1, 1, 1, 1 };
+    texture_path:    string;
+    color:           Vector4 = .{ 1, 1, 1, 1 };
+    pixels_per_unit: u32 = PIXELS_PER_UNIT;
 }
 
 Camera :: struct {

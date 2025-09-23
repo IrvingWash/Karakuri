@@ -8,11 +8,12 @@ GLFW :: #import "GLFW";
 #load "vertex_shader.jai";
 #load "fragment_shader.jai";
 
-init :: (window: *GLFW.Window) {
+init :: (window: *GLFW.Window, pixels_per_unit: u32) {
     renderer = .{
-        window = window,
-        quad_mesh = create_quad_mesh(),
-        shader = create_shader(VERTEX_SHADER, FRAGMENT_SHADER),
+        window          = window,
+        quad_mesh       = create_quad_mesh(),
+        shader          = create_shader(VERTEX_SHADER, FRAGMENT_SHADER),
+        pixels_per_unit = pixels_per_unit,
     };
 
     GLFW.set_framebuffer_size_callback(window, on_framebuffer_size_change);
@@ -71,6 +72,9 @@ finish_drawing :: () {
         glActiveTexture(GL_TEXTURE0);
         bind_texture(batch.texture);
         set_uniform(renderer.shader, "spriteTexture", cast(s32) 0);
+        set_uniform(renderer.shader, "textureWidth", cast(float) batch.texture.width);
+        set_uniform(renderer.shader, "textureHeight", cast(float) batch.texture.height);
+        set_uniform(renderer.shader, "pixelsPerUnit", cast(float) batch.pixels_per_unit);
 
         glDrawElementsInstanced(
             GL_TRIANGLES,
@@ -89,18 +93,19 @@ finish_drawing :: () {
 }
 
 draw :: (
-    position: Vector2,
-    scale:    Vector2,
-    rotation: float,
-    color:    Vector4,
-    texture:  Texture
+    position:        Vector2,
+    scale:           Vector2,
+    rotation:        float,
+    color:           Vector4,
+    texture:         Texture,
+    pixels_per_unit: u32
 ) {
     batch := table_find_pointer(*renderer.sprite_batches, texture.id);
     payload: Sprite_Instance = .{
-        position = position,
-        scale = scale,
-        rotation = rotation,
-        color = color,
+        position        = position,
+        scale           = scale,
+        rotation        = rotation,
+        color           = color,
     };
 
     if (batch == null) {
@@ -114,6 +119,7 @@ draw :: (
             .{
                 texture = texture,
                 sprites = sprites,
+                pixels_per_unit = pixels_per_unit,
             },
         );
     } else {
@@ -128,6 +134,7 @@ draw :: (
 
 Renderer :: struct {
     window:         *GLFW.Window;
+    pixels_per_unit: u32;
     projection:     Matrix4;
     view:           Matrix4;
     quad_mesh:      Quad_Mesh;
@@ -135,20 +142,25 @@ Renderer :: struct {
     sprite_batches: Table(u32, Sprite_Batch);
 }
 
+renderer: Renderer = ---;
+
 Sprite_Batch :: struct {
-    texture: Texture;
-    sprites: [..]Sprite_Instance;
+    texture:         Texture;
+    sprites:         [..]Sprite_Instance;
+    pixels_per_unit: u32;
 }
 
 make_projection_matrix :: () -> Matrix4 {
     width, height: s32;
     GLFW.get_frame_buffer_size(renderer.window, *width, *height);
 
+    halved_ppu := 2.0 * renderer.pixels_per_unit;
+
     return orthographic_projection_matrix(
-        -(width / 2.0),
-        width / 2.0,
-        -(height / 2.0),
-        height / 2.0,
+        -width / halved_ppu,
+        width / halved_ppu,
+        -height / halved_ppu,
+        height / halved_ppu,
         -1,
         1,
     );
@@ -178,5 +190,3 @@ on_framebuffer_size_change :: (window: *GLFW.Window, width: s32, height: s32) #c
 
     glViewport(0, 0, xx width, xx height);
 }
-
-renderer: Renderer = ---;

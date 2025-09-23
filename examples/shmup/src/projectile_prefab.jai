@@ -5,7 +5,7 @@ projectile_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
         name = "Projectile",
         transform = .{
             position = position,
-            scale = .{ 10, 20 },
+            scale = .{ 3, 3 },
         },
         sprite = .{
             texture_path = "examples/shmup/assets/projectile_1.png",
@@ -18,7 +18,7 @@ projectile_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
 
 Projectile :: struct {
     #as using behavior: Karakuri.Behavior;
-    speed := 200;
+    speed := 20;
 }
 
 move :: (entity: *Karakuri.Entity) {

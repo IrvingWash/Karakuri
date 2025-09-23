@@ -14,6 +14,9 @@ layout (location = 5) in vec4 iColor;
 out vec2 textureCoordinates;
 out vec4 instanceColor;
 
+uniform float pixelsPerUnit;
+uniform float textureWidth;
+uniform float textureHeight;
 uniform mat4 projection;
 uniform mat4 view;
 
@@ -26,7 +29,7 @@ void main()
         cos(iRotation)
     );
 
-    vec2 scaled = aPosition * iScale;
+    vec2 scaled = aPosition * iScale * vec2(textureWidth / pixelsPerUnit, textureHeight / pixelsPerUnit);
     vec2 rotated = rotation * scaled;
     vec2 worldPosition = iPosition + rotated;
 

@@ -10,7 +10,7 @@ Engine_Config :: struct {
 init :: (config: Engine_Config) {
     Window_Manager.init(config.title);
     Time_Manager.init(config.target_fps);
-    Sprite_Renderer.init(Window_Manager.get_window());
+    Sprite_Renderer.init(Window_Manager.get_window(), PIXELS_PER_UNIT);
     Asset_Manager.init();
     Input_Manager.init(Window_Manager.get_window());
 
@@ -53,6 +53,8 @@ run :: () {
 
 Asset_Manager :: #import "Asset_Manager";
 
+PIXELS_PER_UNIT :: 100;
+
 #scope_file
 
 process_input :: () {
@@ -90,6 +92,7 @@ render :: () {
                 entity.transform.rotation,
                 entity.sprite.color,
                 texture,
+                entity.sprite.pixels_per_unit,
             );
         }
 
