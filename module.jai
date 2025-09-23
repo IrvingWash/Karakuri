@@ -5,3 +5,4 @@
 #load "src/entity.jai";
 #load "src/scene.jai";
 #load "src/world.jai";
+#load "src/screen.jai";

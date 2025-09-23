@@ -2,7 +2,7 @@ player_prefab :: () -> Karakuri.Entity_Params {
     return .{
         name = "Player",
         transform = .{
-            position = .{ 0, -4 },
+            position = .{ 0, Karakuri.screen_bottom_to_world() + 2 },
             scale = .{ 3, 3 },
         },
         sprite = .{
