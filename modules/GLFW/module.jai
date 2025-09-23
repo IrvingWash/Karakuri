@@ -5,15 +5,15 @@ Window :: struct {}
 Monitor :: struct {}
 
 Hint_Name :: enum_flags #specified {
-    CONTEXT_VERSION_MAJOR: : 0x00022002;
-    CONTEXT_VERSION_MINOR: : 0x00022003;
-    OPENGL_PROFILE:        : 0x00022008;
-    OPENGL_FORWARD_COMPAT: : 0x00022006;
+    CONTEXT_VERSION_MAJOR :: 0x00022002;
+    CONTEXT_VERSION_MINOR :: 0x00022003;
+    OPENGL_PROFILE        :: 0x00022008;
+    OPENGL_FORWARD_COMPAT :: 0x00022006;
 }
 
 Hint_Value :: enum_flags #specified {
-    OPENGL_CORE_PROFILE: : 0x00032001;
-    TRUE:                : 1;
+    OPENGL_CORE_PROFILE :: 0x00032001;
+    TRUE                :: 1;
 }
 
 Input_Mode_Name :: enum_flags #specified {
@@ -32,31 +32,36 @@ Framebuffer_Size_Proc :: #type (
 
 Cursor_Position_Proc :: #type (
     window: *Window,
-    x: float64,
-    y: float64
+    x:      float64,
+    y:      float64
 ) #c_call;
 
 Scroll_Proc :: #type (
-    window: *Window,
+    window:   *Window,
     offset_x: float64,
     offset_y: float64
 ) #c_call;
 
 Key :: enum #specified {
-    ESCAPE :: 256;
-    A :: 65;
-    D :: 68;
-    E :: 69;
-    Q :: 81;
-    R :: 82;
-    S :: 83;
-    W :: 87;
+    SPACE :: 32;
+    A           :: 65;
+    D           :: 68;
+    E           :: 69;
+    Q           :: 81;
+    R           :: 82;
+    S           :: 83;
+    W           :: 87;
+    ESCAPE      :: 256;
+    ARROW_RIGHT :: 262;
+    ARRAOW_LEFT :: 263;
+    ARROW_DOWN  :: 264;
+    ARROW_UP    :: 265;
 }
 
 Key_Action :: enum #specified {
-    RELEASE: : 0;
-    PRESS:   : 1;
-    REPEAT:  : 2;
+    RELEASE :: 0;
+    PRESS   :: 1;
+    REPEAT  :: 2;
 }
 
 init :: () -> s32 #foreign glfw "glfwInit";
@@ -146,7 +151,7 @@ set_cursor_position :: (
 ) #foreign glfw "glfwSetCursorPos";
 
 set_cursor_position_callback :: (
-    window: *Window,
+    window:   *Window,
     callback: Cursor_Position_Proc
 ) #foreign glfw "glfwSetCursorPosCallback";
 
