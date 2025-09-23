@@ -75,6 +75,7 @@ render :: () {
             camera.transform.position,
             camera.camera.front,
             camera.camera.up,
+            camera.camera.size,
         );
 
         drawable_entities := get_world_entities(.SPRITE);

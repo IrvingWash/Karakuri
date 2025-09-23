@@ -35,7 +35,8 @@ start_drawing :: (
     clear_color:     Vector4,
     camera_position: Vector2,
     camera_front:    Vector3,
-    camera_up:       Vector3
+    camera_up:       Vector3,
+    camera_size:     float
 ) {
     using gl;
 
@@ -49,7 +50,12 @@ start_drawing :: (
     glClear(GL_COLOR_BUFFER_BIT);
 
     renderer.projection = make_projection_matrix();
-    renderer.view = make_view_matrix(camera_position, camera_front, camera_up);
+    renderer.view = make_view_matrix(
+        camera_position,
+        camera_front,
+        camera_up,
+        camera_size,
+    );
 
     use_shader(renderer.shader);
     set_uniform(renderer.shader, "projection", renderer.projection);
@@ -171,7 +177,8 @@ make_projection_matrix :: () -> Matrix4 {
 make_view_matrix :: (
     camera_position: Vector2,
     camera_front:    Vector3,
-    camera_up:       Vector3
+    camera_up:       Vector3,
+    camera_size:     float
 ) -> Matrix4 {
     position_3d: Vector3 = .{
         camera_position.x,
@@ -179,7 +186,9 @@ make_view_matrix :: (
         0,
     };
 
-    return make_look_at_matrix(
+    camera_scale := make_scale_matrix4(.{ camera_size, camera_size, 1 });
+
+    return camera_scale * make_look_at_matrix(
         position_3d,
         position_3d + camera_front,
         camera_up,
