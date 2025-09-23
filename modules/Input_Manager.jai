@@ -25,7 +25,6 @@ is_key_down :: (key: Key) -> bool {
 }
 
 reset_key_state :: () {
-    print("input state cleared\n");
     for *key_state: manager.key_state {
         key_state.* = .RELEASE;
     }
