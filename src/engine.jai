@@ -58,6 +58,7 @@ PIXELS_PER_UNIT :: 100;
 #scope_file
 
 process_input :: () {
+    Input_Manager.reset_key_state();
     Window_Manager.poll_events();
 }
 

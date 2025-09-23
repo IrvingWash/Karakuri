@@ -30,7 +30,7 @@ on_camera_start :: (entity: *Karakuri.Entity) {
 on_camera_update :: (entity: *Karakuri.Entity) {
     camera := cast(*Camera) entity.behavior;
 
-    if Karakuri.Input_Manager.is_key_pressed(.C) {
+    if Karakuri.Input_Manager.is_key_down(.C) {
         camera.is_targeting = !camera.is_targeting;
     }
 

@@ -1,3 +1,4 @@
+#import "Basic";
 GLFW :: #import "GLFW";
 
 Key :: GLFW.Key;
@@ -19,10 +20,24 @@ is_key_pressed :: (key: Key) -> bool {
     return GLFW.get_key(manager.window, key) == .PRESS;
 }
 
+is_key_down :: (key: Key) -> bool {
+    return manager.key_state[key] == .PRESS;
+}
+
+reset_key_state :: () {
+    print("input state cleared\n");
+    for *key_state: manager.key_state {
+        key_state.* = .RELEASE;
+    }
+}
+
 #scope_file
+
+_, HIGHEST_KEY :: #run enum_range(Key);
 
 Input_Manager :: struct {
     window: *GLFW.Window;
+    key_state: [HIGHEST_KEY]Key_State;
 }
 
 manager: Input_Manager = ---;
@@ -34,6 +49,10 @@ on_key :: (
     action:    GLFW.Key_Action,
     modifiers: s32
 ) #c_call {
-    // @Todo
+    if key > HIGHEST_KEY {
+        return;
+    }
+
+    manager.key_state[key] = action;
 }
 
