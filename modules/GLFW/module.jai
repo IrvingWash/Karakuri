@@ -119,15 +119,21 @@ window_should_close :: (
     window: *Window
 ) -> s32 #foreign glfw "glfwWindowShouldClose";
 
-swap_buffers  :: (window: *Window) #foreign glfw "glfwSwapBuffers";
+swap_buffers :: (window: *Window) #foreign glfw "glfwSwapBuffers";
 
-poll_events  :: () #foreign glfw "glfwPollEvents";
+poll_events :: () #foreign glfw "glfwPollEvents";
 
 get_frame_buffer_size :: (
     window: *Window,
     width:  *s32,
     height: *s32
-) #foreign "glfwGetFramebufferSize";
+) #foreign glfw "glfwGetFramebufferSize";
+
+get_window_content_scale :: (
+    window: *Window,
+    x_scale: *float,
+    y_scale: *float
+) #foreign glfw "glfwGetWindowContentScale";
 
 set_framebuffer_size_callback :: (
     window:   *Window,

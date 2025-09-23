@@ -36,6 +36,21 @@ get_window :: inline () -> *GLFW.Window {
     return manager.window;
 }
 
+get_render_size :: () -> u32, u32 {
+    width, height: s32;
+    GLFW.get_frame_buffer_size(manager.window, *width, *height);
+
+    return xx width, xx height;
+}
+
+get_dpi_scale :: () -> float, float {
+    x, y: float;
+
+    GLFW.get_window_content_scale(manager.window, *x, *y);
+
+    return x, y;
+}
+
 #scope_file
 
 Window_Manager :: struct {
