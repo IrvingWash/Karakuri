@@ -1,3 +1,4 @@
+// @Todo we return all entities, even despawned ones
 get_world_entities :: () -> []Entity {
     return world.entities;
 }

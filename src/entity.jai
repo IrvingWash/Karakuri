@@ -34,7 +34,6 @@ operator == :: (a: Entity, b: Entity) -> bool {
     return a.token == b.token;
 }
 
-// @TODO we don't check if the entity is still in the world
 is_alive :: inline (using entity: Entity) -> bool {
     return flags & .ALIVE != 0;
 }
