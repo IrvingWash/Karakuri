@@ -82,9 +82,12 @@ render :: () {
         for entity: drawable_entities {
             ok, texture := Asset_Manager.get_texture(entity.sprite.texture_path);
             if !ok {
-                #if DEBUG {
-                    log("Texture `%` not loaded into the Asset Manager", entity.sprite.texture_path);
-                }
+                log(
+                    "Texture `%` not loaded into the Asset Manager.",
+                    entity.sprite.texture_path,
+                    flags = .WARNING,
+                );
+
                 continue;
             }
 

@@ -1,3 +1,3 @@
-[x] FPS_Manager -> Time_Manager
-[ ] add world and scene
-[ ] figure out pixels per unit
+[ ] - Add projectile destroyer to shmup example
+    [] - Need to implement box colliders
+    [] - Need to implement debug drawing for box colliders
