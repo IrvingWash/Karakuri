@@ -11,8 +11,8 @@ deinit :: () {
     manager = .{};
 }
 
-get_key_state :: (key: Key) -> Key_State {
-    return GLFW.get_key(manager.window, key);
+is_key_pressed :: (key: Key) -> bool {
+    return GLFW.get_key(manager.window, key) == .PRESS;
 }
 
 #scope_file

@@ -29,23 +29,23 @@ on_update :: (entity: *Karakuri.Entity) {
 move :: (entity: *Karakuri.Entity) {
     disposition := (cast(*Player) entity.behavior).speed * Karakuri.Time_Manager.get_delta_time();
 
-    if Karakuri.Input_Manager.get_key_state(.W) == .PRESS {
+    if Karakuri.Input_Manager.is_key_pressed(.W) {
         entity.transform.position.y += disposition;
     }
-    if Karakuri.Input_Manager.get_key_state(.S) == .PRESS {
+    if Karakuri.Input_Manager.is_key_pressed(.S) {
         entity.transform.position.y -= disposition;
     }
-    if Karakuri.Input_Manager.get_key_state(.A) == .PRESS {
+    if Karakuri.Input_Manager.is_key_pressed(.A) {
         entity.transform.position.x -= disposition;
     }
-    if Karakuri.Input_Manager.get_key_state(.D) == .PRESS {
+    if Karakuri.Input_Manager.is_key_pressed(.D) {
         entity.transform.position.x += disposition;
     }
 }
 
 shoot :: (entity: *Karakuri.Entity) {
     // @TODO this is not a oneshot...
-    if Karakuri.Input_Manager.get_key_state(.SPACE) == .PRESS {
+    if Karakuri.Input_Manager.is_key_pressed(.SPACE) {
         Karakuri.spawn_entity_into_world(projectile_prefab(entity.transform.position));
     }
 }
