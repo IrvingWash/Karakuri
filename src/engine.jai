@@ -2,8 +2,8 @@ Input_Manager :: #import "Input_Manager";
 Time_Manager :: #import "Time_Manager";
 
 Engine_Config :: struct {
-    title: string = "Karakuri";
-    target_fps: u32 = 60;
+    title:         string = "Karakuri";
+    target_fps:    u32 = 60;
     initial_scene: Scene = DEFAULT_SCENE_LOADER;
 }
 

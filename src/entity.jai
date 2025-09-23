@@ -1,5 +1,5 @@
 Entity :: struct {
-    #as using params: Entity_Params;
+    #as   using params: Entity_Params;
     using token: Entity_Token;
 }
 
@@ -11,17 +11,17 @@ Entity_Flags :: enum_flags u64 {
 }
 
 Entity_Params :: struct {
-    name: string;
-    tags: [..]string;
-    flags: Entity_Flags;
+    name:       string;
+    tags:       [..]string;
+    flags:      Entity_Flags;
 
-    transform: Transform;
-    sprite: Sprite;
-    camera: Camera;
-    behavior: *Behavior;
+    transform:  Transform;
+    sprite:     Sprite;
+    camera:     Camera;
+    behavior:   *Behavior;
 
-    on_start: (self: *Entity);
-    on_update: (self: *Entity);
+    on_start:   (self: *Entity);
+    on_update:  (self: *Entity);
     on_destroy: (self: *Entity);
 }
 
@@ -41,14 +41,17 @@ entity_has_flags :: inline (entity: Entity, flags: Entity_Flags) -> bool {
     return (flags & entity.flags) == flags;
 }
 
-entity_has_flags :: inline (entity: Entity_Params, flags: Entity_Flags) -> bool {
+entity_has_flags :: inline (
+    entity: Entity_Params,
+    flags: Entity_Flags
+) -> bool {
     return (flags & entity.flags) == flags;
 }
 
 #scope_module
 
 Entity_Token :: struct {
-    id: u32;
+    id:         u32;
     generation: u32;
 }
 

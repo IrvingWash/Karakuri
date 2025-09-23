@@ -3,9 +3,9 @@
 #import "Basic";
 
 World :: struct {
-    entities: [..]Entity;
-    free_tokens: [..]Entity_Token;
-    entities_to_spawn: [..]Entity_Params;
+    entities:            [..]Entity;
+    free_tokens:         [..]Entity_Token;
+    entities_to_spawn:   [..]Entity_Params;
     entities_to_despawn: [..]Entity_Token;
 }
 
