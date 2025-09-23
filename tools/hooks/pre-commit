@@ -7,4 +7,6 @@ if git diff --cached --diff-filter=ACM | grep -F @"$BLOCK_MARKER"; then
     exit 1
 fi
 
+jai "./test.jai"
+
 exit 0
