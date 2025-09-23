@@ -62,6 +62,16 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
     };
 
     entity.flags |= .ALIVE;
+    if entity.sprite.texture_path != "" {
+        entity.flags |= .SPRITE;
+    }
+    if entity.behavior {
+        entity.flags |= .BEHAVIOR;
+    }
+
+    if entity_has_flags(entity, .SPRITE) {
+        Asset_Manager.add_texture(params.sprite.texture_path);
+    }
 
     return entity;
 }

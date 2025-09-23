@@ -5,5 +5,3 @@
 #load "src/entity.jai";
 #load "src/scene.jai";
 #load "src/world.jai";
-
-get_entity :: get_world_entity;

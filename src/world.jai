@@ -1,41 +1,3 @@
-#scope_module
-
-#import "Basic";
-
-World :: struct {
-    entities:            [..]Entity;
-    free_tokens:         [..]Entity_Token;
-    entities_to_spawn:   [..]Entity_Params;
-    entities_to_despawn: [..]Entity_Token;
-}
-
-init_world :: (entities: []Entity_Params) {
-    world = .{};
-
-    for entity: entities {
-        spawn_entity(entity);
-    }
-
-    for *entity: world.entities {
-        start_entity(entity);
-    }
-}
-
-deinit_world :: () {
-    for *entity: world.entities {
-        destroy_entity(entity);
-    }
-    array_reset(*world.entities);
-
-    for *entity: world.entities_to_spawn {
-        destroy_entity_params(entity);
-    }
-    array_reset(*world.entities_to_spawn);
-
-    array_reset(*world.free_tokens);
-    array_reset(*world.entities_to_despawn);
-}
-
 get_world_entities :: () -> []Entity {
     return world.entities;
 }
@@ -113,6 +75,44 @@ despawn_entity_from_world :: (token: Entity_Token) {
     array_add_if_unique(*world.entities_to_despawn, token);
 }
 
+#scope_module
+
+#import "Basic";
+
+World :: struct {
+    entities:            [..]Entity;
+    free_tokens:         [..]Entity_Token;
+    entities_to_spawn:   [..]Entity_Params;
+    entities_to_despawn: [..]Entity_Token;
+}
+
+init_world :: (entities: []Entity_Params) {
+    world = .{};
+
+    for entity: entities {
+        spawn_entity(entity);
+    }
+
+    for *entity: world.entities {
+        start_entity(entity);
+    }
+}
+
+deinit_world :: () {
+    for *entity: world.entities {
+        destroy_entity(entity);
+    }
+    array_reset(*world.entities);
+
+    for *entity: world.entities_to_spawn {
+        destroy_entity_params(entity);
+    }
+    array_reset(*world.entities_to_spawn);
+
+    array_reset(*world.free_tokens);
+    array_reset(*world.entities_to_despawn);
+}
+
 update_world :: () {
     despawn_entities();
 
@@ -182,10 +182,6 @@ spawn_entity :: (params: Entity_Params) -> Entity_Token {
             *world.entities,
             create_entity(params, token),
         );
-    }
-
-    if entity_has_flags(params, .SPRITE) {
-        Asset_Manager.add_texture(params.sprite.texture_path);
     }
 
     return token;

@@ -8,7 +8,6 @@ player_prefab :: () -> Karakuri.Entity_Params {
             texture_path = "examples/shmup/assets/main_ship-1.png",
         },
         behavior = New(Player),
-        flags = .SPRITE | .BEHAVIOR, // @TODO this is redundant
 
         on_update = on_update,
     };
