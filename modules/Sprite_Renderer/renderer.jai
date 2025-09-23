@@ -20,6 +20,8 @@ init :: (window: *GLFW.Window, pixels_per_unit: u32) {
 }
 
 deinit :: () {
+    GLFW.set_framebuffer_size_callback(renderer.window, null);
+
     destroy_quad_mesh(renderer.quad_mesh);
     destroy_shader(renderer.shader);
 

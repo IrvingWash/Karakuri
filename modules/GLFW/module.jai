@@ -42,6 +42,14 @@ Scroll_Proc :: #type (
     offset_y: float64
 ) #c_call;
 
+Key_Proc :: #type (
+    window:    *Window,
+    key:       Key,
+    scan_code: s32,
+    action:    Key_Action,
+    modifiers: s32
+) #c_call;
+
 Key :: enum #specified {
     SPACE :: 32;
     A           :: 65;
@@ -161,6 +169,11 @@ set_scroll_callback :: (
     window:   *Window,
     callback: Scroll_Proc
 ) #foreign glfw "glfwSetScrollCallback";
+
+set_key_callback :: (
+    window:   *Window,
+    callback: Key_Proc
+) #foreign glfw "glfwSetKeyCallback";
 
 #scope_file;
 

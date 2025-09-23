@@ -5,9 +5,13 @@ Key_State :: GLFW.Key_Action;
 
 init :: (window: *GLFW.Window) {
     manager = .{ window = window };
+
+    GLFW.set_key_callback(window, on_key);
 }
 
 deinit :: () {
+    GLFW.set_key_callback(manager.window, null);
+
     manager = .{};
 }
 
@@ -22,3 +26,14 @@ Input_Manager :: struct {
 }
 
 manager: Input_Manager = ---;
+
+on_key :: (
+    window:    *GLFW.Window,
+    key:       GLFW.Key,
+    scan_code: s32,
+    action:    GLFW.Key_Action,
+    modifiers: s32
+) #c_call {
+    // @Todo
+}
+
