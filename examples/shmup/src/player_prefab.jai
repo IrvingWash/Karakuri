@@ -47,6 +47,8 @@ move :: (entity: *Karakuri.Entity) {
 shoot :: (entity: *Karakuri.Entity) {
     // @TODO this is not a oneshot...
     if Karakuri.Input_Manager.is_key_down(.SPACE) {
-        Karakuri.spawn_entity_into_world(projectile_prefab(entity.transform.position));
+        Karakuri.spawn_entity_into_world(
+            projectile_prefab(entity.transform.position + .{ 0, 1.0 }),
+        );
     }
 }
