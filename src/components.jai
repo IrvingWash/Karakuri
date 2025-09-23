@@ -10,6 +10,7 @@ Sprite :: struct {
     texture_path:    string;
     color:           Vector4 = .{ 1, 1, 1, 1 };
     pixels_per_unit: u32 = PIXELS_PER_UNIT;
+    origin:          Vector2;
 }
 
 Camera :: struct {

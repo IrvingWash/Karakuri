@@ -96,8 +96,9 @@ render :: () {
                 entity.transform.scale,
                 entity.transform.rotation,
                 entity.sprite.color,
-                texture,
                 entity.sprite.pixels_per_unit,
+                entity.sprite.origin,
+                texture,
             );
         }
 

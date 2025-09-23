@@ -105,8 +105,9 @@ draw :: (
     scale:           Vector2,
     rotation:        float,
     color:           Vector4,
-    texture:         Texture,
-    pixels_per_unit: u32
+    pixels_per_unit: u32,
+    origin:          Vector2,
+    texture:         Texture
 ) {
     batch := table_find_pointer(*renderer.sprite_batches, texture.id);
     payload: Sprite_Instance = .{
