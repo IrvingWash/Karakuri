@@ -24,7 +24,6 @@ Projectile :: struct {
 move :: (entity: *Karakuri.Entity) {
     speed := (cast(*Projectile) entity.behavior).speed;
     disposition := Karakuri.Time_Manager.get_delta_time() * speed;
-    print("%\n", speed);
 
     entity.transform.position.y += disposition;
 }
