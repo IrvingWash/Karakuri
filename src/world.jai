@@ -119,6 +119,8 @@ update_world :: () {
     spawn_entities();
 
     update_entities();
+
+    late_update_entities();
 }
 
 #scope_file
@@ -164,6 +166,14 @@ update_entities :: () {
     for *entity: world.entities {
         if is_alive(entity) {
             update_entity(entity);
+        }
+    }
+}
+
+late_update_entities :: () {
+    for *entity: world.entities {
+        if is_alive(entity) {
+            late_update_entity(entity);
         }
     }
 }

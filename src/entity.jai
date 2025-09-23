@@ -20,9 +20,10 @@ Entity_Params :: struct {
     camera:     Camera;
     behavior:   *Behavior;
 
-    on_start:   (self: *Entity);
-    on_update:  (self: *Entity);
-    on_destroy: (self: *Entity);
+    on_start:       (self: *Entity);
+    on_update:      (self: *Entity);
+    on_late_update: (self: *Entity);
+    on_destroy:     (self: *Entity);
 }
 
 operator == :: (a: Entity_Token, b: Entity_Token) -> bool {
@@ -33,6 +34,7 @@ operator == :: (a: Entity, b: Entity) -> bool {
     return a.token == b.token;
 }
 
+// @TODO we don't check if the entity is still in the world
 is_alive :: inline (using entity: Entity) -> bool {
     return flags & .ALIVE != 0;
 }
@@ -76,15 +78,21 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
     return entity;
 }
 
-start_entity :: (using entity: *Entity) {
+start_entity :: inline (using entity: *Entity) {
     if on_start {
         on_start(entity);
     }
 }
 
-update_entity :: (using entity: *Entity) {
+update_entity :: inline (using entity: *Entity) {
     if on_update {
         on_update(entity);
+    }
+}
+
+late_update_entity :: inline (using entity: *Entity) {
+    if on_late_update {
+        on_late_update(entity);
     }
 }
 

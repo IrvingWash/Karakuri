@@ -7,7 +7,7 @@ camera_prefab :: () -> Karakuri.Entity_Params {
         behavior = New(Camera),
 
         on_start = on_camera_start,
-        on_update = on_camera_update,
+        on_late_update = on_camera_late_update,
     };
 }
 
@@ -27,7 +27,7 @@ on_camera_start :: (entity: *Karakuri.Entity) {
     camera.player_token = player.token;
 }
 
-on_camera_update :: (entity: *Karakuri.Entity) {
+on_camera_late_update :: (entity: *Karakuri.Entity) {
     camera := cast(*Camera) entity.behavior;
 
     if Karakuri.Input_Manager.is_key_down(.C) {
