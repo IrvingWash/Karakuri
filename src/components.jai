@@ -23,3 +23,8 @@ Camera :: struct {
 }
 
 Behavior :: struct {}
+
+Box_Collider :: struct {
+    size: Vector2 = .{ 1, 1 };
+    offset: Vector2;
+}

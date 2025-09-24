@@ -8,6 +8,7 @@ Entity_Flags :: enum_flags u64 {
     SPRITE;
     CAMERA;
     BEHAVIOR;
+    BOX_COLLIDER;
 }
 
 Entity_Params :: struct {
@@ -19,6 +20,7 @@ Entity_Params :: struct {
     sprite:     Sprite;
     camera:     Camera;
     behavior:   *Behavior;
+    box_collider: Box_Collider;
 
     on_start:       (self: *Entity);
     on_update:      (self: *Entity);

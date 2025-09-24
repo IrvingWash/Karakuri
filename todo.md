@@ -1,4 +1,4 @@
-[ ] - Add projectile destroyer to shmup example
+[] - Add projectile destroyer to shmup example
     [] - Need to implement box colliders
     [] - Need to implement debug drawing for box colliders
     [] - Need to implement aabb collision system
