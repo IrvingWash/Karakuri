@@ -10,6 +10,8 @@ player_prefab :: () -> Karakuri.Entity_Params {
             origin = .{ 0, -0.5 },
         },
         behavior = New(Player),
+        box_collider = .{},
+        flags = .BOX_COLLIDER,
 
         on_update = on_update,
     };
@@ -45,7 +47,6 @@ move :: (entity: *Karakuri.Entity) {
 }
 
 shoot :: (entity: *Karakuri.Entity) {
-    // @TODO this is not a oneshot...
     if Karakuri.Input_Manager.is_key_down(.SPACE) {
         Karakuri.spawn_entity_into_world(
             projectile_prefab(entity.transform.position + .{ 0, 1.0 }),

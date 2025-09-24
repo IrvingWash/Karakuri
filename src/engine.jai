@@ -16,6 +16,10 @@ init :: (config: Engine_Config) {
 
     print("= 1\n"); // @TODO everything crashes without this call
 
+    if DEBUG {
+        Asset_Manager.add_texture("assets/textures/square.png");
+    }
+
     initial_entities := config.initial_scene();
     defer array_free(initial_entities);
 
@@ -100,6 +104,24 @@ render :: () {
                 entity.sprite.origin,
                 texture,
             );
+        }
+
+        if DEBUG {
+            entities_with_box_colliders := get_world_entities(.BOX_COLLIDER);
+            for entity: entities_with_box_colliders {
+                ok, texture := Asset_Manager.get_texture("assets/textures/square.png");
+                assert(ok, "Stock texture `square.png` not found.");
+
+                Sprite_Renderer.draw(
+                    entity.transform.position,
+                    entity.box_collider.size,
+                    entity.transform.rotation,
+                    .{ 0, 1, 0, 0.5 },
+                    PIXELS_PER_UNIT,
+                    entity.box_collider.offset,
+                    texture,
+                );
+            }
         }
 
         Sprite_Renderer.finish_drawing();
