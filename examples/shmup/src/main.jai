@@ -1,9 +1,11 @@
 #import "Basic"()(MEMORY_DEBUGGER = true, TEMP_ALLOCATOR_POISON_FREED_MEMORY = true);
 Karakuri :: #import "Karakuri"()(DEBUG = true);
+
 #load "../../utils.jai";
 #load "camera_prefab.jai";
 #load "player_prefab.jai";
 #load "projectile_prefab.jai";
+#load "projectile_destroyer.jai";
 
 main :: () {
     setup_formatting();
@@ -28,6 +30,8 @@ scene :: () -> [..]Karakuri.Entity_Params {
         *result,
         camera_prefab(),
         player_prefab(),
+        projectile_destroyer(.TOP),
+        projectile_destroyer(.BOTTOM),
     );
 
     return result;
