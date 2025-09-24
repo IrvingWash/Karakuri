@@ -30,7 +30,7 @@ void main()
         cos(iRotation)
     );
 
-    vec2 scaled = (aPosition - iOrigin)
+    vec2 scaled = (aPosition + iOrigin)
         * iScale
         * vec2(textureWidth / pixelsPerUnit, textureHeight / pixelsPerUnit);
     vec2 rotated = rotation * scaled;

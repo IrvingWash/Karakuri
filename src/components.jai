@@ -2,7 +2,7 @@
 
 Transform :: struct {
     position: Vector2;
-    scale:    Vector2 = .{ 1, 1 };
+    scale:    Vector2 = DEFAULT_SCALE;
     rotation: float;
 }
 
@@ -25,6 +25,9 @@ Camera :: struct {
 Behavior :: struct {}
 
 Box_Collider :: struct {
-    size: Vector2 = .{ 1, 1 };
+    size: Vector2 = DEFAULT_SCALE;
     offset: Vector2;
 }
+
+#scope_module
+DEFAULT_SCALE :: Vector2.{ 1, 1 };

@@ -71,6 +71,12 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
     if entity.behavior {
         entity.flags |= .BEHAVIOR;
     }
+    if (
+        entity.box_collider.size != DEFAULT_SCALE
+        || entity.box_collider.offset != ZERO_VECTOR2
+    ) {
+        entity.flags |= .BOX_COLLIDER;
+    }
 
     if entity_has_flags(entity, .SPRITE) {
         Asset_Manager.add_texture(params.sprite.texture_path);

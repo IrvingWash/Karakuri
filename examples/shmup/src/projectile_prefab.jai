@@ -11,6 +11,9 @@ projectile_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
             texture_path = "examples/shmup/assets/projectile_1.png",
         },
         behavior = New(Projectile),
+        box_collider = .{
+            size = .{ 0.1, 0.3 },
+        },
 
         on_update = on_projectile_update,
     };

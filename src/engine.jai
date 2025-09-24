@@ -114,7 +114,7 @@ render :: () {
 
                 Sprite_Renderer.draw(
                     entity.transform.position,
-                    entity.box_collider.size,
+                    entity.box_collider.size * entity.transform.scale,
                     entity.transform.rotation,
                     .{ 0, 1, 0, 0.5 },
                     PIXELS_PER_UNIT,
