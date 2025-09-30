@@ -1,13 +1,7 @@
-collision_checker_prefab :: () -> Karakuri.Entity_Params {
-    return .{
-        on_late_update = on_collision_checker_late_update,
-    };
-}
+#scope_module
 
-#scope_file
-
-on_collision_checker_late_update :: (entity: *Karakuri.Entity) {
-    entities_with_colliders := Karakuri.get_world_entities(.ALIVE | .BOX_COLLIDER);
+run_physics_system :: () {
+    entities_with_colliders := get_world_entities(.ALIVE | .BOX_COLLIDER);
 
     for a, i: entities_with_colliders {
         j := i + 1;
@@ -30,9 +24,11 @@ on_collision_checker_late_update :: (entity: *Karakuri.Entity) {
     }
 }
 
+#scope_file
+
 check_aabb :: (
-    a: Karakuri.Entity,
-    b: Karakuri.Entity
+    a: Entity,
+    b: Entity
 ) -> bool {
     a_size      := a.transform.scale * a.box_collider.size;
     a_half_size := a_size / 2;

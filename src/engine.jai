@@ -68,6 +68,7 @@ process_input :: () {
 
 update :: () {
     update_world();
+    run_physics_system();
 }
 
 render :: () {
@@ -132,3 +133,4 @@ render :: () {
 
 Window_Manager :: #import "Window_Manager";
 Sprite_Renderer :: #import "Sprite_Renderer";
+#load "physics_system.jai";
