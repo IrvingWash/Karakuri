@@ -11,6 +11,8 @@ random_in_range :: (a: float, b: float) -> float {
     return random_get_within_range(a, b);
 }
 
+ZERO_VECTOR2 :: Vector2.{ 0, 0 };
+
 #scope_file
 
 DEG_TO_RAD_CONSTANT :: PI / 180;

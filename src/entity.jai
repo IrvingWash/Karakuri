@@ -8,6 +8,7 @@ Entity_Flags :: enum_flags u64 {
     SPRITE;
     CAMERA;
     BEHAVIOR;
+    BOX_COLLIDER;
 }
 
 Entity_Params :: struct {
@@ -19,11 +20,13 @@ Entity_Params :: struct {
     sprite:     Sprite;
     camera:     Camera;
     behavior:   *Behavior;
+    box_collider: Box_Collider;
 
     on_start:       (self: *Entity);
     on_update:      (self: *Entity);
     on_late_update: (self: *Entity);
     on_destroy:     (self: *Entity);
+    on_collision:   (self: *Entity, other: *Entity);
 }
 
 operator == :: (a: Entity_Token, b: Entity_Token) -> bool {
@@ -68,6 +71,12 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
     }
     if entity.behavior {
         entity.flags |= .BEHAVIOR;
+    }
+    if (
+        entity.box_collider.size != DEFAULT_SCALE
+        || entity.box_collider.offset != ZERO_VECTOR2
+    ) {
+        entity.flags |= .BOX_COLLIDER;
     }
 
     if entity_has_flags(entity, .SPRITE) {

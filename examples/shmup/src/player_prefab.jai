@@ -2,14 +2,17 @@ player_prefab :: () -> Karakuri.Entity_Params {
     return .{
         name = "Player",
         transform = .{
-            position = .{ 0, Karakuri.screen_bottom_to_world() },
+            position = .{ 0, Karakuri.screen_bottom_to_world() + 2 },
             scale = .{ 3, 3 },
         },
         sprite = .{
             texture_path = "examples/shmup/assets/main_ship-1.png",
-            origin = .{ 0, -0.5 },
         },
         behavior = New(Player),
+        box_collider = .{
+            size = .{ 0.2, 0.45 },
+            offset = .{ 0, 0.05 },
+        },
 
         on_update = on_update,
     };
@@ -45,7 +48,6 @@ move :: (entity: *Karakuri.Entity) {
 }
 
 shoot :: (entity: *Karakuri.Entity) {
-    // @TODO this is not a oneshot...
     if Karakuri.Input_Manager.is_key_down(.SPACE) {
         Karakuri.spawn_entity_into_world(
             projectile_prefab(entity.transform.position + .{ 0, 1.0 }),
