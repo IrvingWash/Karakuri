@@ -18,6 +18,13 @@ on_collision_checker_late_update :: (entity: *Karakuri.Entity) {
             b := entities_with_colliders[j];
 
             if check_aabb(a, b) {
+                if a.on_collision {
+                    a.on_collision(a, b);
+                }
+
+                if b.on_collision {
+                    b.on_collision(b, a);
+                }
             }
         }
     }

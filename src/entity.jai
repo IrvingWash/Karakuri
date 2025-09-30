@@ -26,6 +26,7 @@ Entity_Params :: struct {
     on_update:      (self: *Entity);
     on_late_update: (self: *Entity);
     on_destroy:     (self: *Entity);
+    on_collision:   (self: *Entity, other: *Entity);
 }
 
 operator == :: (a: Entity_Token, b: Entity_Token) -> bool {

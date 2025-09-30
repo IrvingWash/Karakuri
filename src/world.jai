@@ -101,7 +101,9 @@ init_world :: (entities: []Entity_Params) {
 
 deinit_world :: () {
     for *entity: world.entities {
-        destroy_entity(entity);
+        if is_alive(entity) {
+            destroy_entity(entity);
+        }
     }
     array_reset(*world.entities);
 
