@@ -5,7 +5,8 @@ Karakuri :: #import "Karakuri"()(DEBUG = true);
 #load "camera_prefab.jai";
 #load "player_prefab.jai";
 #load "projectile_prefab.jai";
-#load "projectile_destroyer.jai";
+#load "projectile_destroyer_prefab.jai";
+#load "collision_checker_prefab.jai";
 
 main :: () {
     setup_formatting();
@@ -30,8 +31,9 @@ scene :: () -> [..]Karakuri.Entity_Params {
         *result,
         camera_prefab(),
         player_prefab(),
-        projectile_destroyer(.TOP),
-        projectile_destroyer(.BOTTOM),
+        projectile_destroyer_prefab(.TOP),
+        projectile_destroyer_prefab(.BOTTOM),
+        collision_checker_prefab(),
     );
 
     return result;

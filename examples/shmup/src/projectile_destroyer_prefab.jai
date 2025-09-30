@@ -3,10 +3,11 @@ Projectile_Destroyer_Placement :: enum {
     BOTTOM;
 }
 
-projectile_destroyer :: (
+projectile_destroyer_prefab :: (
     placement: Projectile_Destroyer_Placement
 ) -> Karakuri.Entity_Params {
     return .{
+        name = "Projectile Destroyer",
         transform = .{
             position = .{
                 y = ifx placement == .TOP
@@ -21,4 +22,4 @@ projectile_destroyer :: (
 }
 
 #scope_file
-VERTICAL_OFFSET :: 0.3;
+VERTICAL_OFFSET :: 0.4;

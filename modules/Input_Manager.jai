@@ -48,7 +48,7 @@ on_key :: (
     action:    GLFW.Key_Action,
     modifiers: s32
 ) #c_call {
-    if key > HIGHEST_KEY {
+    if key >= HIGHEST_KEY {
         return;
     }
 
