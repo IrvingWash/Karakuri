@@ -1,8 +1,8 @@
-init_timer_manager :: () {
+init :: () {
     manager = .{};
 }
 
-deinit_timer_manager :: () {
+deinit :: () {
     for timer: manager.timers {
         if timer.should_cleanup && timer.data {
             free(timer.data);
@@ -10,11 +10,12 @@ deinit_timer_manager :: () {
     }
 
     table_reset(*manager.timers);
+    deinit(*manager.timers);
 
     manager = .{};
 }
 
-update_timer_manager :: (delta_time: float) {
+update :: (delta_time: float) {
     manager.current_time += delta_time;
 
     for *timer: manager.timers {
@@ -27,13 +28,13 @@ update_timer_manager :: (delta_time: float) {
         if timer.is_interval {
             timer.start_time += timer.duration;
         } else {
-            table_remove(*manager.timers, timer.id);
+            cancel_timer(timer.id);
         }
     }
 }
 
 set_timer :: (
-    milliseconds: float,
+    seconds: float,
     proc: (data: *void),
     data: *void,
     is_interval: bool = false,
@@ -47,7 +48,7 @@ set_timer :: (
         .{
             id             = manager.next_id,
             start_time     = manager.current_time,
-            duration       = milliseconds,
+            duration       = seconds,
             proc           = proc,
             data           = data,
             is_interval    = is_interval,

@@ -14,7 +14,8 @@ player_prefab :: () -> Karakuri.Entity_Params {
             offset = .{ 0, 0.05 },
         },
 
-        on_update = on_update,
+        on_update    = on_update,
+        on_collision = on_collision,
     };
 }
 
@@ -30,8 +31,18 @@ on_update :: (entity: *Karakuri.Entity) {
     move(entity);
 }
 
+on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
+    if (
+        other.name == "Projectile"
+        && other.behavior.(*Projectile).emitter != .PLAYER
+    ) {
+        Karakuri.despawn_entity_from_world(self.token);
+    }
+}
+
 move :: (entity: *Karakuri.Entity) {
-    disposition := (cast(*Player) entity.behavior).speed * Karakuri.Time_Manager.get_delta_time();
+    disposition := (cast(*Player) entity.behavior).speed
+        * Karakuri.Time_Manager.get_delta_time();
 
     if Karakuri.Input_Manager.is_key_pressed(.W) {
         entity.transform.position.y += disposition;
@@ -50,7 +61,10 @@ move :: (entity: *Karakuri.Entity) {
 shoot :: (entity: *Karakuri.Entity) {
     if Karakuri.Input_Manager.is_key_down(.SPACE) {
         Karakuri.spawn_entity_into_world(
-            projectile_prefab(entity.transform.position + .{ 0, 1.0 }),
+            projectile_prefab(
+                entity.transform.position + .{ 0, 1.0 },
+                .PLAYER,
+            ),
         );
     }
 }

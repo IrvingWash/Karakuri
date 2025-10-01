@@ -10,6 +10,7 @@ init :: (config: Engine_Config) {
     Sprite_Renderer.init(Window_Manager.get_window(), PIXELS_PER_UNIT);
     Asset_Manager.init();
     Input_Manager.init(Window_Manager.get_window());
+    Timer_Manager.init();
 
     print("= 1\n"); // @TODO everything crashes without this call
 
@@ -25,6 +26,7 @@ init :: (config: Engine_Config) {
 
 deinit :: () {
     deinit_world();
+    Timer_Manager.deinit();
     Input_Manager.deinit();
     Asset_Manager.deinit();
     Sprite_Renderer.deinit();
@@ -35,6 +37,7 @@ deinit :: () {
 run :: () {
     while !Window_Manager.should_window_close() {
         Time_Manager.cap_frame_rate();
+        Timer_Manager.update(Time_Manager.get_delta_time());
 
         process_input();
 
