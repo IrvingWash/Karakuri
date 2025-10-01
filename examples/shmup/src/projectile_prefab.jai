@@ -1,6 +1,20 @@
 #import "Math";
 
-projectile_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
+Projectile_Emitter :: enum {
+    PLAYER;
+    ENEMY;
+}
+
+projectile_prefab :: (
+    position: Vector2,
+    emitter: Projectile_Emitter
+) -> Karakuri.Entity_Params {
+    behavior := New(Projectile);
+    behavior.emitter = emitter;
+    if emitter == .ENEMY {
+        behavior.speed *= -1;
+    }
+
     return .{
         name = "Projectile",
         transform = .{
@@ -10,18 +24,20 @@ projectile_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
         sprite = .{
             texture_path = "examples/shmup/assets/projectile_1.png",
         },
-        behavior = New(Projectile),
+        behavior = behavior,
         box_collider = .{
             size = .{ 0.1, 0.3 },
         },
 
         on_update = on_projectile_update,
+        on_collision = on_collision,
     };
 }
 
 Projectile :: struct {
     #as using behavior: Karakuri.Behavior;
-    speed := 20;
+    speed:              = 20;
+    emitter:            Projectile_Emitter;
 }
 
 move :: (entity: *Karakuri.Entity) {
@@ -32,6 +48,27 @@ move :: (entity: *Karakuri.Entity) {
 }
 
 #scope_file
+
 on_projectile_update :: (entity: *Karakuri.Entity) {
     move(entity);
+}
+
+on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
+    if other.name == "Projectile Destroyer" {
+        Karakuri.despawn_entity_from_world(self.token);
+    }
+
+    if (
+        other.name == "Enemy"
+        && self.behavior.(*Projectile).emitter != .ENEMY
+    ) {
+        Karakuri.despawn_entity_from_world(self.token);
+    }
+
+    if (
+        other.name == "Player"
+        && self.behavior.(*Projectile).emitter != .PLAYER
+    ) {
+        Karakuri.despawn_entity_from_world(self.token);
+    }
 }

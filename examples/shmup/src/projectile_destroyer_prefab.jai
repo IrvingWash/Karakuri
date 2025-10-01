@@ -18,16 +18,9 @@ projectile_destroyer_prefab :: (
         box_collider = .{
             size = .{ 16, 1 },
         },
-        on_collision = on_collision,
     };
 }
 
 #scope_file
 
 VERTICAL_OFFSET :: 0.4;
-
-on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
-    if other.name == "Projectile" {
-        Karakuri.despawn_entity_from_world(other.token);
-    }
-}

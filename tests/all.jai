@@ -9,3 +9,4 @@
 #load "world_test.jai";
 #load "math_test.jai";
 #load "physics_system_test.jai";
+#load "timer_manager_test.jai";
