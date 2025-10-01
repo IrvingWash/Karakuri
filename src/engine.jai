@@ -1,6 +1,3 @@
-Input_Manager :: #import "Input_Manager";
-Time_Manager :: #import "Time_Manager";
-
 Engine_Config :: struct {
     title:         string = "Karakuri";
     target_fps:    u32 = 60;
@@ -55,7 +52,10 @@ run :: () {
 
 #scope_module
 
+Input_Manager :: #import "Input_Manager";
+Time_Manager  :: #import "Time_Manager";
 Asset_Manager :: #import "Asset_Manager";
+Timer_Manager :: #import "Timer_Manager";
 
 PIXELS_PER_UNIT :: 100;
 
