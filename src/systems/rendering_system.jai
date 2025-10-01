@@ -38,15 +38,15 @@ run_rendering_system :: () {
 
         if DEBUG {
             entities_with_box_colliders := get_world_entities(.BOX_COLLIDER);
-            for entity: entities_with_box_colliders {
-                ok, texture := Asset_Manager.get_texture("assets/textures/square.png");
-                assert(ok, "Stock texture `square.png` not found.");
+            ok, texture := Asset_Manager.get_texture("assets/textures/square.png");
+            assert(ok, "Stock texture `square.png` not found.");
 
+            for entity: entities_with_box_colliders {
                 Sprite_Renderer.draw(
                     entity.transform.position,
                     entity.box_collider.size * entity.transform.scale,
                     entity.transform.rotation,
-                    .{ 0, 1, 0, 0.5 },
+                    BOX_COLLIDER_COLOR,
                     PIXELS_PER_UNIT,
                     entity.box_collider.offset,
                     texture,
@@ -59,4 +59,7 @@ run_rendering_system :: () {
 }
 
 #scope_file
+
 Sprite_Renderer :: #import "Sprite_Renderer";
+
+BOX_COLLIDER_COLOR: Vector4 : .{ 0, 1, 0, 0.2 };

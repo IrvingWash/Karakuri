@@ -12,8 +12,6 @@ init :: (config: Engine_Config) {
     Input_Manager.init(Window_Manager.get_window());
     Timer_Manager.init();
 
-    print("= 1\n"); // @TODO everything crashes without this call
-
     if DEBUG {
         Asset_Manager.add_texture("assets/textures/square.png");
     }
