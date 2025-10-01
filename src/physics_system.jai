@@ -24,8 +24,6 @@ run_physics_system :: () {
     }
 }
 
-#scope_file
-
 check_aabb :: (
     a: Entity,
     b: Entity
