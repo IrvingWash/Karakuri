@@ -54,6 +54,10 @@ on_projectile_update :: (entity: *Karakuri.Entity) {
 }
 
 on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
+    if other.name == "Projectile Destroyer" {
+        Karakuri.despawn_entity_from_world(self.token);
+    }
+
     if (
         other.name == "Enemy"
         && self.behavior.(*Projectile).emitter != .ENEMY

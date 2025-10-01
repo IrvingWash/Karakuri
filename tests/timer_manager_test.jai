@@ -27,7 +27,7 @@ test_set_timer_non_interval :: () {
     Timer_Manager.update(1.9);
     assert(test_proc_call_count == 1);
 
-    Timer_Manager.cancel_timer(second_id);
+    Timer_Manager.cancel_timers(second_id);
 
     Timer_Manager.update(7.1);
     assert(test_proc_call_count == 1);
@@ -60,7 +60,7 @@ test_set_timer_interval :: () {
     Timer_Manager.update(3);
     assert(test_proc_call_count == 3);
 
-    Timer_Manager.cancel_timer(first_id);
+    Timer_Manager.cancel_timers(first_id);
 
     Timer_Manager.update(5);
     assert(test_proc_call_count == 3);

@@ -28,7 +28,7 @@ update :: (delta_time: float) {
         if timer.is_interval {
             timer.start_time += timer.duration;
         } else {
-            cancel_timer(timer.id);
+            cancel_timers(timer.id);
         }
     }
 }
@@ -59,11 +59,13 @@ set_timer :: (
     return manager.next_id;
 }
 
-cancel_timer :: (id: u32) {
-    ok, timer := table_remove(*manager.timers, id);
+cancel_timers :: (ids: ..u32) {
+    for id: ids {
+        ok, timer := table_remove(*manager.timers, id);
 
-    if ok && timer.should_cleanup && timer.data {
-        free(timer.data);
+        if ok && timer.should_cleanup && timer.data {
+            free(timer.data);
+        }
     }
 }
 

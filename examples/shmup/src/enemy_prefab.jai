@@ -80,10 +80,8 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
 }
 
 on_destroy :: (self: *Karakuri.Entity) {
-    Karakuri.Timer_Manager.cancel_timer(
-        xx self.behavior.(*Enemy).jump_timer_id
-    );
-    Karakuri.Timer_Manager.cancel_timer(
-        xx self.behavior.(*Enemy).shoot_timer_id
+    Karakuri.Timer_Manager.cancel_timers(
+        xx self.behavior.(*Enemy).jump_timer_id,
+        xx self.behavior.(*Enemy).shoot_timer_id,
     );
 }
