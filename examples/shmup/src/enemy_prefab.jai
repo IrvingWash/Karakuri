@@ -21,7 +21,6 @@ enemy_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
 
 Enemy :: struct {
     #as using behavior: Karakuri.Behavior;
-    jump_timer_id: s64 = -1;
     shoot_timer_id: s64 = -1;
 }
 
@@ -29,23 +28,6 @@ Enemy :: struct {
 
 on_start :: (self: *Karakuri.Entity) {
     enemy := self.behavior.(*Enemy);
-
-    {
-        token_for_timer := New(Karakuri.Entity_Token);
-        token_for_timer.* = self.token;
-        enemy.jump_timer_id = Karakuri.Timer_Manager.set_timer(
-            2,
-            (token: *void) {
-                self := Karakuri.get_world_entity(
-                    token.(*Karakuri.Entity_Token)
-                );
-
-                self.transform.position.y -= 0.5;
-            },
-            token_for_timer,
-            is_interval = true,
-        );
-    }
 
     {
         token_for_timer := New(Karakuri.Entity_Token);
@@ -81,7 +63,6 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
 
 on_destroy :: (self: *Karakuri.Entity) {
     Karakuri.Timer_Manager.cancel_timers(
-        xx self.behavior.(*Enemy).jump_timer_id,
         xx self.behavior.(*Enemy).shoot_timer_id,
     );
 }
