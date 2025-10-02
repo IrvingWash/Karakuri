@@ -41,7 +41,7 @@ test_world :: () {
 
     update_world();
 
-    assert(get_world_entities().count == 3);
+    assert(get_world_entities(0).count == 2);
 
     peach_tags: [..]string;
     array_add(*peach_tags, "humanoid");
@@ -58,10 +58,10 @@ test_world :: () {
 
     entities := get_world_entities();
 
-    assert(entities.count == 3);
-    assert(entities[2].name == "Peach");
-    assert(entities[2].id == 2);
-    assert(entities[2].generation == 1);
+    assert(entities.count == 2);
+    assert(entities[1].name == "Peach");
+    assert(entities[1].id == 2);
+    assert(entities[1].generation == 1);
 
     spawn_entity_into_world(create_mario_params());
     spawn_entity_into_world(.{ name = "Finish Line" });

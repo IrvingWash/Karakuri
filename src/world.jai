@@ -1,9 +1,4 @@
-// @Todo we return all entities, even despawned ones
-get_world_entities :: () -> []Entity {
-    return world.entities;
-}
-
-get_world_entities :: (flags: Entity_Flags) -> []*Entity {
+get_world_entities :: (flags: Entity_Flags = .ALIVE) -> []*Entity {
     patched_flags := flags | .ALIVE;
 
     result: [..]*Entity;

@@ -7,6 +7,7 @@ Karakuri :: #import "Karakuri"()(DEBUG = true);
 #load "projectile_prefab.jai";
 #load "projectile_destroyer_prefab.jai";
 #load "enemy_prefab.jai";
+#load "enemy_spawner_prefab.jai";
 
 main :: () {
     setup_formatting();
@@ -33,7 +34,7 @@ scene :: () -> [..]Karakuri.Entity_Params {
         player_prefab(),
         projectile_destroyer_prefab(.TOP),
         projectile_destroyer_prefab(.BOTTOM),
-        enemy_prefab(),
+        enemy_spawner_prefab(),
     );
 
     return result;

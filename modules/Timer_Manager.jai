@@ -36,7 +36,7 @@ update :: (delta_time: float) {
 set_timer :: (
     seconds: float,
     proc: (data: *void),
-    data: *void,
+    data: *void = null,
     is_interval: bool = false,
     should_cleanup: bool = true
 ) -> id: u32 {

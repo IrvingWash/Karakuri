@@ -1,8 +1,8 @@
-enemy_prefab :: () -> Karakuri.Entity_Params {
+enemy_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
     return .{
         name = "Enemy",
         transform = .{
-            position = .{ 2, Karakuri.screen_top_to_world() - 2 },
+            position = position,
             scale = .{ 3, 3 },
         },
         sprite = .{
@@ -34,7 +34,7 @@ on_start :: (self: *Karakuri.Entity) {
         token_for_timer := New(Karakuri.Entity_Token);
         token_for_timer.* = self.token;
         enemy.jump_timer_id = Karakuri.Timer_Manager.set_timer(
-            5,
+            2,
             (token: *void) {
                 self := Karakuri.get_world_entity(
                     token.(*Karakuri.Entity_Token)
