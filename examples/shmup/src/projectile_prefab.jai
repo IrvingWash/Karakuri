@@ -40,13 +40,6 @@ Projectile :: struct {
     emitter:            Projectile_Emitter;
 }
 
-move :: (entity: *Karakuri.Entity) {
-    speed := (cast(*Projectile) entity.behavior).speed;
-    disposition := Karakuri.Time_Manager.get_delta_time() * speed;
-
-    entity.transform.position.y += disposition;
-}
-
 #scope_file
 
 on_projectile_update :: (entity: *Karakuri.Entity) {
@@ -71,4 +64,11 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
     ) {
         Karakuri.despawn_entity_from_world(self.token);
     }
+}
+
+move :: (entity: *Karakuri.Entity) {
+    speed := (cast(*Projectile) entity.behavior).speed;
+    disposition := Karakuri.Time_Manager.get_delta_time() * speed;
+
+    entity.transform.position.y += disposition;
 }

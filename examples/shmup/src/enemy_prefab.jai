@@ -29,27 +29,25 @@ Enemy :: struct {
 on_start :: (self: *Karakuri.Entity) {
     enemy := self.behavior.(*Enemy);
 
-    {
-        token_for_timer := New(Karakuri.Entity_Token);
-        token_for_timer.* = self.token;
-        enemy.shoot_timer_id = Karakuri.Timer_Manager.set_timer(
-            1,
-            (token: *void) {
-                self := Karakuri.get_world_entity(
-                    token.(*Karakuri.Entity_Token)
-                );
+    token_for_timer := New(Karakuri.Entity_Token);
+    token_for_timer.* = self.token;
+    enemy.shoot_timer_id = Karakuri.Timer_Manager.set_timer(
+        1,
+        (token: *void) {
+            self := Karakuri.get_world_entity(
+                token.(*Karakuri.Entity_Token)
+            );
 
-                Karakuri.spawn_entity_into_world(
-                    projectile_prefab(
-                        self.transform.position - .{ 0, 1.0 },
-                        .ENEMY,
-                    ),
-                );
-            },
-            token_for_timer,
-            is_interval = true,
-        );
-    }
+            Karakuri.spawn_entity_into_world(
+                projectile_prefab(
+                    self.transform.position - .{ 0, 1.0 },
+                    .ENEMY,
+                ),
+            );
+        },
+        token_for_timer,
+        is_interval = true,
+    );
 }
 
 on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {

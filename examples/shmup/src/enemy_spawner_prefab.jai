@@ -17,7 +17,7 @@ Enemy_Spawner :: struct {
 on_start :: (self: *Karakuri.Entity) {
     enemy_spawner := self.behavior.(*Enemy_Spawner);
 
-    Karakuri.Timer_Manager.set_timer(
+    enemy_spawner.spawn_timer_id = Karakuri.Timer_Manager.set_timer(
         2,
         (data: *void) {
             Karakuri.spawn_entity_into_world(enemy_prefab(.{
