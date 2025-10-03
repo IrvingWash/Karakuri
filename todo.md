@@ -3,3 +3,4 @@
 [ ] - Add procedures to get camera grid in world units
 [ ] - Add animations support
 [ ] - Add sprite sorting
+[ ] - Add sounds
