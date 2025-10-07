@@ -133,6 +133,8 @@ build :: (
 
     copy_binaries(build_dir_path);
 
+    compiler_begin_intercept(workspace);
+
     add_build_file(
         tprint(
             "%/%/%",
@@ -142,6 +144,24 @@ build :: (
         ),
         workspace,
     );
+
+    on_compiler_message();
+
+    compiler_end_intercept(workspace);
+}
+
+on_compiler_message :: () {
+    while true {
+        message := compiler_wait_for_message();
+
+        if message.kind == {
+            case .ERROR;
+                terminate("Compilation failed: %", message);
+
+            case .COMPLETE;
+                break;
+        }
+    }
 }
 
 terminate :: (format_string: string, args: .. Any) {
