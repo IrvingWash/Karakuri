@@ -1,5 +1,7 @@
 #scope_module
 
+#import "IntroSort";
+
 run_rendering_system :: () {
     cameras := get_world_entities(.CAMERA);
 
@@ -12,7 +14,13 @@ run_rendering_system :: () {
             camera.camera.size,
         );
 
+        // @Optimization: we can avoid getting entities each frame if the world marks itself dirty when new entities are added
         drawable_entities := get_world_entities(.SPRITE);
+        insertion_sort(
+            drawable_entities,
+            (a, b) => cast(s64)(a.sprite.sorting_layer) - cast(s64)(b.sprite.sorting_layer)
+        );
+
         for entity: drawable_entities {
             ok, texture := Asset_Manager.get_texture(entity.sprite.texture_path);
             if !ok {

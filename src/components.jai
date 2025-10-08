@@ -11,6 +11,7 @@ Sprite :: struct {
     color:           Vector4 = .{ 1, 1, 1, 1 };
     pixels_per_unit: u32 = PIXELS_PER_UNIT;
     origin:          Vector2;
+    sorting_layer:   s64;
 }
 
 Camera :: struct {
