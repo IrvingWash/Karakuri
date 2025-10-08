@@ -7,7 +7,7 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
         sprite = .{
             texture_path = "examples/snakey/assets/snakey.png",
             clip = .{ 0.25, 0.5 },
-            offset = .{ 0, 0.5 }, // @Todo this is from bottom left, but we want from top left
+            offset = .{ 0, 0 }, // @Todo this is from bottom left, but we want from top left
         },
         behavior = behavior,
 
@@ -36,7 +36,7 @@ on_update :: (self: *Karakuri.Entity) {
 }
 
 move :: (self: *Karakuri.Entity) {
-    disposition := 10 * Karakuri.Time_Manager.get_delta_time();
+    disposition := 5 * Karakuri.Time_Manager.get_delta_time();
 
     if Karakuri.Input_Manager.is_key_pressed(.W) {
         self.transform.position.y += disposition;
