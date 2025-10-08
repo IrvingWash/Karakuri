@@ -61,6 +61,7 @@ Key :: enum #specified {
     R           :: 82;
     S           :: 83;
     W           :: 87;
+    X           :: 88;
     ESCAPE      :: 256;
     ARROW_RIGHT :: 262;
     ARRAOW_LEFT :: 263;

@@ -33,15 +33,21 @@ run_rendering_system :: () {
                 continue;
             }
 
-            Sprite_Renderer.draw(
-                entity.transform.position,
-                entity.transform.scale,
-                entity.transform.rotation,
-                entity.sprite.color,
-                entity.sprite.pixels_per_unit,
-                entity.sprite.origin,
-                texture,
-            );
+            {
+                using entity;
+
+                Sprite_Renderer.draw(
+                    transform.position,
+                    transform.scale,
+                    transform.rotation,
+                    sprite.color,
+                    sprite.pixels_per_unit,
+                    sprite.origin,
+                    sprite.clip,
+                    sprite.offset,
+                    texture,
+                );
+            }
         }
 
         if DEBUG {
@@ -57,6 +63,8 @@ run_rendering_system :: () {
                     BOX_COLLIDER_COLOR,
                     PIXELS_PER_UNIT,
                     entity.box_collider.offset,
+                    .{ 0, 0 },
+                    .{ 0, 0 },
                     texture,
                 );
             }

@@ -1,26 +1,13 @@
 #import "Math";
 
-snakey_prefab :: (controlled: bool = false) -> Karakuri.Entity_Params {
+snakey_prefab :: () -> Karakuri.Entity_Params {
     behavior := New(Snakey);
-    behavior.controlled = controlled;
 
     return .{
-        transform = .{
-            position = .{
-                xx ifx controlled
-                    then -2
-                    else 2,
-                0,
-            },
-        },
         sprite = .{
             texture_path = "examples/snakey/assets/snakey.png",
-            color = ifx controlled
-                then Vector4.{ 1, 1, 1, 1 }
-                else Vector4.{ 0.7, 0.7, 0.7, 1 },
-            sorting_layer = ifx controlled
-                then 1
-                else 0,
+            clip = .{ 0.25, 0.5 },
+            offset = .{ 0, 0.5 }, // @Todo this is from bottom left, but we want from top left
         },
         behavior = behavior,
 
@@ -30,16 +17,21 @@ snakey_prefab :: (controlled: bool = false) -> Karakuri.Entity_Params {
 
 Snakey :: struct {
     #as using behavior: Karakuri.Behavior;
-    controlled: bool;
 }
 
 #scope_file
 
 on_update :: (self: *Karakuri.Entity) {
-    snakey := self.behavior.(*Snakey);
+    move(self);
 
-    if snakey.controlled {
-        move(self);
+    if Karakuri.Input_Manager.is_key_down(.X) {
+        using self.sprite;
+
+        if offset.x == 0.5 {
+            offset.x = 0;
+        } else {
+            offset.x += 0.25;
+        }
     }
 }
 

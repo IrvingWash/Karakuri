@@ -26,6 +26,8 @@ Sprite_Instance :: struct {
     rotation: float;
     color:    Vector4;
     origin:   Vector2;
+    clip:     Vector2;
+    offset:   Vector2;
 }
 
 create_quad_mesh :: () -> Quad_Mesh {
@@ -148,6 +150,30 @@ create_quad_mesh :: () -> Quad_Mesh {
     );
     glEnableVertexAttribArray(6);
     glVertexAttribDivisor(6, 1);
+
+    // Clip
+    glVertexAttribPointer(
+        7,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        size_of(Sprite_Instance),
+        cast(*void) offset_of(Sprite_Instance, "clip"),
+    );
+    glEnableVertexAttribArray(7);
+    glVertexAttribDivisor(7, 1);
+
+    // Offset
+    glVertexAttribPointer(
+        8,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        size_of(Sprite_Instance),
+        cast(*void) offset_of(Sprite_Instance, "offset"),
+    );
+    glEnableVertexAttribArray(8);
+    glVertexAttribDivisor(8, 1);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

@@ -12,6 +12,8 @@ Sprite :: struct {
     pixels_per_unit: u32 = PIXELS_PER_UNIT;
     origin:          Vector2;
     sorting_layer:   s64;
+    clip:          Vector2;
+    offset:        Vector2;
 }
 
 Camera :: struct {

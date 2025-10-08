@@ -26,7 +26,6 @@ scene :: () -> [..]Karakuri.Entity_Params {
     array_add(
         *result,
         camera_prefab(),
-        snakey_prefab(true),
         snakey_prefab(),
     );
 

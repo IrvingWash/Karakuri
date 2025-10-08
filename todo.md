@@ -3,3 +3,8 @@
 [ ] - Add procedures to get camera grid in world units
 [ ] - Add animations support
 [ ] - Add sounds
+
+Animator:
+Sample_Rate
+Frame_Count
+Sprite offset
