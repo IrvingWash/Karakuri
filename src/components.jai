@@ -1,4 +1,5 @@
 #import "Math";
+#import "Hash_Table";
 
 Transform :: struct {
     position: Vector2;
@@ -30,6 +31,11 @@ Behavior :: struct {}
 Box_Collider :: struct {
     size: Vector2 = DEFAULT_SCALE;
     offset: Vector2;
+}
+
+Animation_Controller :: struct {
+    current:    *Animation;
+    animations: Table(string, Animation);
 }
 
 #scope_module

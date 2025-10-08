@@ -3,6 +3,8 @@
 [ ] - Add procedures to get camera grid in world units
 [ ] - Add animations support
 [ ] - Add sounds
+[ ] - Change scene return type to a static array
+[ ] - All the systems should have initializers
 
 Animator:
 Sample_Rate

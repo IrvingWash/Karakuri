@@ -70,6 +70,7 @@ process_input :: () {
 update :: () {
     update_world();
     run_physics_system();
+    run_animation_system();
 }
 
 render :: () {
@@ -82,3 +83,4 @@ Window_Manager :: #import "Window_Manager";
 Sprite_Renderer :: #import "Sprite_Renderer";
 #load "systems/physics_system.jai";
 #load "systems/rendering_system.jai";
+#load "systems/animation_system.jai";
