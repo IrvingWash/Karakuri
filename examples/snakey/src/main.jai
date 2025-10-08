@@ -3,13 +3,13 @@ Karakuri :: #import "Karakuri";
 
 #load "../../utils.jai";
 #load "camera_prefab.jai";
-#load "square_prefab.jai";
+#load "snakey_prefab.jai";
 
 main :: () {
     setup_formatting();
 
     Karakuri.init(.{
-        title = "Squares",
+        title = "Snakey",
         initial_scene = scene,
     });
 
@@ -26,8 +26,8 @@ scene :: () -> [..]Karakuri.Entity_Params {
     array_add(
         *result,
         camera_prefab(),
-        square_prefab(true),
-        square_prefab(),
+        snakey_prefab(true),
+        snakey_prefab(),
     );
 
     return result;

@@ -1,18 +1,23 @@
 #import "Math";
 
-square_prefab :: (controlled: bool = false) -> Karakuri.Entity_Params {
-    behavior := New(Square);
+snakey_prefab :: (controlled: bool = false) -> Karakuri.Entity_Params {
+    behavior := New(Snakey);
     behavior.controlled = controlled;
 
     return .{
         transform = .{
-            scale = .{ 2, 2 },
+            position = .{
+                xx ifx controlled
+                    then -2
+                    else 2,
+                0,
+            },
         },
         sprite = .{
-            texture_path = "examples/squares/assets/square.png",
+            texture_path = "examples/snakey/assets/snakey.png",
             color = ifx controlled
-                then Vector4.{ 1, 0, 0, 1 }
-                else Vector4.{ 0, 1, 0, 1 },
+                then Vector4.{ 1, 1, 1, 1 }
+                else Vector4.{ 0.7, 0.7, 0.7, 1 },
             sorting_layer = ifx controlled
                 then 1
                 else 0,
@@ -23,7 +28,7 @@ square_prefab :: (controlled: bool = false) -> Karakuri.Entity_Params {
     };
 }
 
-Square :: struct {
+Snakey :: struct {
     #as using behavior: Karakuri.Behavior;
     controlled: bool;
 }
@@ -31,9 +36,9 @@ Square :: struct {
 #scope_file
 
 on_update :: (self: *Karakuri.Entity) {
-    square := self.behavior.(*Square);
+    snakey := self.behavior.(*Snakey);
 
-    if square.controlled {
+    if snakey.controlled {
         move(self);
     }
 }
