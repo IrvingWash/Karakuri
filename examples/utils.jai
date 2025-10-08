@@ -1,3 +1,5 @@
+#import "Basic";
+
 setup_formatting :: () {
     print_style := *context.print_style;
 
