@@ -63,8 +63,8 @@ run_rendering_system :: () {
                     BOX_COLLIDER_COLOR,
                     PIXELS_PER_UNIT,
                     entity.box_collider.offset,
-                    .{ 0, 0 },
-                    .{ 0, 0 },
+                    ZERO_VECTOR2,
+                    ZERO_VECTOR2,
                     texture,
                 );
             }
