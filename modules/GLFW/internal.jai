@@ -29,6 +29,22 @@ glfwWindowShouldClose :: (
     window: *Window
 ) -> s32 #foreign glfw "glfwWindowShouldClose";
 
+glfwSetWindowSize :: (
+    window: *Window,
+    width: s32,
+    height: s32
+) #foreign glfw "glfwSetWindowSize";
+
+glfwSetWindowMonitor :: (
+    window:       *Window,
+    monitor:      *Monitor,
+    x_position:   s32,
+    y_position:   s32,
+    width:        s32,
+    height:       s32,
+    refresh_rate: s32
+) #foreign "glfwSetWindowMonitor";
+
 glfwSetWindowShouldClose :: (
     window: *Window,
     value:  int

@@ -97,6 +97,34 @@ get_window_content_scale :: (
     y_scale: *float
 ) #foreign glfw "glfwGetWindowContentScale";
 
+set_window_size :: inline (window: *Window, width: u32, height: u32) {
+    glfwSetWindowSize(window, xx width, xx height);
+}
+
+get_window_monitor :: (
+    window: *Window
+) -> *Monitor #foreign glfw "glfwGetWindowMonitor";
+
+set_window_monitor :: inline (
+    window:       *Window,
+    monitor:      *Monitor,
+    x_position:   u32,
+    y_position:   u32,
+    width:        u32,
+    height:       u32,
+    refresh_rate: u32
+) {
+    glfwSetWindowMonitor(
+        window,
+        monitor,
+        xx x_position,
+        xx y_position,
+        xx width,
+        xx height,
+        xx refresh_rate,
+    );
+}
+
 set_framebuffer_size_callback :: (
     window:   *Window,
     callback: Framebuffer_Size_Proc

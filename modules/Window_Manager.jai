@@ -10,14 +10,14 @@ init :: (title: string, vsync: bool) {
         GLFW.window_hint(.OPENGL_FORWARD_COMPAT, .TRUE);
     }
 
-    monitor := GLFW.get_primary_monitor();
-    video_mode := GLFW.get_video_mode(monitor);
+    manager.monitor = GLFW.get_primary_monitor();
+    video_mode := GLFW.get_video_mode(manager.monitor);
 
     manager.window = GLFW.create_window(
         video_mode.width,
         video_mode.height,
         title,
-        monitor,
+        manager.monitor,
     );
     assert(manager.window != null, "Failed to create GLFW window");
 
@@ -65,10 +65,69 @@ get_dpi_scale :: () -> float, float {
     return x, y;
 }
 
+set_resolution :: (width: u32, height: u32) {
+    if is_fullscreen() {
+        video_mode := GLFW.get_video_mode(manager.monitor);
+
+        GLFW.set_window_monitor(
+            manager.window,
+            manager.monitor,
+            0,
+            0,
+            width,
+            height,
+            video_mode.refresh_rate,
+        );
+    } else {
+        GLFW.set_window_size(manager.window, xx width, xx height);
+    }
+}
+
+is_fullscreen :: () -> bool {
+    return GLFW.get_window_monitor(manager.window) != null;
+}
+
+set_fullscreen :: () {
+    if is_fullscreen() {
+        return;
+    }
+
+    video_mode := GLFW.get_video_mode(manager.monitor);
+
+    GLFW.set_window_monitor(
+        manager.window,
+        manager.monitor,
+        0,
+        0,
+        video_mode.width,
+        video_mode.height,
+        video_mode.refresh_rate,
+    );
+}
+
+set_windowed :: () {
+    if !is_fullscreen() {
+        return;
+    }
+
+    video_mode := GLFW.get_video_mode(manager.monitor);
+
+    GLFW.set_window_monitor(
+        manager.window,
+        null,
+        0,
+        0,
+        video_mode.width,
+        video_mode.height,
+        video_mode.refresh_rate,
+    );
+}
+
 #scope_file
 
 Window_Manager :: struct {
-    window: *GLFW.Window;
+    window:  *GLFW.Window;
+    monitor: *GLFW.Monitor;
 }
 
 manager: Window_Manager = ---;
