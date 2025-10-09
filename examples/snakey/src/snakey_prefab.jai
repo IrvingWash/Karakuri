@@ -29,9 +29,6 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
     );
 
     return .{
-        sprite = .{
-            offset = .{ 0, 0 }, // @Todo P3 this is from bottom left, but we want from top left
-        },
         behavior = behavior,
         animation_controller = animation_controller,
 

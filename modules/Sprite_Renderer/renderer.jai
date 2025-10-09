@@ -124,7 +124,7 @@ draw :: (
 
     if (batch == null) {
         sprites: [..]Sprite_Instance;
-        sprites.allocator = temp; // @TODO P5 consider not using temp and cleaning up at every finished draw
+        sprites.allocator = temp;
         array_add(*sprites, payload);
 
         table_add(

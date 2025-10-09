@@ -13,7 +13,7 @@ Sprite :: struct {
     pixels_per_unit: u32 = PIXELS_PER_UNIT;
     origin:          Vector2;
     sorting_layer:   s64;
-    clip:            Vector2 = .{ 1, 1 }; // @TODO P4 is this from bottom left??? We want from top left.
+    clip:            Vector2 = .{ 1, 1 };
     offset:          Vector2;
 }
 

@@ -42,7 +42,6 @@ run_animation_system :: () {
             * cast(float)(animation.frame_rate)
         ) % animation.frame_count;
 
-        // @Todo P4 we don't know anything about y...
         sprite.clip = .{ 1.0 / animation.frame_count, 1 }; // @TODO 1 is hardcoded
         sprite.offset = .{ sprite.clip.x * animation.current_frame, 0 }; // @TODO 0 is hardcoded
 
