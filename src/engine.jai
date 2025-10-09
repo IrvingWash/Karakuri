@@ -1,11 +1,12 @@
 Engine_Config :: struct {
-    title:         string = "Karakuri";
-    target_fps:    u32 = 60;
-    initial_scene: Scene = DEFAULT_SCENE_LOADER;
+    title:             string = "Karakuri";
+    target_fps:        u32    = 60;
+    initial_scene:     Scene  = DEFAULT_SCENE_LOADER;
+    vsync:             bool   = true;
 }
 
 init :: (config: Engine_Config) {
-    Window_Manager.init(config.title);
+    Window_Manager.init(config.title, config.vsync);
     Time_Manager.init(config.target_fps);
     Sprite_Renderer.init(Window_Manager.get_window(), PIXELS_PER_UNIT);
     Asset_Manager.init();

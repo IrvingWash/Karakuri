@@ -1,99 +1,17 @@
 #import "Basic";
 
-Window :: struct {}
+#load "structs.jai";
+#load "enums.jai";
+#load "proc_types.jai";
+#load "internal.jai";
 
-Monitor :: struct {}
-
-Hint_Name :: enum_flags #specified {
-    CONTEXT_VERSION_MAJOR :: 0x00022002;
-    CONTEXT_VERSION_MINOR :: 0x00022003;
-    OPENGL_PROFILE        :: 0x00022008;
-    OPENGL_FORWARD_COMPAT :: 0x00022006;
+init :: inline () -> ok: bool {
+    return xx glfwInit();
 }
 
-Hint_Value :: enum_flags #specified {
-    OPENGL_CORE_PROFILE :: 0x00032001;
-    TRUE                :: 1;
+terminate :: inline () -> bool {
+    return xx glfwTerminate();
 }
-
-Input_Mode_Name :: enum_flags #specified {
-    CURSOR :: 0x00033001;
-}
-
-Input_Mode_Value :: enum_flags #specified {
-    CURSOR_DISABLED :: 0x00034003;
-}
-
-Framebuffer_Size_Proc :: #type (
-    window: *Window,
-    width:  s32,
-    height: s32
-) #c_call;
-
-Cursor_Position_Proc :: #type (
-    window: *Window,
-    x:      float64,
-    y:      float64
-) #c_call;
-
-Scroll_Proc :: #type (
-    window:   *Window,
-    offset_x: float64,
-    offset_y: float64
-) #c_call;
-
-Key_Proc :: #type (
-    window:    *Window,
-    key:       Key,
-    scan_code: s32,
-    action:    Key_Action,
-    modifiers: s32
-) #c_call;
-
-Key :: enum #specified {
-    SPACE :: 32;
-    A           :: 65;
-    B           :: 66;
-    C           :: 67;
-    D           :: 68;
-    E           :: 69;
-    F           :: 70;
-    G           :: 71;
-    H           :: 72;
-    I           :: 73;
-    J           :: 74;
-    K           :: 75;
-    L           :: 76;
-    M           :: 77;
-    N           :: 78;
-    O           :: 79;
-    P           :: 80;
-    Q           :: 81;
-    R           :: 82;
-    S           :: 83;
-    T           :: 84;
-    U           :: 85;
-    V           :: 86;
-    W           :: 87;
-    X           :: 88;
-    Y           :: 89;
-    Z           :: 90;
-    ESCAPE      :: 256;
-    ARROW_RIGHT :: 262;
-    ARRAOW_LEFT :: 263;
-    ARROW_DOWN  :: 264;
-    ARROW_UP    :: 265;
-}
-
-Key_Action :: enum #specified {
-    RELEASE :: 0;
-    PRESS   :: 1;
-    REPEAT  :: 2;
-}
-
-init :: () -> s32 #foreign glfw "glfwInit";
-
-terminate :: () -> s32 #foreign glfw "glfwTerminate";
 
 window_hint :: (
     hint:  Hint_Name,
@@ -132,25 +50,80 @@ make_context_current :: (
     window: *Window
 ) #foreign glfw "glfwMakeContextCurrent";
 
-window_should_close :: (
-    window: *Window
-) -> s32 #foreign glfw "glfwWindowShouldClose";
+window_should_close :: inline (window: *Window) -> bool {
+    return xx glfwWindowShouldClose(window);
+}
 
 swap_buffers :: (window: *Window) #foreign glfw "glfwSwapBuffers";
 
 poll_events :: () #foreign glfw "glfwPollEvents";
 
-get_frame_buffer_size :: (
-    window: *Window,
-    width:  *s32,
-    height: *s32
-) #foreign glfw "glfwGetFramebufferSize";
+get_primary_monitor :: () -> *Monitor #foreign glfw "glfwGetPrimaryMonitor";
+
+get_video_mode :: (monitor: *Monitor) -> Video_Mode {
+    using raw_video_mode := glfwGetVideoMode(monitor);
+
+    return .{
+        width        = xx width,
+        height       = xx height,
+        red_bits     = xx redBits,
+        green_bits   = xx greenBits,
+        blue_bits    = xx blueBits,
+        refresh_rate = xx refreshRate,
+    };
+}
+
+get_frame_buffer_size :: (window: *Window) -> width: u32, height: u32 {
+    width: s32;
+    height: s32;
+
+    glfwGetFrameBufferSize(window, *width, *height);
+
+    return xx width, xx height;
+}
+
+get_window_content_scale :: (window: *Window) -> x_scale: float, y_scale: float {
+    x_scale: float;
+    y_scale: float;
+
+    glfwGetWindowContentScale(window, *x_scale, *y_scale);
+
+    return x_scale, y_scale;
+}
 
 get_window_content_scale :: (
     window: *Window,
     x_scale: *float,
     y_scale: *float
 ) #foreign glfw "glfwGetWindowContentScale";
+
+set_window_size :: inline (window: *Window, width: u32, height: u32) {
+    glfwSetWindowSize(window, xx width, xx height);
+}
+
+get_window_monitor :: (
+    window: *Window
+) -> *Monitor #foreign glfw "glfwGetWindowMonitor";
+
+set_window_monitor :: inline (
+    window:       *Window,
+    monitor:      *Monitor,
+    x_position:   u32,
+    y_position:   u32,
+    width:        u32,
+    height:       u32,
+    refresh_rate: u32
+) {
+    glfwSetWindowMonitor(
+        window,
+        monitor,
+        xx x_position,
+        xx y_position,
+        xx width,
+        xx height,
+        xx refresh_rate,
+    );
+}
 
 set_framebuffer_size_callback :: (
     window:   *Window,
@@ -162,14 +135,17 @@ get_key :: (
     key: Key
 ) -> Key_Action #foreign glfw "glfwGetKey";
 
-set_window_should_close :: (
-    window: *Window,
-    value:  int
-) #foreign "glfwSetWindowShouldClose";
+set_window_should_close :: inline (window: *Window, value: bool) {
+    glfwSetWindowShouldClose(window, xx value);
+}
 
 get_proc_address :: (
     proc_name: *u8
 ) -> *void #foreign glfw "glfwGetProcAddress";
+
+swap_interval :: inline (interval: u16) {
+    glfwSwapInterval(xx interval);
+}
 
 set_input_mode :: (
     window: *Window,
@@ -197,19 +173,3 @@ set_key_callback :: (
     window:   *Window,
     callback: Key_Proc
 ) #foreign glfw "glfwSetKeyCallback";
-
-#scope_file;
-
-glfwCreateWindow :: (
-    width:   s32,
-    height:  s32,
-    title:   *u8,
-    monitor: *Monitor,
-    share:   *Window
-) -> *Window #foreign glfw;
-
-#if OS == .MACOS {
-    glfw :: #library "macos/libglfw.3";
-} else #if OS == .LINUX {
-    glfw :: #library "linux/libglfw";
-}

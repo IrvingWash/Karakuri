@@ -165,15 +165,14 @@ Sprite_Batch :: struct {
 }
 
 make_projection_matrix :: () -> Matrix4 {
-    width, height: s32;
-    GLFW.get_frame_buffer_size(renderer.window, *width, *height);
+    width, height := GLFW.get_frame_buffer_size(renderer.window);
 
     halved_ppu := 2.0 * renderer.pixels_per_unit;
 
     return orthographic_projection_matrix(
-        -width / halved_ppu,
+        width / -halved_ppu,
         width / halved_ppu,
-        -height / halved_ppu,
+        height / -halved_ppu,
         height / halved_ppu,
         -1,
         1,

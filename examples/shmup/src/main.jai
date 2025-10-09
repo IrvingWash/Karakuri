@@ -15,9 +15,10 @@ main :: () {
     setup_formatting();
 
     Karakuri.init(.{
-        title = "Shmup",
-        target_fps = 60,
+        title         = "Shmup",
+        target_fps    = 60,
         initial_scene = scene,
+        vsync         = false,
     });
 
     Karakuri.run();
