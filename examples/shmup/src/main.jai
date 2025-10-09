@@ -18,10 +18,7 @@ main :: () {
         title         = "Shmup",
         target_fps    = 60,
         initial_scene = scene,
-        fullscreen    = true,
         vsync         = false,
-        window_width  = 270 * 2,
-        window_height = 480 * 2,
     });
 
     Karakuri.run();

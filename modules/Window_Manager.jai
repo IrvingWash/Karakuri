@@ -1,4 +1,4 @@
-init :: (params: Init_Params) {
+init :: (title: string, vsync: bool) {
     is_initialized := GLFW.init();
     assert(is_initialized, "Failed to initialize GLFW");
 
@@ -10,38 +10,20 @@ init :: (params: Init_Params) {
         GLFW.window_hint(.OPENGL_FORWARD_COMPAT, .TRUE);
     }
 
-    if params.fullscreen {
-        monitor := GLFW.get_primary_monitor();
+    monitor := GLFW.get_primary_monitor();
+    video_mode := GLFW.get_video_mode(monitor);
 
-        if params.native_resolution {
-            video_mode := GLFW.get_video_mode(monitor);
-
-            manager.window = GLFW.create_window(
-                video_mode.width,
-                video_mode.height,
-                params.title,
-                monitor
-            );
-        } else {
-            manager.window = GLFW.create_window(
-                params.width,
-                params.height,
-                params.title,
-                monitor
-            );
-        }
-    } else {
-        manager.window = GLFW.create_window(
-            params.width,
-            params.height,
-            params.title,
-        );
-    }
+    manager.window = GLFW.create_window(
+        video_mode.width,
+        video_mode.height,
+        title,
+        monitor,
+    );
     assert(manager.window != null, "Failed to create GLFW window");
 
     GLFW.make_context_current(manager.window);
 
-    if !params.vsync {
+    if !vsync {
         GLFW.swap_interval(0);
     }
 
@@ -90,16 +72,6 @@ Window_Manager :: struct {
 }
 
 manager: Window_Manager = ---;
-
-Init_Params :: struct {
-    title: string;
-    fullscreen:        bool;
-    native_resolution: bool;
-    width:  u32;
-    height: u32;
-    vsync: bool;
-}
-
 
 #import "Basic";
 #import "GL";

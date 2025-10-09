@@ -2,23 +2,11 @@ Engine_Config :: struct {
     title:             string = "Karakuri";
     target_fps:        u32    = 60;
     initial_scene:     Scene  = DEFAULT_SCENE_LOADER;
-    window_width:      u32    = 800;
-    window_height:     u32    = 600;
-    fullscreen:        bool   = true;
-    native_resolution: bool   = true;
     vsync:             bool   = true;
 }
 
 init :: (config: Engine_Config) {
-    Window_Manager.init(.{
-        title             = config.title,
-        fullscreen        = config.fullscreen,
-        native_resolution = config.native_resolution,
-        width             = config.window_width,
-        height            = config.window_height,
-        vsync             = config.vsync,
-    });
-
+    Window_Manager.init(config.title, config.vsync);
     Time_Manager.init(config.target_fps);
     Sprite_Renderer.init(Window_Manager.get_window(), PIXELS_PER_UNIT);
     Asset_Manager.init();
