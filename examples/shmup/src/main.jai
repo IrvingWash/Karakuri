@@ -10,6 +10,8 @@ Karakuri :: #import "Karakuri"()(DEBUG = true);
 #load "enemy_spawner_prefab.jai";
 #load "background_prefab.jai";
 #load "stars_overlay_prefab.jai";
+#load "settings_manager_prefab.jai";
+#load "state.jai";
 
 main :: () {
     setup_formatting();
@@ -40,6 +42,7 @@ scene :: () -> [..]Karakuri.Entity_Params {
         projectile_destroyer_prefab(.TOP),
         projectile_destroyer_prefab(.BOTTOM),
         enemy_spawner_prefab(),
+        settings_manager_prefab(),
     );
 
     return result;

@@ -1,5 +1,4 @@
 background_prefab :: () -> Karakuri.Entity_Params {
-    print("%\n", Karakuri.screen_right_to_world());
     return .{
         transform = .{
             scale = .{

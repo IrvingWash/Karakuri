@@ -30,6 +30,10 @@ on_start :: (entity: *Karakuri.Entity) {
 }
 
 on_update :: (entity: *Karakuri.Entity) {
+    if state.is_paused {
+        return;
+    }
+
     shoot(entity);
     move(entity);
 }

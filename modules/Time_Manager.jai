@@ -23,7 +23,7 @@ cap_frame_rate :: () {
 
     now := seconds_since_init();
 
-    manager.delta_time = now - manager.last_time;
+    manager.delta_time = (now - manager.last_time) * manager.time_scale;
     if manager.delta_time > manager.max_delta_time {
         manager.delta_time = manager.max_delta_time;
     }
@@ -35,8 +35,8 @@ get_delta_time :: () -> float {
     return xx manager.delta_time;
 }
 
-get_time :: () -> float {
-    return xx manager.last_time;
+set_time_scale :: (value: float64) {
+    manager.time_scale = value;
 }
 
 #scope_file
@@ -46,6 +46,7 @@ Time_Manager :: struct {
     last_time:         float64;
     max_delta_time:    float64;
     delta_time:        float64;
+    time_scale:        float64 = 1;
 }
 
 manager: Time_Manager = ---;
