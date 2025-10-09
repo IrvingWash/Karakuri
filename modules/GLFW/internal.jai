@@ -50,6 +50,12 @@ glfwSetWindowShouldClose :: (
     value:  int
 ) #foreign "glfwSetWindowShouldClose";
 
+glfwGetWindowContentScale :: (
+    window: *Window,
+    x_scale: *float,
+    y_scale: *float
+) #foreign glfw "glfwGetWindowContentScale";
+
 glfwGetFrameBufferSize :: (
     window: *Window,
     width:  *s32,

@@ -58,9 +58,7 @@ get_render_size :: () -> u32, u32 {
 }
 
 get_dpi_scale :: () -> float, float {
-    x, y: float;
-
-    GLFW.get_window_content_scale(manager.window, *x, *y);
+    x, y := GLFW.get_window_content_scale(manager.window);
 
     return x, y;
 }
