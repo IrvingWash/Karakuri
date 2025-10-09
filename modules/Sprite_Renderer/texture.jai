@@ -37,9 +37,17 @@ create_texture :: (image_path: string, flip := false) -> Texture {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    format := ifx channels == 3
-        then GL_RGB
-        else GL_RGBA;
+    format: GLenum;
+    if channels == {
+        case 1;
+            format = GL_RED;
+        case 2;
+            format = GL_RG;
+        case 3;
+            format = GL_RGB;
+        case 4;
+            format = GL_RGBA;
+    }
 
     glTexImage2D(
         GL_TEXTURE_2D,

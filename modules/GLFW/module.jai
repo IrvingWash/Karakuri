@@ -91,12 +91,6 @@ get_window_content_scale :: (window: *Window) -> x_scale: float, y_scale: float 
     return x_scale, y_scale;
 }
 
-get_window_content_scale :: (
-    window: *Window,
-    x_scale: *float,
-    y_scale: *float
-) #foreign glfw "glfwGetWindowContentScale";
-
 set_window_size :: inline (window: *Window, width: u32, height: u32) {
     glfwSetWindowSize(window, xx width, xx height);
 }
