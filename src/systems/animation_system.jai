@@ -5,7 +5,7 @@ Animation :: struct {
     frame_rate:   u16;
     looping:      bool;
     current_frame: u16;
-    start_time:    float;
+    time_playing:  float;
 }
 
 play_animation :: (using entity: *Entity, animation_name: string) {
@@ -13,10 +13,15 @@ play_animation :: (using entity: *Entity, animation_name: string) {
         !animation_controller.current
         || animation_controller.current.name != animation_name
     ) {
-        entity.animation_controller.current = table_find_pointer(
+        animation := table_find_pointer(
             *entity.animation_controller.animations,
             animation_name,
         );
+
+        animation.current_frame = 0;
+        animation.time_playing = 0;
+
+        entity.animation_controller.current = animation;
     }
 }
 
@@ -27,8 +32,6 @@ stop_animation :: (entity: *Entity) {
 #scope_module
 
 run_animation_system :: () {
-    system.time += Time_Manager.get_delta_time();
-
     animating_entities := get_world_entities(.ANIMATION_CONTROLLER);
 
     for entity: animating_entities {
@@ -42,8 +45,10 @@ run_animation_system :: () {
             continue;
         }
 
+        animation.time_playing += Time_Manager.get_delta_time();
+
         animation.current_frame = cast(u16)(
-            (system.time - animation.start_time)
+            animation.time_playing
             * cast(float)(animation.frame_rate)
         ) % animation.frame_count;
 
@@ -58,13 +63,6 @@ run_animation_system :: () {
 }
 
 #scope_file;
-
-// @Todo we'll need to init and deinit this
-Animation_System :: struct {
-    time: float;
-}
-
-system: Animation_System;
 
 #import "Hash_Table";
 Time_Manager :: #import "Time_Manager";
