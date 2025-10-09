@@ -6,7 +6,7 @@ enemy_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
             scale = .{ 3, 3 },
         },
         sprite = .{
-            texture_path = "examples/shmup/assets/enemy_2_1.png",
+            texture_path = "examples/shmup/textures/enemy_2_1.png",
         },
         box_collider = .{
             size = .{ 0.4, 0.3 },

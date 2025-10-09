@@ -4,7 +4,7 @@ stars_overlay_prefab :: () -> Karakuri.Entity_Params {
             scale = .{ 3, 3 },
         },
         sprite = .{
-            texture_path = "examples/shmup/assets/stars.png",
+            texture_path = "examples/shmup/textures/stars.png",
         },
     };
 }

@@ -22,7 +22,7 @@ projectile_prefab :: (
             scale = .{ 3, 3 },
         },
         sprite = .{
-            texture_path = "examples/shmup/assets/projectile_1.png",
+            texture_path = "examples/shmup/textures/projectile_1.png",
         },
         behavior = behavior,
         box_collider = .{

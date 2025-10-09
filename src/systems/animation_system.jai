@@ -7,6 +7,15 @@ play_animation :: (using entity: *Entity, animation_name: string) {
             *entity.animation_controller.animations,
             animation_name,
         );
+        if !animation {
+            log(
+                "Animation `%` not found",
+                animation_name,
+                flags = .WARNING,
+            );
+
+            return;
+        }
 
         animation.current_frame = 0;
         animation.time_playing = 0;

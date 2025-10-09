@@ -1,13 +1,35 @@
+#import "Hash_Table";
+
 player_prefab :: () -> Karakuri.Entity_Params {
+    animation_controller: Karakuri.Animation_Controller;
+    table_add(
+        *animation_controller.animations,
+        "idle",
+        PLAYER_IDLE,
+    );
+    table_add(
+        *animation_controller.animations,
+        "strafe_forward",
+        PLAYER_STRAFE_FORWARD,
+    );
+    table_add(
+        *animation_controller.animations,
+        "strafe_right",
+        PLAYER_STRAFE_RIGHT,
+    );
+    table_add(
+        *animation_controller.animations,
+        "strafe_left",
+        PLAYER_STRAFE_LEFT,
+    );
+
     return .{
         name = "Player",
         transform = .{
             position = .{ 0, Karakuri.screen_bottom_to_world() + 2 },
             scale = .{ 3, 3 },
         },
-        sprite = .{
-            texture_path = "examples/shmup/assets/main_ship-1.png",
-        },
+        animation_controller = animation_controller,
         behavior = New(Player),
         box_collider = .{
             size = .{ 0.2, 0.45 },
@@ -25,6 +47,9 @@ Player :: struct {
 }
 
 #scope_file
+on_start :: (entity: *Karakuri.Entity) {
+    Karakuri.play_animation(entity, "idle");
+}
 
 on_update :: (entity: *Karakuri.Entity) {
     shoot(entity);
@@ -43,19 +68,32 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
 move :: (entity: *Karakuri.Entity) {
     disposition := (cast(*Player) entity.behavior).speed
         * Karakuri.Time_Manager.get_delta_time();
+    vector: Vector2;
 
     if Karakuri.Input_Manager.is_key_pressed(.W) {
-        entity.transform.position.y += disposition;
+        vector.y += disposition;
     }
     if Karakuri.Input_Manager.is_key_pressed(.S) {
-        entity.transform.position.y -= disposition;
+        vector.y -= disposition;
     }
     if Karakuri.Input_Manager.is_key_pressed(.A) {
-        entity.transform.position.x -= disposition;
+        vector.x -= disposition;
     }
     if Karakuri.Input_Manager.is_key_pressed(.D) {
-        entity.transform.position.x += disposition;
+        vector.x += disposition;
     }
+
+    if vector.x > 0 {
+        Karakuri.play_animation(entity, "strafe_right");
+    } else if vector.x < 0 {
+        Karakuri.play_animation(entity, "strafe_left");
+    } else if vector.y > 0 {
+        Karakuri.play_animation(entity, "strafe_forward");
+    } else {
+        Karakuri.play_animation(entity, "idle");
+    }
+
+    entity.transform.position += vector;
 }
 
 shoot :: (entity: *Karakuri.Entity) {
@@ -68,3 +106,6 @@ shoot :: (entity: *Karakuri.Entity) {
         );
     }
 }
+
+#scope_file
+#load "../animations/player_animations.jai";
