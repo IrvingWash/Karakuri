@@ -4,11 +4,21 @@ Window :: struct {}
 
 Monitor :: struct {}
 
+Video_Mode :: struct {
+    width:        u32;
+    height:       u32;
+    red_bits:     u32;
+    green_bits:   u32;
+    blue_bits:    u32;
+    refresh_rate: u32;
+}
+
 Hint_Name :: enum_flags #specified {
     CONTEXT_VERSION_MAJOR :: 0x00022002;
     CONTEXT_VERSION_MINOR :: 0x00022003;
     OPENGL_PROFILE        :: 0x00022008;
     OPENGL_FORWARD_COMPAT :: 0x00022006;
+    FOCUS_ON_SHOW         :: 0x0002000C;
 }
 
 Hint_Value :: enum_flags #specified {
@@ -140,6 +150,21 @@ swap_buffers :: (window: *Window) #foreign glfw "glfwSwapBuffers";
 
 poll_events :: () #foreign glfw "glfwPollEvents";
 
+get_primary_monitor :: () -> *Monitor #foreign glfw "glfwGetPrimaryMonitor";
+
+get_video_mode :: (monitor: *Monitor) -> Video_Mode {
+    using raw_video_mode := glfwGetVideoMode(monitor);
+
+    return .{
+        width        = xx width,
+        height       = xx height,
+        red_bits     = xx redBits,
+        green_bits   = xx greenBits,
+        blue_bits    = xx blueBits,
+        refresh_rate = xx refreshRate,
+    };
+}
+
 get_frame_buffer_size :: (
     window: *Window,
     width:  *s32,
@@ -171,6 +196,8 @@ get_proc_address :: (
     proc_name: *u8
 ) -> *void #foreign glfw "glfwGetProcAddress";
 
+swap_interval :: (interval: s32) #foreign glfw "glfwSwapInterval";
+
 set_input_mode :: (
     window: *Window,
     mode:   Input_Mode_Name,
@@ -200,6 +227,15 @@ set_key_callback :: (
 
 #scope_file;
 
+GLFWvidmode :: struct {
+    width:       s32;
+    height:      s32;
+    redBits:     s32;
+    greenBits:   s32;
+    blueBits:    s32;
+    refreshRate: s32;
+}
+
 glfwCreateWindow :: (
     width:   s32,
     height:  s32,
@@ -207,6 +243,10 @@ glfwCreateWindow :: (
     monitor: *Monitor,
     share:   *Window
 ) -> *Window #foreign glfw;
+
+glfwGetVideoMode :: (
+    monitor: *Monitor
+) -> *GLFWvidmode #foreign glfw "glfwGetVideoMode";
 
 #if OS == .MACOS {
     glfw :: #library "macos/libglfw.3";
