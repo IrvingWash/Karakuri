@@ -68,26 +68,30 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
     };
 
     entity.flags |= .ALIVE;
+
     if entity.sprite.texture_path != "" {
         entity.flags |= .SPRITE;
     }
+    if entity_has_flags(entity, .SPRITE) {
+        Asset_Manager.add_texture(params.sprite.texture_path);
+    }
+
     if entity.behavior {
         entity.flags |= .BEHAVIOR;
     }
+
     if (
         entity.box_collider.size != DEFAULT_SCALE
         || entity.box_collider.offset != ZERO_VECTOR2
     ) {
         entity.flags |= .BOX_COLLIDER;
     }
+
     if entity.animation_controller.animations.count > 0 {
         entity.flags |= .ANIMATION_CONTROLLER;
         entity.flags |= .SPRITE;
     }
 
-    if entity_has_flags(entity, .SPRITE) {
-        Asset_Manager.add_texture(params.sprite.texture_path);
-    }
     if entity_has_flags(entity, .ANIMATION_CONTROLLER) {
         for animation: params.animation_controller.animations {
             Asset_Manager.add_texture(animation.texture_path);
