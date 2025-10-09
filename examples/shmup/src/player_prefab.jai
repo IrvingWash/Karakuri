@@ -1,35 +1,13 @@
 #import "Hash_Table";
 
 player_prefab :: () -> Karakuri.Entity_Params {
-    animation_controller: Karakuri.Animation_Controller;
-    table_add(
-        *animation_controller.animations,
-        "idle",
-        PLAYER_IDLE,
-    );
-    table_add(
-        *animation_controller.animations,
-        "strafe_forward",
-        PLAYER_STRAFE_FORWARD,
-    );
-    table_add(
-        *animation_controller.animations,
-        "strafe_right",
-        PLAYER_STRAFE_RIGHT,
-    );
-    table_add(
-        *animation_controller.animations,
-        "strafe_left",
-        PLAYER_STRAFE_LEFT,
-    );
-
     return .{
         name = "Player",
         transform = .{
             position = .{ 0, Karakuri.screen_bottom_to_world() + 2 },
             scale = .{ 3, 3 },
         },
-        animation_controller = animation_controller,
+        animation_controller = player_animation_controller(),
         behavior = New(Player),
         box_collider = .{
             size = .{ 0.2, 0.45 },
@@ -108,4 +86,4 @@ shoot :: (entity: *Karakuri.Entity) {
 }
 
 #scope_file
-#load "../animations/player_animations.jai";
+#load "../animations/player_animation_controller.jai";
