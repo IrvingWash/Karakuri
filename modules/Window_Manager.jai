@@ -1,5 +1,4 @@
-// @TODO currently if we get width/height 0, we use the screen resolution, this is unintuitive
-init :: (title: string, width: u32, height: u32, fullscreen: bool, vsync: bool) {
+init :: (params: Init_Params) {
     is_initialized := GLFW.init();
     assert(is_initialized, "Failed to initialize GLFW");
 
@@ -11,26 +10,38 @@ init :: (title: string, width: u32, height: u32, fullscreen: bool, vsync: bool) 
         GLFW.window_hint(.OPENGL_FORWARD_COMPAT, .TRUE);
     }
 
-    monitor := GLFW.get_primary_monitor();
-    video_mode := GLFW.get_video_mode(monitor);
+    if params.fullscreen {
+        monitor := GLFW.get_primary_monitor();
 
-    manager.window = GLFW.create_window(
-        ifx width == 0
-            then video_mode.width
-            else width,
-        ifx height == 0
-            then video_mode.height
-            else height,
-        title,
-        ifx fullscreen
-            then monitor
-            else null,
-    );
+        if params.native_resolution {
+            video_mode := GLFW.get_video_mode(monitor);
+
+            manager.window = GLFW.create_window(
+                video_mode.width,
+                video_mode.height,
+                params.title,
+                monitor
+            );
+        } else {
+            manager.window = GLFW.create_window(
+                params.width,
+                params.height,
+                params.title,
+                monitor
+            );
+        }
+    } else {
+        manager.window = GLFW.create_window(
+            params.width,
+            params.height,
+            params.title,
+        );
+    }
     assert(manager.window != null, "Failed to create GLFW window");
 
     GLFW.make_context_current(manager.window);
 
-    if !vsync {
+    if !params.vsync {
         GLFW.swap_interval(0);
     }
 
@@ -79,6 +90,16 @@ Window_Manager :: struct {
 }
 
 manager: Window_Manager = ---;
+
+Init_Params :: struct {
+    title: string;
+    fullscreen:        bool;
+    native_resolution: bool;
+    width:  u32;
+    height: u32;
+    vsync: bool;
+}
+
 
 #import "Basic";
 #import "GL";

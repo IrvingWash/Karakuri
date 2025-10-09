@@ -9,8 +9,14 @@ main :: () {
     setup_formatting();
 
     Karakuri.init(.{
-        title = "Snakey",
-        initial_scene = scene,
+        title             = "Snakey",
+        target_fps        = 120,
+        initial_scene     = scene,
+        window_width      = 800,
+        window_height     = 600,
+        fullscreen        = true,
+        native_resolution = true,
+        vsync             = true,
     });
 
     Karakuri.run();
