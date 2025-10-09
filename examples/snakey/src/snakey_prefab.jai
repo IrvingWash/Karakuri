@@ -1,61 +1,77 @@
 #import "Math";
+#import "Hash_Table";
 
-snakey_prefab :: (controlled: bool = false) -> Karakuri.Entity_Params {
+snakey_prefab :: () -> Karakuri.Entity_Params {
     behavior := New(Snakey);
-    behavior.controlled = controlled;
+
+    animation_controller: Karakuri.Animation_Controller;
+    table_add(
+        *animation_controller.animations,
+        "run",
+        .{
+            name         = "run",
+            texture_path = "examples/snakey/assets/snakey_run.png",
+            frame_count  = 3,
+            frame_rate   = 8,
+            looping      = true,
+        },
+    );
+    table_add(
+        *animation_controller.animations,
+        "idle",
+        .{
+            name         = "idle",
+            texture_path = "examples/snakey/assets/snakey_idle.png",
+            frame_count  = 3,
+            frame_rate   = 4,
+            looping      = true,
+        },
+    );
 
     return .{
-        transform = .{
-            position = .{
-                xx ifx controlled
-                    then -2
-                    else 2,
-                0,
-            },
-        },
-        sprite = .{
-            texture_path = "examples/snakey/assets/snakey.png",
-            color = ifx controlled
-                then Vector4.{ 1, 1, 1, 1 }
-                else Vector4.{ 0.7, 0.7, 0.7, 1 },
-            sorting_layer = ifx controlled
-                then 1
-                else 0,
-        },
         behavior = behavior,
+        animation_controller = animation_controller,
 
+        on_start  = on_start,
         on_update = on_update,
     };
 }
 
 Snakey :: struct {
     #as using behavior: Karakuri.Behavior;
-    controlled: bool;
 }
 
 #scope_file
 
-on_update :: (self: *Karakuri.Entity) {
-    snakey := self.behavior.(*Snakey);
+on_start :: (self: *Karakuri.Entity) {
+    Karakuri.play_animation(self, "idle");
+}
 
-    if snakey.controlled {
-        move(self);
-    }
+on_update :: (self: *Karakuri.Entity) {
+    move(self);
 }
 
 move :: (self: *Karakuri.Entity) {
-    disposition := 10 * Karakuri.Time_Manager.get_delta_time();
+    disposition := 5 * Karakuri.Time_Manager.get_delta_time();
+    vector: Vector2;
 
     if Karakuri.Input_Manager.is_key_pressed(.W) {
-        self.transform.position.y += disposition;
+        vector.y += disposition;
     }
     if Karakuri.Input_Manager.is_key_pressed(.S) {
-        self.transform.position.y -= disposition;
+        vector.y -= disposition;
     }
     if Karakuri.Input_Manager.is_key_pressed(.A) {
-        self.transform.position.x -= disposition;
+        vector.x -= disposition;
     }
     if Karakuri.Input_Manager.is_key_pressed(.D) {
-        self.transform.position.x += disposition;
+        vector.x += disposition;
+    }
+
+    if vector != Karakuri.ZERO_VECTOR2 {
+        self.transform.position += vector;
+        Karakuri.play_animation(self, "run");
+    } else {
+        Karakuri.play_animation(self, "idle");
     }
 }

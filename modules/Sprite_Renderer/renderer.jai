@@ -107,6 +107,8 @@ draw :: (
     color:           Vector4,
     pixels_per_unit: u32,
     origin:          Vector2,
+    clip:            Vector2,
+    offset:          Vector2,
     texture:         Texture
 ) {
     batch := table_find_pointer(*renderer.sprite_batches, texture.id);
@@ -116,11 +118,13 @@ draw :: (
         rotation        = rotation,
         color           = color,
         origin          = origin,
+        clip            = clip,
+        offset          = offset,
     };
 
     if (batch == null) {
         sprites: [..]Sprite_Instance;
-        sprites.allocator = temp; // @TODO: consider not using temp and cleaning up at every finished draw
+        sprites.allocator = temp;
         array_add(*sprites, payload);
 
         table_add(

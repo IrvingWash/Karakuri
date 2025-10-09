@@ -35,6 +35,10 @@ get_delta_time :: () -> float {
     return xx manager.delta_time;
 }
 
+get_time :: () -> float {
+    return xx manager.last_time;
+}
+
 #scope_file
 
 Time_Manager :: struct {

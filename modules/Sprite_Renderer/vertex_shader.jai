@@ -11,6 +11,8 @@ layout (location = 3) in vec2 iScale;
 layout (location = 4) in float iRotation;
 layout (location = 5) in vec4 iColor;
 layout (location = 6) in vec2 iOrigin;
+layout (location = 7) in vec2 iClip;
+layout (location = 8) in vec2 iOffset;
 
 out vec2 textureCoordinates;
 out vec4 instanceColor;
@@ -32,13 +34,13 @@ void main()
 
     vec2 scaled = (aPosition + iOrigin)
         * iScale
-        * vec2(textureWidth / pixelsPerUnit, textureHeight / pixelsPerUnit);
+        * vec2(textureWidth * iClip.x / pixelsPerUnit, textureHeight * iClip.y / pixelsPerUnit);
     vec2 rotated = rotation * scaled;
     vec2 worldPosition = iPosition + rotated;
 
     gl_Position = projection * view * vec4(worldPosition, 0.0, 1.0);
 
-    textureCoordinates = aTexture;
+    textureCoordinates = aTexture * iClip + iOffset;
     instanceColor = iColor;
 }
 GLSL

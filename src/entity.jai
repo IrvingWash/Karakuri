@@ -9,6 +9,7 @@ Entity_Flags :: enum_flags u64 {
     CAMERA;
     BEHAVIOR;
     BOX_COLLIDER;
+    ANIMATION_CONTROLLER;
 }
 
 Entity_Params :: struct {
@@ -16,11 +17,12 @@ Entity_Params :: struct {
     tags:       [..]string;
     flags:      Entity_Flags;
 
-    transform:  Transform;
-    sprite:     Sprite;
-    camera:     Camera;
-    behavior:   *Behavior;
-    box_collider: Box_Collider;
+    transform:            Transform;
+    sprite:               Sprite;
+    camera:               Camera;
+    behavior:             *Behavior;
+    box_collider:         Box_Collider;
+    animation_controller: Animation_Controller;
 
     on_start:       (self: *Entity);
     on_update:      (self: *Entity);
@@ -78,9 +80,18 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
     ) {
         entity.flags |= .BOX_COLLIDER;
     }
+    if entity.animation_controller.animations.count > 0 {
+        entity.flags |= .ANIMATION_CONTROLLER;
+        entity.flags |= .SPRITE;
+    }
 
     if entity_has_flags(entity, .SPRITE) {
         Asset_Manager.add_texture(params.sprite.texture_path);
+    }
+    if entity_has_flags(entity, .ANIMATION_CONTROLLER) {
+        for animation: params.animation_controller.animations {
+            Asset_Manager.add_texture(animation.texture_path);
+        }
     }
 
     return entity;
@@ -104,7 +115,6 @@ late_update_entity :: inline (using entity: *Entity) {
     }
 }
 
-// @TODO entity is cleaned up and it's lifecycle event is called at the same time. If this entity wants to refer to another entity destroyed in the same pass, things will go badly
 destroy_entity :: (using entity: *Entity) {
     if on_destroy {
         on_destroy(entity);
@@ -115,14 +125,20 @@ destroy_entity :: (using entity: *Entity) {
 
 destroy_entity_params :: (using entity_params: *Entity_Params) {
     array_reset(*tags);
-    flags = 0;
 
     if behavior {
         free(behavior);
     }
+
+    if entity_has_flags(entity_params, .ANIMATION_CONTROLLER) {
+        deinit(*animation_controller.animations);
+    }
+
+    flags = 0;
 }
 
 #scope_file
 
 using Basic :: #import "Basic";
 #poke_name Basic operator ==;
+#import "Hash_Table";

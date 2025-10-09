@@ -155,9 +155,6 @@ on_compiler_message :: () {
         message := compiler_wait_for_message();
 
         if message.kind == {
-            case .ERROR;
-                terminate("Compilation failed: %", message);
-
             case .COMPLETE;
                 break;
         }
