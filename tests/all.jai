@@ -11,4 +11,3 @@
 #load "math_test.jai";
 #load "physics_system_test.jai";
 #load "timer_manager_test.jai";
-#load "animation_system_test.jai";

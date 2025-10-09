@@ -29,8 +29,7 @@ run_animation_system :: () {
 
         animation := animation_controller.current;
         if !animation || (
-            (animation.current_frame == animation.frame_count - 1)
-            && !animation.looping
+            !animation.looping && (animation.current_frame == animation.frame_count - 1)
         ) {
             continue;
         }
