@@ -3,12 +3,13 @@
 #load "structs.jai";
 #load "enums.jai";
 #load "proc_types.jai";
+#load "internal.jai";
 
-init :: () -> ok: bool {
+init :: inline () -> ok: bool {
     return xx glfwInit();
 }
 
-terminate :: () -> bool {
+terminate :: inline () -> bool {
     return xx glfwTerminate();
 }
 
@@ -49,7 +50,7 @@ make_context_current :: (
     window: *Window
 ) #foreign glfw "glfwMakeContextCurrent";
 
-window_should_close :: (window: *Window) -> bool {
+window_should_close :: inline (window: *Window) -> bool {
     return xx glfwWindowShouldClose(window);
 }
 
@@ -106,7 +107,7 @@ get_key :: (
     key: Key
 ) -> Key_Action #foreign glfw "glfwGetKey";
 
-set_window_should_close :: (window: *Window, value: bool) {
+set_window_should_close :: inline (window: *Window, value: bool) {
     glfwSetWindowShouldClose(window, xx value);
 }
 
@@ -114,7 +115,7 @@ get_proc_address :: (
     proc_name: *u8
 ) -> *void #foreign glfw "glfwGetProcAddress";
 
-swap_interval :: (interval: u16) {
+swap_interval :: inline (interval: u16) {
     glfwSwapInterval(xx interval);
 }
 
@@ -144,53 +145,3 @@ set_key_callback :: (
     window:   *Window,
     callback: Key_Proc
 ) #foreign glfw "glfwSetKeyCallback";
-
-#scope_file;
-
-GLFWvidmode :: struct {
-    width:       s32;
-    height:      s32;
-    redBits:     s32;
-    greenBits:   s32;
-    blueBits:    s32;
-    refreshRate: s32;
-}
-
-glfwInit :: () -> s32 #foreign glfw "glfwInit";
-
-glfwTerminate :: () -> s32 #foreign glfw "glfwTerminate";
-
-glfwCreateWindow :: (
-    width:   s32,
-    height:  s32,
-    title:   *u8,
-    monitor: *Monitor,
-    share:   *Window
-) -> *Window #foreign glfw;
-
-glfwGetVideoMode :: (
-    monitor: *Monitor
-) -> *GLFWvidmode #foreign glfw "glfwGetVideoMode";
-
-glfwWindowShouldClose :: (
-    window: *Window
-) -> s32 #foreign glfw "glfwWindowShouldClose";
-
-glfwSetWindowShouldClose :: (
-    window: *Window,
-    value:  int
-) #foreign "glfwSetWindowShouldClose";
-
-glfwGetFrameBufferSize :: (
-    window: *Window,
-    width:  *s32,
-    height: *s32
-) #foreign glfw "glfwGetFramebufferSize";
-
-glfwSwapInterval :: (interval: s32) #foreign glfw "glfwSwapInterval";
-
-#if OS == .MACOS {
-    glfw :: #library "macos/libglfw.3";
-} else #if OS == .LINUX {
-    glfw :: #library "linux/libglfw";
-}
