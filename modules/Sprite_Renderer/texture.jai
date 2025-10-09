@@ -37,7 +37,7 @@ create_texture :: (image_path: string, flip := false) -> Texture {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    // @Todo this is bad
+    // @Todo P6 this is bad
     format := ifx channels == 3
         then GL_RGB
         else GL_RGBA;

@@ -13,8 +13,8 @@ Sprite :: struct {
     pixels_per_unit: u32 = PIXELS_PER_UNIT;
     origin:          Vector2;
     sorting_layer:   s64;
-    clip:          Vector2;
-    offset:        Vector2;
+    clip:            Vector2 = .{ 1, 1 }; // @TODO P4 is this from bottom left??? We want from top left.
+    offset:          Vector2;
 }
 
 Camera :: struct {
@@ -36,6 +36,16 @@ Box_Collider :: struct {
 Animation_Controller :: struct {
     current:    *Animation;
     animations: Table(string, Animation);
+}
+
+Animation :: struct {
+    name:         string;
+    texture_path: string;
+    frame_count:  u16;
+    frame_rate:   u16;
+    looping:      bool;
+    current_frame: u16;
+    time_playing:  float;
 }
 
 #scope_module

@@ -24,7 +24,7 @@ test_entity_destruction :: () {
     mario := create_mario(1, 2);
     destroy_entity(*mario);
 
-    assert(mario.name == "Mario"); // @TODO: how to free this string if it was dynamically allocated?
+    assert(mario.name == "Mario"); // @TODO P5 how to free this string if it was dynamically allocated?
     assert(mario.tags.count == 0);
     assert(mario.flags == 0);
 } @Test

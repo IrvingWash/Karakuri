@@ -1,12 +1,6 @@
 [ ] - Add procedures to get screen parts in world units.
     For example `screen_part_to_world(column_count: u32, row_count: u32, column: u32, row: u32) -> x,y: u32`
 [ ] - Add procedures to get camera grid in world units
-[ ] - Add animations support
 [ ] - Add sounds
 [ ] - Change scene return type to a static array
-[ ] - All the systems should have initializers
-
-Animator:
-Sample_Rate
-Frame_Count
-Sprite offset
+[ ] - All the systems maybe should have initializers

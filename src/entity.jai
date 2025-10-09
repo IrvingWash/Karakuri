@@ -115,7 +115,7 @@ late_update_entity :: inline (using entity: *Entity) {
     }
 }
 
-// @TODO entity is cleaned up and it's lifecycle event is called at the same time. If this entity wants to refer to another entity destroyed in the same pass, things will go badly
+// @TODO P5 entity is cleaned up and it's lifecycle event is called at the same time. If this entity wants to refer to another entity destroyed in the same pass, things will go badly
 destroy_entity :: (using entity: *Entity) {
     if on_destroy {
         on_destroy(entity);

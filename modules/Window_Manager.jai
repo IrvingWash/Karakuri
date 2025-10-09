@@ -9,7 +9,7 @@ init :: (title: string) {
         GLFW.window_hint(.OPENGL_FORWARD_COMPAT, .TRUE);
     }
 
-    // @Todo width and height are hardcoded
+    // @Todo P4 width and height are hardcoded
     manager.window = GLFW.create_window(800, 600, title);
     assert(manager.window != null, "Failed to create GLFW window");
 

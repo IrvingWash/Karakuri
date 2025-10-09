@@ -1,13 +1,3 @@
-Animation :: struct {
-    name:         string;
-    texture_path: string;
-    frame_count:  u16;
-    frame_rate:   u16;
-    looping:      bool;
-    current_frame: u16;
-    time_playing:  float;
-}
-
 play_animation :: (using entity: *Entity, animation_name: string) {
     if (
         !animation_controller.current
@@ -52,7 +42,7 @@ run_animation_system :: () {
             * cast(float)(animation.frame_rate)
         ) % animation.frame_count;
 
-        // @Todo: we don't know anything about y...
+        // @Todo P4 we don't know anything about y...
         sprite.clip = .{ 1.0 / animation.frame_count, 1 }; // @TODO 1 is hardcoded
         sprite.offset = .{ sprite.clip.x * animation.current_frame, 0 }; // @TODO 0 is hardcoded
 
