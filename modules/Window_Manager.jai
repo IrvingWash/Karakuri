@@ -1,7 +1,7 @@
 // @TODO currently if we get width/height 0, we use the screen resolution, this is unintuitive
 init :: (title: string, width: u32, height: u32, fullscreen: bool, vsync: bool) {
     is_initialized := GLFW.init();
-    assert(xx is_initialized, "Failed to initialize GLFW");
+    assert(is_initialized, "Failed to initialize GLFW");
 
     GLFW.window_hint(.CONTEXT_VERSION_MAJOR, 3);
     GLFW.window_hint(.CONTEXT_VERSION_MINOR, 3);
@@ -39,12 +39,15 @@ init :: (title: string, width: u32, height: u32, fullscreen: bool, vsync: bool) 
 
 deinit :: () {
     GLFW.destroy_window(manager.window);
-    GLFW.terminate();
+
+    ok := GLFW.terminate();
+    assert(ok, "Failed to terminate GLFW");
+
     manager = .{};
 }
 
 should_window_close :: inline () -> bool {
-    return xx GLFW.window_should_close(manager.window);
+    return GLFW.window_should_close(manager.window);
 }
 
 poll_events :: inline () {
@@ -56,10 +59,9 @@ get_window :: inline () -> *GLFW.Window {
 }
 
 get_render_size :: () -> u32, u32 {
-    width, height: s32;
-    GLFW.get_frame_buffer_size(manager.window, *width, *height);
+    width, height := GLFW.get_frame_buffer_size(manager.window);
 
-    return xx width, xx height;
+    return width, height;
 }
 
 get_dpi_scale :: () -> float, float {
