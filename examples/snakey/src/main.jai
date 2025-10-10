@@ -33,7 +33,7 @@ scene :: () -> [..]Karakuri.Entity_Params {
         camera_prefab(),
         snakey_prefab(),
         ground_prefab(-5, -2),
-        ground_prefab(10, -2),
+        ground_prefab(15, -2),
         ground_prefab(6, 0),
         physics_affecter_prefab(),
     );
