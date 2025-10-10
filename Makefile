@@ -4,6 +4,9 @@ shmup:
 snakey:
 	jai ./build_example.jai - snakey && ./build/snakey/DEBUG/game
 
+collisions:
+	jai ./build_example.jai - collisions && ./build/collisions/DEBUG/game
+
 test:
 	jai ./test.jai
 
