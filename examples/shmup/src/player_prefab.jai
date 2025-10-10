@@ -23,6 +23,7 @@ Player :: struct {
     #as using behavior: Karakuri.Behavior;
     speed := 5;
     double: bool = false;
+    lives: u8 = 3;
 }
 
 #scope_file
@@ -44,11 +45,24 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
         other.name == "Projectile"
         && other.behavior.(*Projectile).emitter != .PLAYER
     ) {
+        player := self.behavior.(*Player);
+
+        if player.lives > 0 {
+            player.lives -= 1;
+
+            if player.double {
+                player.double = false;
+            }
+
+            return;
+        }
+
         Karakuri.despawn_entity_from_world(self.token);
     }
 
     if other.name == "Powerup" {
         player := self.behavior.(*Player);
+
         player.double = true;
     }
 }
