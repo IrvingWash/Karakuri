@@ -25,6 +25,12 @@ glfwGetVideoMode :: (
     monitor: *Monitor
 ) -> *GLFWvidmode #foreign glfw "glfwGetVideoMode";
 
+glfwGetCursorPos :: (
+    window: *Window,
+    x: *float64,
+    y: *float64
+) #foreign glfw "glfwGetCursorPos";
+
 glfwWindowShouldClose :: (
     window: *Window
 ) -> s32 #foreign glfw "glfwWindowShouldClose";

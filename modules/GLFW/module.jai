@@ -74,18 +74,14 @@ get_video_mode :: (monitor: *Monitor) -> Video_Mode {
 }
 
 get_frame_buffer_size :: (window: *Window) -> width: u32, height: u32 {
-    width: s32;
-    height: s32;
-
+    width, height: s32;
     glfwGetFrameBufferSize(window, *width, *height);
 
     return xx width, xx height;
 }
 
 get_window_content_scale :: (window: *Window) -> x_scale: float, y_scale: float {
-    x_scale: float;
-    y_scale: float;
-
+    x_scale, y_scale: float;
     glfwGetWindowContentScale(window, *x_scale, *y_scale);
 
     return x_scale, y_scale;
@@ -128,6 +124,13 @@ get_key :: (
     window: *Window,
     key: Key
 ) -> Key_Action #foreign glfw "glfwGetKey";
+
+get_cursor_position :: inline (window: *Window) -> x: float, y: float {
+    x, y: float64;
+    glfwGetCursorPos(window, *x, *y);
+
+    return xx x, xx y;
+}
 
 set_window_should_close :: inline (window: *Window, value: bool) {
     glfwSetWindowShouldClose(window, xx value);

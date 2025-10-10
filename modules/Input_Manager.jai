@@ -7,7 +7,7 @@ Key_State :: GLFW.Key_Action;
 init :: (window: *GLFW.Window) {
     manager = .{ window = window };
 
-    GLFW.set_key_callback(window, on_key);
+    GLFW.set_key_callback(manager.window, on_key);
 }
 
 deinit :: () {
