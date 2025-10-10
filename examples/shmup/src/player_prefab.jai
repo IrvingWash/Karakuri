@@ -22,6 +22,7 @@ player_prefab :: () -> Karakuri.Entity_Params {
 Player :: struct {
     #as using behavior: Karakuri.Behavior;
     speed := 5;
+    double: bool = false;
 }
 
 #scope_file
@@ -44,6 +45,11 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
         && other.behavior.(*Projectile).emitter != .PLAYER
     ) {
         Karakuri.despawn_entity_from_world(self.token);
+    }
+
+    if other.name == "Powerup" {
+        player := self.behavior.(*Player);
+        player.double = true;
     }
 }
 
@@ -79,7 +85,26 @@ move :: (entity: *Karakuri.Entity) {
 }
 
 shoot :: (entity: *Karakuri.Entity) {
-    if Karakuri.Input_Manager.is_key_down(.SPACE) {
+    if !Karakuri.Input_Manager.is_key_down(.SPACE) {
+        return;
+    }
+
+    player := entity.behavior.(*Player);
+
+    if player.double {
+        Karakuri.spawn_entity_into_world(
+            projectile_prefab(
+                entity.transform.position + .{ 0.2, 1.0 },
+                .PLAYER,
+            ),
+        );
+        Karakuri.spawn_entity_into_world(
+            projectile_prefab(
+                entity.transform.position + .{ -0.2, 1.0 },
+                .PLAYER,
+            ),
+        );
+    } else {
         Karakuri.spawn_entity_into_world(
             projectile_prefab(
                 entity.transform.position + .{ 0, 1.0 },

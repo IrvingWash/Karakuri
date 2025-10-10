@@ -11,6 +11,7 @@ Karakuri :: #import "Karakuri"()(DEBUG = true);
 #load "background_prefab.jai";
 #load "stars_overlay_prefab.jai";
 #load "settings_manager_prefab.jai";
+#load "powerup_prefab.jai";
 #load "state.jai";
 
 main :: () {

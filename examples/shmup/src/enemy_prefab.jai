@@ -55,6 +55,10 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
         other.name == "Projectile"
         && other.behavior.(*Projectile).emitter == .PLAYER
     ) {
+        if Karakuri.random_in_range(0, 1) >= 0.9 {
+            Karakuri.spawn_entity_into_world(powerup_prefab(self.transform.position));
+        }
+
         Karakuri.despawn_entity_from_world(self.token);
     }
 }

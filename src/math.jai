@@ -12,6 +12,7 @@ random_in_range :: (a: float, b: float) -> float {
 }
 
 ZERO_VECTOR2 :: Vector2.{ 0, 0 };
+UNIT_VECTOR2 :: Vector2.{ 1, 1 };
 
 #scope_file
 
