@@ -10,7 +10,7 @@ init :: (config: Engine_Config) {
     Time_Manager.init(config.target_fps);
     Sprite_Renderer.init(Window_Manager.get_window(), PIXELS_PER_UNIT);
     Asset_Manager.init();
-    Input_Manager.init(Window_Manager.get_window());
+    Input_Manager.init(Window_Manager.get_window(), PIXELS_PER_UNIT);
     Timer_Manager.init();
 
     if DEBUG {

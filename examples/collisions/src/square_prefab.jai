@@ -52,21 +52,26 @@ on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
 }
 
 move :: (self: *Karakuri.Entity) {
-    disposition := 5 * Karakuri.Time_Manager.get_delta_time();
-    vector: Vector2;
+    x, y := Karakuri.Input_Manager.get_cursor_position();
 
-    if Karakuri.Input_Manager.is_key_pressed(.W) {
-        vector.y += disposition;
-    }
-    if Karakuri.Input_Manager.is_key_pressed(.S) {
-        vector.y -= disposition;
-    }
-    if Karakuri.Input_Manager.is_key_pressed(.A) {
-        vector.x -= disposition;
-    }
-    if Karakuri.Input_Manager.is_key_pressed(.D) {
-        vector.x += disposition;
-    }
+    self.transform.position.x = x;
+    self.transform.position.y = y;
 
-    self.transform.position += vector;
+    // disposition := 5 * Karakuri.Time_Manager.get_delta_time();
+    // vector: Vector2;
+    //
+    // if Karakuri.Input_Manager.is_key_pressed(.W) {
+    //     vector.y += disposition;
+    // }
+    // if Karakuri.Input_Manager.is_key_pressed(.S) {
+    //     vector.y -= disposition;
+    // }
+    // if Karakuri.Input_Manager.is_key_pressed(.A) {
+    //     vector.x -= disposition;
+    // }
+    // if Karakuri.Input_Manager.is_key_pressed(.D) {
+    //     vector.x += disposition;
+    // }
+    //
+    // self.transform.position += vector;
 }
