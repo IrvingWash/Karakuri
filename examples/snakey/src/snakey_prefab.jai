@@ -31,6 +31,10 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
     return .{
         behavior = behavior,
         animation_controller = animation_controller,
+        box_collider = .{
+            size = .{ 1.6, 2.65 },
+            offset = .{ 0, -0.07 },
+        },
 
         on_start  = on_start,
         on_update = on_update,
