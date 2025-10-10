@@ -1,10 +1,12 @@
 #import "Basic"()(MEMORY_DEBUGGER = true, TEMP_ALLOCATOR_POISON_FREED_MEMORY = true);
-Karakuri :: #import "Karakuri"()(DEBUG = true);
+Karakuri :: #import "Karakuri"()(DEBUG = false);
 
 #load "../../utils.jai";
 #load "camera_prefab.jai";
 #load "snakey_prefab.jai";
 #load "ground_prefab.jai";
+#load "physics_affecter_prefab.jai";
+#load "state.jai";
 
 main :: () {
     setup_formatting();
@@ -30,7 +32,10 @@ scene :: () -> [..]Karakuri.Entity_Params {
         *result,
         camera_prefab(),
         snakey_prefab(),
-        ground_prefab(),
+        ground_prefab(-5, -2),
+        ground_prefab(10, -2),
+        ground_prefab(6, 0),
+        physics_affecter_prefab(),
     );
 
     return result;

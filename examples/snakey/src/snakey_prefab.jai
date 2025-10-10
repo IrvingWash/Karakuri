@@ -29,6 +29,10 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
     );
 
     return .{
+        name = "Player",
+        transform = .{
+            position = .{ -9, 0 },
+        },
         behavior = behavior,
         animation_controller = animation_controller,
         box_collider = .{
@@ -43,6 +47,7 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
 
 Snakey :: struct {
     #as using behavior: Karakuri.Behavior;
+    #as using snakey_entity: Snakey_Entity;
 }
 
 #scope_file
@@ -59,21 +64,20 @@ move :: (self: *Karakuri.Entity) {
     disposition := 5 * Karakuri.Time_Manager.get_delta_time();
     vector: Vector2;
 
-    if Karakuri.Input_Manager.is_key_pressed(.W) {
-        vector.y += disposition;
-    }
-    if Karakuri.Input_Manager.is_key_pressed(.S) {
-        vector.y -= disposition;
-    }
     if Karakuri.Input_Manager.is_key_pressed(.A) {
         vector.x -= disposition;
     }
     if Karakuri.Input_Manager.is_key_pressed(.D) {
         vector.x += disposition;
     }
+    if Karakuri.Input_Manager.is_key_down(.SPACE) {
+        snakey_entity := self.behavior.(*Snakey_Entity);
+        snakey_entity.velocity.y += 30 * Karakuri.Time_Manager.get_delta_time();
+    }
 
-    if vector != Karakuri.ZERO_VECTOR2 {
-        self.transform.position += vector;
+    self.transform.position += vector;
+
+    if vector.x != 0 {
         Karakuri.play_animation(self, "run");
     } else {
         Karakuri.play_animation(self, "idle");
