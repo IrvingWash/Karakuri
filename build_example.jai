@@ -13,6 +13,7 @@ Config :: struct {
 BUILD_PATH_BASE :: "build";
 ENTRY_POINT_PATH_BASE :: "examples";
 MAIN_FILE_PATH :: "src/main.jai";
+EXECUTABLE_NAME :: "game";
 
 #if OS == .MACOS {
     BINARY_SUB_DIR_NAME :: "macos";
@@ -121,7 +122,7 @@ build :: (
         using build_options;
 
         output_type = .EXECUTABLE;
-        output_executable_name = example_name;
+        output_executable_name = EXECUTABLE_NAME;
         output_path, intermediate_path = build_dir_path;
         import_path = make_import_paths(import_path);
     }
