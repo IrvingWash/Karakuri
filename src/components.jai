@@ -1,6 +1,15 @@
 #import "Math";
 #import "Hash_Table";
 
+DEFAULT_TRANSFORM            :: Transform.{};
+DEFAULT_SPRITE               :: Sprite.{};
+DEFAULT_CAMERA               :: Camera.{};
+DEFAULT_BEHAVIOR             :: Behavior.{};
+DEFAULT_BOX_COLLIDER         :: Box_Collider.{};
+DEFAULT_RIGID_BODY           :: Rigid_Body.{};
+DEFAULT_ANIMATION_CONTROLLER :: Animation_Controller.{};
+
+
 Transform :: struct {
     position: Vector2;
     scale:    Vector2 = DEFAULT_SCALE;
@@ -33,6 +42,11 @@ Box_Collider :: struct {
     offset: Vector2;
 }
 
+Rigid_Body :: struct {
+    velocity: Vector2;
+    static:   bool;
+}
+
 Animation_Controller :: struct {
     current:    *Animation;
     animations: Table(string, Animation);
@@ -49,4 +63,5 @@ Animation :: struct {
 }
 
 #scope_module
+
 DEFAULT_SCALE :: Vector2.{ 1, 1 };

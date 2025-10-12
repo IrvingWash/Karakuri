@@ -1,11 +1,8 @@
 camera_prefab :: () -> Karakuri.Entity_Params {
-    behavior := New(Camera);
-    behavior.flags = .STATIC;
-
     return .{
         name     = "Camera",
         flags    = .CAMERA,
-        behavior = behavior,
+        behavior = New(Camera),
 
         on_start  = on_start,
         on_update = on_update,
@@ -14,7 +11,6 @@ camera_prefab :: () -> Karakuri.Entity_Params {
 
 Camera :: struct {
     #as using behavior: Karakuri.Behavior;
-    #as using snakey_entity: Snakey_Entity;
     player_token: Karakuri.Entity_Token;
 }
 
