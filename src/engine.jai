@@ -14,13 +14,15 @@ init :: (config: Engine_Config) {
     Timer_Manager.init();
 
     #if DEBUG {
-        init_editor();
-
         Asset_Manager.add_texture("assets/textures/square.png");
     }
 
+    #if EDITOR {
+        init_editor();
+    }
+
     initial_entities := config.initial_scene();
-    defer array_free(initial_entities);
+    defer array_reset(*initial_entities);
 
     init_world(initial_entities);
 
@@ -36,7 +38,7 @@ deinit :: () {
 
     deinit_world();
 
-    #if DEBUG {
+    #if EDITOR {
         deinit_editor();
     }
 

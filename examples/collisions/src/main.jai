@@ -1,5 +1,5 @@
 #import "Basic"()(MEMORY_DEBUGGER = true, TEMP_ALLOCATOR_POISON_FREED_MEMORY = true);
-Karakuri :: #import "Karakuri"()(DEBUG = true);
+Karakuri :: #import "Karakuri"()(DEBUG = true, EDITOR = true);
 
 #load "../../utils.jai";
 #load "camera_prefab.jai";

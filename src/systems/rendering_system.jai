@@ -95,7 +95,7 @@ run_rendering_system :: () {
 
         Sprite_Renderer.finish_drawing();
 
-        #if DEBUG {
+        #if EDITOR {
             update_editor();
         }
 

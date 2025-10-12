@@ -86,6 +86,34 @@ update_editor :: () {
                     entity.box_collider.offset.y = box_collider_offset[1];
                 }
             }
+
+            if entity_has_flags(entity, .CAMERA) {
+                {
+                    size := entity.camera.size;
+                    if DragFloat("Camera Size", *size, 0.1, flags = .NoInput) {
+                        entity.camera.size = size;
+                    }
+                }
+
+                {
+                    using entity.camera.color;
+
+                    color := float.[x, y, z, w];
+
+                    if ColorPicker4("Camera Color", *color, .NoOptions | .NoSmallPreview | .NoInputs) {
+                        entity.camera.color = .{ color[0], color[1], color[2], color[3] };
+                    }
+                }
+            }
+
+            if entity_has_flags(entity, .SPRITE) {
+                using entity.sprite.color;
+
+                color := float.[x, y, z, w];
+                if ColorPicker4("Sprite Color", *color, .NoOptions | .NoSmallPreview | .NoInputs) {
+                    entity.sprite.color = .{ color[0], color[1], color[2], color[3] };
+                }
+            }
         }
 
         PopID();

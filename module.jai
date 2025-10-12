@@ -1,4 +1,4 @@
-#module_parameters()(DEBUG := false);
+#module_parameters()(DEBUG := false, EDITOR := false);
 
 #load "src/engine.jai";
 #load "src/components.jai";

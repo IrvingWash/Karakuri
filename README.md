@@ -4,6 +4,7 @@ Karakuri is a 2D game engine written in Jai.
 
 ## Program parameters
 - `DEBUG` - enable the debug mode. This means connecting to Memory Visualizer, and other stuff.
+- `EDITOR` - enable the editor.
 
 ## Building examples
 The examples ar located in the `./examples` directory.  
