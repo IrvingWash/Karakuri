@@ -1,15 +1,28 @@
 #scope_module
 
-run_physics_system :: () {
-    entities_with_colliders := get_world_entities(.ALIVE | .BOX_COLLIDER);
+init_physics_system :: () {
+    system = .{};
+}
 
-    for a, i: entities_with_colliders {
+deinit_physics_system :: () {
+    array_reset(*system.entities);
+
+    system = .{};
+}
+
+run_physics_system :: () {
+    if system.entities.count == 0 || has_world_changed() {
+        array_reset(*system.entities);
+        system.entities = array_copy(get_world_entities(.ALIVE | .BOX_COLLIDER));
+    }
+
+    for a, i: system.entities {
         j := i + 1;
 
-        while j < entities_with_colliders.count {
+        while j < system.entities.count {
             defer j += 1;
 
-            b := entities_with_colliders[j];
+            b := system.entities[j];
 
             if check_aabb(a, b) {
                 if a.on_collision {
@@ -45,3 +58,11 @@ check_aabb :: (
         && a_top             > b_top - b_size.y
         && a_top - a_size.y  < b_top;
 }
+
+#scope_file
+
+Physics_System :: struct {
+    entities: []*Entity;
+}
+
+system: Physics_System = ---;

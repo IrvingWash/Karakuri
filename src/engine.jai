@@ -21,10 +21,19 @@ init :: (config: Engine_Config) {
     defer array_free(initial_entities);
 
     init_world(initial_entities);
+
+    init_rendering_system();
+    init_animation_system();
+    init_physics_system();
 }
 
 deinit :: () {
+    deinit_physics_system();
+    deinit_animation_system();
+    deinit_rendering_system();
+
     deinit_world();
+
     Timer_Manager.deinit();
     Input_Manager.deinit();
     Asset_Manager.deinit();
@@ -41,8 +50,6 @@ run :: () {
         process_input();
 
         update();
-
-        render();
 
         reset_temporary_storage();
 
@@ -70,11 +77,9 @@ process_input :: () {
 
 update :: () {
     update_world();
+
     run_physics_system();
     run_animation_system();
-}
-
-render :: () {
     run_rendering_system();
 }
 
