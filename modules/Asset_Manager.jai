@@ -14,7 +14,7 @@ deinit :: () {
 }
 
 add_texture :: (path: string) -> Texture {
-    ok, texture := table_find_new(*manager.textures, path);
+    ok, texture := table_find(*manager.textures, path);
     if ok {
         return texture;
     }
@@ -27,7 +27,7 @@ add_texture :: (path: string) -> Texture {
 }
 
 get_texture :: (path: string) -> ok: bool, texture: Texture {
-    ok, texture := table_find_new(*manager.textures, path);
+    ok, texture := table_find(*manager.textures, path);
 
     return ok, texture;
 }
