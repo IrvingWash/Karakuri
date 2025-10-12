@@ -35,19 +35,13 @@ make_entity_editor :: (entity: *Editor_Entity, camera_position: Vector2) {
         }
     }
 
-    if IsItemHovered() { // @Todo: do this when getting entities
+    if IsItemHovered() {
         draw_list := GetForegroundDrawList(); 
-
-        halved_display_size := editor.io.DisplaySize / 2;
-        halved_ppu := entity.sprite.pixels_per_unit / 2;
-
-        x := halved_display_size.x + (entity.transform.position.x - camera_position.x) * halved_ppu;
-        y := halved_display_size.y - (entity.transform.position.y + camera_position.y) * halved_ppu;
 
         draw_list.AddRect(
             draw_list,
-            .{x - entity.transform.scale.x * halved_ppu / 2, y - entity.transform.scale. y * halved_ppu / 2},
-            .{x + entity.transform.scale.x * halved_ppu / 2, y + entity.transform.scale.y * halved_ppu / 2},
+            entity.top_left,
+            entity.bottom_right,
             0xFFFF0000,
         );
     }
