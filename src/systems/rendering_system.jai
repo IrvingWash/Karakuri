@@ -94,6 +94,12 @@ run_rendering_system :: () {
         }
 
         Sprite_Renderer.finish_drawing();
+
+        #if DEBUG {
+            update_editor();
+        }
+
+        Sprite_Renderer.present();
     }
 }
 

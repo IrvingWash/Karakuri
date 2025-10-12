@@ -17,10 +17,5 @@ ImDrawCallback :: #type (parent_list: *ImDrawList, cmd: *ImDrawCmd) #c_call;
 #import "Basic";
 #import "Math";
 
-#if OS == .WINDOWS {
-    #load "windows.jai";
-    #library,system,link_always "user32"; // Needed by imgui unless ImGui is compiled it with "IMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCS"
-} else {
-    #load "unix.jai";
-}
+#load "unix.jai";
 

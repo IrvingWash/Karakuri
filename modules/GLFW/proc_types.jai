@@ -23,3 +23,5 @@ Key_Proc :: #type (
     action:    Key_Action,
     modifiers: s32
 ) #c_call;
+
+Error_Proc :: #type (error: s32, description: *u8) #c_call;

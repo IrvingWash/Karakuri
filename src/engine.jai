@@ -13,7 +13,9 @@ init :: (config: Engine_Config) {
     Input_Manager.init(Window_Manager.get_window(), PIXELS_PER_UNIT);
     Timer_Manager.init();
 
-    if DEBUG {
+    #if DEBUG {
+        init_editor();
+
         Asset_Manager.add_texture("assets/textures/square.png");
     }
 
@@ -33,6 +35,10 @@ deinit :: () {
     deinit_rendering_system();
 
     deinit_world();
+
+    #if DEBUG {
+        deinit_editor();
+    }
 
     Timer_Manager.deinit();
     Input_Manager.deinit();

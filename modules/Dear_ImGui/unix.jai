@@ -4255,6 +4255,6 @@ TextBuffer_EmptyString: [1] u8 #elsewhere imgui "_ZN15ImGuiTextBuffer11EmptyStri
 #import "Basic"; // For push_context
 
 
-#if OS == .MACOS    imgui :: #library "macos/ImGui";
+#if OS == .MACOS    imgui :: #library "macos/libimgui.1";
 #if OS == .LINUX    imgui :: #library "linux/ImGui";
 

@@ -7,3 +7,4 @@
 #load "src/world.jai";
 #load "src/screen.jai";
 #load "src/math.jai";
+#load "src/editor.jai";

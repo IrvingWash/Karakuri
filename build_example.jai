@@ -18,6 +18,7 @@ EXECUTABLE_NAME :: "game";
 #if OS == .MACOS {
     BINARY_SUB_DIR_NAME :: "macos";
     GLFW_BINARY_NAME :: "libglfw.3.dylib";
+    IMGUI_BINARY_NAME :: "libimgui.1.dylib";
 } else #if OS == .LINUX {
     BINARY_SUB_DIR_NAME :: "linux";
     GLFW_BINARY_NAME :: "libglfw.so";
@@ -27,6 +28,12 @@ GLFW_BINARY_PATH :: #run tprint(
     "./modules/GLFW/%/%",
     BINARY_SUB_DIR_NAME,
     GLFW_BINARY_NAME,
+);
+
+IMGUI_BINARY_PATH :: #run tprint(
+    "./modules/Dear_ImGui/%/%",
+    BINARY_SUB_DIR_NAME,
+    IMGUI_BINARY_NAME,
 );
 
 
@@ -184,5 +191,10 @@ copy_binaries :: (build_path: string) {
     copy_file(
         GLFW_BINARY_PATH,
         tprint("%/%", build_path, GLFW_BINARY_NAME)
+    );
+
+    copy_file(
+        IMGUI_BINARY_PATH,
+        tprint("%/%", build_path, IMGUI_BINARY_NAME)
     );
 }
