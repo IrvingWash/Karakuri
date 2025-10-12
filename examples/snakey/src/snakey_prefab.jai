@@ -36,14 +36,22 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
             size = .{ 1.6, 2.65 },
             offset = .{ 0, -0.07 },
         },
+        behavior = New(Snakey),
         flags = .RIGID_BODY,
 
-        on_start  = on_start,
-        on_update = on_update,
+        on_start     = on_start,
+        on_update    = on_update,
+        on_collision = on_collision,
     };
 }
 
 #scope_file
+
+Snakey :: struct {
+    #as using behavior: Karakuri.Behavior;
+
+    grounded: bool;
+}
 
 on_start :: (self: *Karakuri.Entity) {
     Karakuri.play_animation(self, "idle");
@@ -53,7 +61,16 @@ on_update :: (self: *Karakuri.Entity) {
     move(self);
 }
 
+on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
+    if other.name == "Ground" {
+        snakey := cast(*Snakey) self.behavior;
+        snakey.grounded = true;
+    }
+}
+
 move :: (self: *Karakuri.Entity) {
+    snakey := cast(*Snakey) self.behavior;
+
     disposition := 5 * Karakuri.Time_Manager.get_delta_time();
     vector: Vector2;
 
@@ -63,8 +80,9 @@ move :: (self: *Karakuri.Entity) {
     if Karakuri.Input_Manager.is_key_pressed(.D) {
         vector.x += disposition;
     }
-    if Karakuri.Input_Manager.is_key_down(.SPACE) {
+    if  snakey.grounded && Karakuri.Input_Manager.is_key_down(.SPACE) {
         self.rigid_body.velocity.y += 30 * Karakuri.Time_Manager.get_delta_time();
+        snakey.grounded = false;
     }
 
     self.transform.position += vector;
