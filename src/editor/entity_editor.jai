@@ -98,6 +98,7 @@ make_camera_editor :: (camera: *Camera) {
 
     using camera.color;
     color := float.[x, y, z, w];
+    SetNextItemWidth((GetContentRegionAvail().x - GetStyle().ItemSpacing.y) * 0.4);
     if ColorPicker4("Color", *color, .NoOptions | .NoSmallPreview | .NoInputs) {
         camera.color = .{ color[0], color[1], color[2], color[3] };
     }
@@ -136,6 +137,7 @@ make_sprite_editor :: (sprite: *Sprite) {
 
     using sprite.color;
     color := float.[x, y, z, w];
+    SetNextItemWidth((GetContentRegionAvail().x - GetStyle().ItemSpacing.y) * 0.4);
     if ColorPicker4("Color", *color, .NoOptions | .NoSmallPreview | .NoInputs) {
         sprite.color = .{ color[0], color[1], color[2], color[3] };
     }
@@ -144,14 +146,14 @@ make_sprite_editor :: (sprite: *Sprite) {
 make_rigid_body_editor :: (rigid_body: *Rigid_Body) {
     SeparatorText("Rigid Body");
 
-    static := rigid_body.static;
-    if Checkbox("Static", *static) {
-        rigid_body.static = static;
-    };
-
     velocity := float.[rigid_body.velocity.x, rigid_body.velocity.y];
     if DragFloat2("Velocity", *velocity, 0.1, flags = .NoInput) {
         rigid_body.velocity.x = velocity[0];
         rigid_body.velocity.y = velocity[1];
     }
+
+    static := rigid_body.static;
+    if Checkbox("Static", *static) {
+        rigid_body.static = static;
+    };
 }
