@@ -1,11 +1,17 @@
 #scope_module
 
-make_entity_editor :: (entity: *Editor_Entity, camera_position: Vector2) {
+make_entity_editor :: (
+    entity: *Editor_Entity,
+    camera_position: *Vector2,
+    io: *IO,
+    entities: *[]Editor_Entity
+) {
     PushID(
         tprint("%-%", entity.token.id, entity.token.generation)
     );
     defer PopID();
 
+    SetNextItemOpen(entity.is_selected);
     if CollapsingHeader(
         temp_c_string(
             tprint(
@@ -16,6 +22,12 @@ make_entity_editor :: (entity: *Editor_Entity, camera_position: Vector2) {
             ),
         ),
     ) {
+        entity.is_selected = true;
+
+        if Button("Focus") {
+            camera_position.* = entity.transform.position;
+        };
+
         make_transform_editor(*entity.transform);
 
         if entity_has_flags(entity, .BOX_COLLIDER) {
@@ -36,18 +48,51 @@ make_entity_editor :: (entity: *Editor_Entity, camera_position: Vector2) {
     }
 
     if IsItemHovered() {
-        draw_list := GetForegroundDrawList(); 
+        outline(entity);
 
-        draw_list.AddRect(
-            draw_list,
-            entity.top_left,
-            entity.bottom_right,
-            0xFFFF0000,
-        );
+        return;
+    }
+
+    if !entity.is_selected {
+        mouse_position := io.MousePos;
+
+        is_hovered := mouse_position.x >= entity.top_left.x
+            && mouse_position.x <= entity.bottom_right.x
+            && mouse_position.y >= entity.top_left.y
+            && mouse_position.y <= entity.bottom_right.y;
+
+        if !is_hovered {
+            return;
+        }
+
+        outline(entity);
+
+        entity.is_selected = IsMouseClicked(0);
+
+        if entity.is_selected {
+            for *other_entity: entities.* {
+                if other_entity.token != entity.token {
+                    other_entity.is_selected = false;
+                }
+            }
+        }
+    } else {
+        outline(entity);
     }
 }
 
 #scope_file;
+
+outline :: (entity: Editor_Entity) {
+    draw_list := GetForegroundDrawList(); 
+
+    draw_list.AddRect(
+        draw_list,
+        entity.top_left,
+        entity.bottom_right,
+        0xFFFF0000,
+    );
+}
 
 make_transform_editor :: (transform: *Transform) {
     SeparatorText("Transform");

@@ -96,7 +96,7 @@ run_rendering_system :: () {
         Sprite_Renderer.finish_drawing();
 
         #if EDITOR {
-            update_editor(camera.transform.position);
+            update_editor(*camera.transform.position);
         }
 
         Sprite_Renderer.present();
