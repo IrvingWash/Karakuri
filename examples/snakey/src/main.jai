@@ -1,5 +1,5 @@
 #import "Basic"()(MEMORY_DEBUGGER = true, TEMP_ALLOCATOR_POISON_FREED_MEMORY = true);
-Karakuri :: #import "Karakuri"()(DEBUG = false);
+Karakuri :: #import "Karakuri"()(DEBUG = true);
 
 #load "../../utils.jai";
 #load "camera_prefab.jai";
@@ -14,7 +14,7 @@ main :: () {
         title             = "Snakey",
         target_fps        = 120,
         initial_scene     = scene,
-        vsync             = true,
+        vsync             = false,
     });
 
     Karakuri.run();

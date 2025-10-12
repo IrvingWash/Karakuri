@@ -1,5 +1,6 @@
 enemy_spawner_prefab :: () -> Karakuri.Entity_Params {
     return .{
+        name = "Enemy_Spawner",
         behavior = New(Enemy_Spawner),
 
         on_start   = on_start,

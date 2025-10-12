@@ -11,7 +11,7 @@ init :: (window: *GLFW.Window, pixels_per_unit: u32) {
     };
 
     GLFW.set_key_callback(manager.window, on_key);
-    GLFW.set_input_mode(manager.window, .CURSOR, .CURSOR_DISABLED);
+    // GLFW.set_input_mode(manager.window, .CURSOR, .CURSOR_DISABLED);
 }
 
 deinit :: () {

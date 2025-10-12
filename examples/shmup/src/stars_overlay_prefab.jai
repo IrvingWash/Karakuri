@@ -1,5 +1,6 @@
 stars_overlay_prefab :: () -> Karakuri.Entity_Params {
     return .{
+        name = "Stars Overlay",
         transform = .{
             scale = .{
                 Karakuri.screen_right_to_world(),

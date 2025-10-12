@@ -170,3 +170,7 @@ set_key_callback :: (
     window:   *Window,
     callback: Key_Proc
 ) #foreign glfw "glfwSetKeyCallback";
+
+set_error_callback :: (
+    callback: Error_Proc
+) #foreign glfw "glfwSetErrorCallback";
