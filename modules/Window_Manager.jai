@@ -1,3 +1,5 @@
+Window :: GLFW.Window;
+
 init :: (title: string, vsync: bool) {
     is_initialized := GLFW.init();
     assert(is_initialized, "Failed to initialize GLFW");
@@ -23,9 +25,13 @@ init :: (title: string, vsync: bool) {
 
     GLFW.make_context_current(manager.window);
 
-    if !vsync {
+    if vsync {
+        GLFW.swap_interval(1);
+    } else {
         GLFW.swap_interval(0);
     }
+
+    GLFW.set_error_callback(on_error);
 
     gl_load(*gl, GLFW.get_proc_address);
 }
@@ -129,6 +135,12 @@ Window_Manager :: struct {
 }
 
 manager: Window_Manager = ---;
+
+on_error :: (error: s32, description: *u8) #c_call {
+    push_context {
+        print("%\n", description);
+    }
+}
 
 #import "Basic";
 #import "GL";

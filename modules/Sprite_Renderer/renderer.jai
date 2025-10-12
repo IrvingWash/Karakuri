@@ -95,9 +95,11 @@ finish_drawing :: () {
         glBindVertexArray(0);
     }
 
-    GLFW.swap_buffers(renderer.window);
-
     table_reset(*renderer.sprite_batches);
+}
+
+present :: () {
+    GLFW.swap_buffers(renderer.window);
 }
 
 draw :: (
