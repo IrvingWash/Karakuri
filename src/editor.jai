@@ -33,11 +33,38 @@ update_editor :: () {
             tprint("%-%", entity.token.id, entity.token.generation)
         );
 
-        if (CollapsingHeader(temp_c_string(entity.name))) {
-            position := float.[entity.transform.position.x, entity.transform.position.y];
-            if DragFloat2("Position", *position, 0.1, flags = .NoInput) {
-                entity.transform.position.x = position[0];
-                entity.transform.position.y = position[1];
+        if CollapsingHeader(
+            temp_c_string(
+                tprint(
+                    "%, %-%",
+                    entity.name,
+                    entity.token.id,
+                    entity.token.generation,
+                ),
+            ),
+        ) {
+            {
+                position := float.[
+                    entity.transform.position.x,
+                    entity.transform.position.y,
+                ];
+
+                if DragFloat2("Position", *position, 0.1, flags = .NoInput) {
+                    entity.transform.position.x = position[0];
+                    entity.transform.position.y = position[1];
+                }
+            }
+
+            {
+                scale := float.[
+                    entity.transform.scale.x,
+                    entity.transform.scale.y,
+                ];
+
+                if DragFloat2("Scale", *scale, 0.1, flags = .NoInput) {
+                    entity.transform.scale.x = scale[0];
+                    entity.transform.scale.y = scale[1];
+                }
             }
 
             if entity_has_flags(entity, .BOX_COLLIDER) {
