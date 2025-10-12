@@ -1,9 +1,10 @@
 #scope_module
 
-make_entity_editor :: (entity: *Entity) {
+make_entity_editor :: (entity: *Editor_Entity) {
     PushID(
         tprint("%-%", entity.token.id, entity.token.generation)
     );
+    defer PopID();
 
     if CollapsingHeader(
         temp_c_string(
@@ -34,8 +35,30 @@ make_entity_editor :: (entity: *Entity) {
         }
     }
 
-    PopID();
+    if IsItemHovered() {
+        if entity.was_hovered {
+            return;
+        }
+
+        entity.was_hovered = true;
+
+        entity.sprite.color.x += HOVER_DELTA;
+        entity.sprite.color.y += HOVER_DELTA;
+        entity.sprite.color.z += HOVER_DELTA;
+        entity.sprite.color.w -= HOVER_DELTA;
+    } else {
+        if entity.was_hovered {
+            entity.sprite.color.x -= HOVER_DELTA;
+            entity.sprite.color.y -= HOVER_DELTA;
+            entity.sprite.color.z -= HOVER_DELTA;
+            entity.sprite.color.w += HOVER_DELTA;
+
+            entity.was_hovered = false;
+        }
+    }
 }
+
+HOVER_DELTA :: 0.3;
 
 #scope_file;
 

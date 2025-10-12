@@ -26,11 +26,13 @@ update_editor :: () {
 
     if editor.entities.count == 0 || has_world_changed() {
         array_reset(*editor.entities);
-        editor.entities = array_copy(get_world_entities());
+        for entity: get_world_entities() {
+            array_add(*editor.entities, .{ entity, false });
+        }
     }
 
     for entity: editor.entities {
-        make_entity_editor(entity);
+        make_entity_editor(*entity);
     }
 
     End();
@@ -46,8 +48,6 @@ deinit_editor :: () {
     DestroyContext();
 }
 
-#scope_file;
-
 start_frame :: () {
     ImplOpenGL3_NewFrame();
     ImplGlfw_NewFrame();
@@ -62,7 +62,12 @@ finish_frame :: () {
 Editor :: struct {
     ctx: *ImGuiContext;
     io: *IO;
-    entities: []*Entity;
+    entities: [..]Editor_Entity;
+}
+
+Editor_Entity :: struct {
+    using entity: *Entity;
+    was_hovered:  bool;
 }
 
 editor: Editor = ---;
