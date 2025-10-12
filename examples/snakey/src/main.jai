@@ -5,8 +5,7 @@ Karakuri :: #import "Karakuri"()(DEBUG = false);
 #load "camera_prefab.jai";
 #load "snakey_prefab.jai";
 #load "ground_prefab.jai";
-#load "physics_affecter_prefab.jai";
-#load "state.jai";
+#load "gravity_affecter_prefab.jai";
 
 main :: () {
     setup_formatting();
@@ -35,7 +34,7 @@ scene :: () -> [..]Karakuri.Entity_Params {
         ground_prefab(-5, -2),
         ground_prefab(15, -2),
         ground_prefab(6, 0),
-        physics_affecter_prefab(),
+        gravity_affecter_prefab(),
     );
 
     return result;

@@ -10,6 +10,7 @@ Entity_Flags :: enum_flags u64 {
     BEHAVIOR;
     BOX_COLLIDER;
     ANIMATION_CONTROLLER;
+    RIGID_BODY;
 }
 
 Entity_Params :: struct {
@@ -23,6 +24,7 @@ Entity_Params :: struct {
     behavior:             *Behavior;
     box_collider:         Box_Collider;
     animation_controller: Animation_Controller;
+    rigid_body:           Rigid_Body;
 
     on_start:       (self: *Entity);
     on_update:      (self: *Entity);
@@ -96,6 +98,10 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
         for animation: params.animation_controller.animations {
             Asset_Manager.add_texture(animation.texture_path);
         }
+    }
+
+    if entity.rigid_body.velocity != ZERO_VECTOR2 || entity.rigid_body.static {
+        entity.flags |= .RIGID_BODY;
     }
 
     return entity;

@@ -33,6 +33,11 @@ Box_Collider :: struct {
     offset: Vector2;
 }
 
+Rigid_Body :: struct {
+    velocity: Vector2;
+    static:   bool;
+}
+
 Animation_Controller :: struct {
     current:    *Animation;
     animations: Table(string, Animation);

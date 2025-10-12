@@ -5,24 +5,25 @@ init_physics_system :: () {
 }
 
 deinit_physics_system :: () {
-    array_reset(*system.entities);
+    array_reset(*system.box_colliders);
+    array_reset(*system.rigid_bodies);
 
     system = .{};
 }
 
 run_physics_system :: () {
-    if system.entities.count == 0 || has_world_changed() {
-        array_reset(*system.entities);
-        system.entities = array_copy(get_world_entities(.ALIVE | .BOX_COLLIDER));
+    if system.box_colliders.count == 0 || has_world_changed() {
+        array_reset(*system.box_colliders);
+        system.box_colliders = array_copy(get_world_entities(.BOX_COLLIDER));
     }
 
-    for a, i: system.entities {
+    for a, i: system.box_colliders {
         j := i + 1;
 
-        while j < system.entities.count {
+        while j < system.box_colliders.count {
             defer j += 1;
 
-            b := system.entities[j];
+            b := system.box_colliders[j];
 
             if check_aabb(a, b) {
                 if a.on_collision {
@@ -34,6 +35,15 @@ run_physics_system :: () {
                 }
             }
         }
+    }
+
+    if system.rigid_bodies.count == 0 || has_world_changed() {
+        array_reset(*system.rigid_bodies);
+        system.rigid_bodies = array_copy(get_world_entities(.RIGID_BODY));
+    }
+
+    for entity: system.rigid_bodies {
+        entity.transform.position += entity.rigid_body.velocity;
     }
 }
 
@@ -62,7 +72,8 @@ check_aabb :: (
 #scope_file
 
 Physics_System :: struct {
-    entities: []*Entity;
+    box_colliders: []*Entity;
+    rigid_bodies:  []*Entity;
 }
 
 system: Physics_System = ---;

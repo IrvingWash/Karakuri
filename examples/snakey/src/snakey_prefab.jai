@@ -2,8 +2,6 @@
 #import "Hash_Table";
 
 snakey_prefab :: () -> Karakuri.Entity_Params {
-    behavior := New(Snakey);
-
     animation_controller: Karakuri.Animation_Controller;
     table_add(
         *animation_controller.animations,
@@ -33,21 +31,16 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
         transform = .{
             position = .{ -9, 0 },
         },
-        behavior = behavior,
         animation_controller = animation_controller,
         box_collider = .{
             size = .{ 1.6, 2.65 },
             offset = .{ 0, -0.07 },
         },
+        flags = .RIGID_BODY,
 
         on_start  = on_start,
         on_update = on_update,
     };
-}
-
-Snakey :: struct {
-    #as using behavior: Karakuri.Behavior;
-    #as using snakey_entity: Snakey_Entity;
 }
 
 #scope_file
@@ -71,8 +64,7 @@ move :: (self: *Karakuri.Entity) {
         vector.x += disposition;
     }
     if Karakuri.Input_Manager.is_key_down(.SPACE) {
-        snakey_entity := self.behavior.(*Snakey_Entity);
-        snakey_entity.velocity.y += 30 * Karakuri.Time_Manager.get_delta_time();
+        self.rigid_body.velocity.y += 30 * Karakuri.Time_Manager.get_delta_time();
     }
 
     self.transform.position += vector;
