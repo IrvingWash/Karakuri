@@ -71,7 +71,7 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
 
     entity.flags |= .ALIVE;
 
-    if entity.sprite.texture_path != "" {
+    if entity.sprite.texture_path != DEFAULT_SPRITE.texture_path {
         entity.flags |= .SPRITE;
     }
     if entity_has_flags(entity, .SPRITE) {
@@ -83,8 +83,8 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
     }
 
     if (
-        entity.box_collider.size != DEFAULT_SCALE
-        || entity.box_collider.offset != ZERO_VECTOR2
+        entity.box_collider.size != DEFAULT_BOX_COLLIDER.size
+        || entity.box_collider.offset != DEFAULT_BOX_COLLIDER.offset
     ) {
         entity.flags |= .BOX_COLLIDER;
     }
@@ -100,7 +100,8 @@ create_entity :: (params: Entity_Params, token: Entity_Token) -> Entity {
         }
     }
 
-    if entity.rigid_body.velocity != ZERO_VECTOR2 || entity.rigid_body.static {
+    if entity.rigid_body.velocity != DEFAULT_RIGID_BODY.velocity
+        || entity.rigid_body.static != DEFAULT_RIGID_BODY.static {
         entity.flags |= .RIGID_BODY;
     }
 
