@@ -30,10 +30,23 @@ stop_animation :: (entity: *Entity) {
 
 #scope_module
 
-run_animation_system :: () {
-    animating_entities := get_world_entities(.ANIMATION_CONTROLLER);
+init_animation_system :: () {
+    system = .{};
+}
 
-    for entity: animating_entities {
+deinit_animation_system :: () {
+    array_reset(*system.entities);
+
+    system = .{};
+}
+
+run_animation_system :: () {
+    if system.entities.count == 0 || has_world_changed() {
+        array_reset(*system.entities);
+        system.entities = array_copy(get_world_entities(.ANIMATION_CONTROLLER));
+    }
+
+    for entity: system.entities {
         using entity;
 
         animation := animation_controller.current;
@@ -60,6 +73,12 @@ run_animation_system :: () {
 }
 
 #scope_file;
+
+Animation_System :: struct {
+    entities: []*Entity;
+}
+
+system: Animation_System = ---;
 
 #import "Hash_Table";
 Time_Manager :: #import "Time_Manager";

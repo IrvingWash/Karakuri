@@ -80,6 +80,7 @@ World :: struct {
     free_tokens:         [..]Entity_Token;
     entities_to_spawn:   [..]Entity_Params;
     entities_to_despawn: [..]Entity_Token;
+    has_changed:         bool = true;
 }
 
 init_world :: (entities: []Entity_Params) {
@@ -111,7 +112,13 @@ deinit_world :: () {
     array_reset(*world.entities_to_despawn);
 }
 
+has_world_changed :: () -> bool {
+    return world.has_changed;
+}
+
 update_world :: () {
+    world.has_changed = false;
+
     despawn_entities();
 
     spawn_entities();
@@ -126,6 +133,10 @@ update_world :: () {
 world: World = ---;
 
 despawn_entities :: () {
+    if world.entities_to_despawn.count > 0 {
+        world.has_changed = true;
+    }
+
     defer array_reset(*world.entities_to_despawn);
 
     for token: world.entities_to_despawn {
@@ -141,6 +152,10 @@ despawn_entities :: () {
 }
 
 spawn_entities :: () {
+    if world.entities_to_spawn.count > 0 {
+        world.has_changed = true;
+    }
+
     defer array_reset(*world.entities_to_spawn);
 
     entities_to_start: [..]Entity_Token;

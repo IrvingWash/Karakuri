@@ -2,10 +2,27 @@
 
 #import "IntroSort";
 
-run_rendering_system :: () {
-    cameras := get_world_entities(.CAMERA);
+init_rendering_system :: () {
+    system = .{};
+}
 
-    for camera: cameras {
+deinit_rendering_system :: () {
+    array_reset(*system.cameras);
+    array_reset(*system.entities);
+    #if DEBUG {
+        array_reset(*system.box_colliders);
+    }
+
+    system = .{};
+}
+
+run_rendering_system :: () {
+    if system.cameras.count == 0 || has_world_changed() {
+        array_reset(*system.cameras);
+        system.cameras = array_copy(get_world_entities(.CAMERA));
+    }
+
+    for camera: system.cameras {
         Sprite_Renderer.start_drawing(
             camera.camera.color,
             camera.transform.position,
@@ -14,14 +31,16 @@ run_rendering_system :: () {
             camera.camera.size,
         );
 
-        // @Optimization: we can avoid getting entities each frame if the world marks itself dirty when new entities are added
-        drawable_entities := get_world_entities(.SPRITE);
-        insertion_sort(
-            drawable_entities,
-            (a, b) => cast(s64)(a.sprite.sorting_layer) - cast(s64)(b.sprite.sorting_layer)
-        );
+        if system.entities.count == 0 || has_world_changed() {
+            array_reset(*system.entities);
+            system.entities = array_copy(get_world_entities(.SPRITE));
+            insertion_sort(
+                system.entities,
+                (a, b) => cast(s64)(a.sprite.sorting_layer) - cast(s64)(b.sprite.sorting_layer)
+            );
+        }
 
-        for entity: drawable_entities {
+        for entity: system.entities {
             ok, texture := Asset_Manager.get_texture(entity.sprite.texture_path);
             if !ok {
                 log(
@@ -50,12 +69,16 @@ run_rendering_system :: () {
             }
         }
 
-        if DEBUG {
-            entities_with_box_colliders := get_world_entities(.BOX_COLLIDER);
+        #if DEBUG {
+            if system.box_colliders.count == 0 || has_world_changed() {
+                array_reset(*system.box_colliders);
+                system.box_colliders = array_copy(get_world_entities(.BOX_COLLIDER));
+            }
+
             ok, texture := Asset_Manager.get_texture("assets/textures/square.png");
             assert(ok, "Stock texture `square.png` not found.");
 
-            for entity: entities_with_box_colliders {
+            for entity: system.box_colliders {
                 Sprite_Renderer.draw(
                     entity.transform.position,
                     entity.box_collider.size * entity.transform.scale,
@@ -78,4 +101,16 @@ run_rendering_system :: () {
 
 Sprite_Renderer :: #import "Sprite_Renderer";
 
-BOX_COLLIDER_COLOR: Vector4 : .{ 0, 1, 0, 0.2 };
+Rendering_System :: struct {
+    cameras:  []*Entity;
+    entities: []*Entity;
+#if DEBUG {
+    box_colliders: []*Entity;
+}
+}
+
+system: Rendering_System = ---;
+
+#if DEBUG {
+    BOX_COLLIDER_COLOR: Vector4 : .{ 0, 1, 0, 0.2 };
+}
