@@ -16,7 +16,6 @@ run_physics_system :: () {
         array_reset(*system.box_colliders);
         system.box_colliders = array_copy(get_world_entities(.BOX_COLLIDER));
     }
-
     for a, i: system.box_colliders {
         j := i + 1;
 
@@ -41,9 +40,10 @@ run_physics_system :: () {
         array_reset(*system.rigid_bodies);
         system.rigid_bodies = array_copy(get_world_entities(.RIGID_BODY));
     }
-
     for entity: system.rigid_bodies {
-        entity.transform.position += entity.rigid_body.velocity;
+        if !entity.rigid_body.static {
+            entity.transform.position += entity.rigid_body.velocity;
+        }
     }
 }
 
