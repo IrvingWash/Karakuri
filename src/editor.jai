@@ -7,6 +7,7 @@ init_editor :: () {
     };
 
     editor.io.ConfigFlags_ |= ConfigFlags.NavEnableKeyboard;
+    editor.io.IniFilename = null;
 
     StyleColorsLight();
 
