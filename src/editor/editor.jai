@@ -17,7 +17,7 @@ init_editor :: () {
     assert(ImplOpenGL3_Init("#version 330 core"));
 }
 
-update_editor :: () {
+update_editor :: (camera_position: Vector2) {
     start_frame();
 
     Begin("Editor");
@@ -32,7 +32,7 @@ update_editor :: () {
     }
 
     for entity: editor.entities {
-        make_entity_editor(*entity);
+        make_entity_editor(*entity, camera_position);
     }
 
     End();

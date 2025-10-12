@@ -1,6 +1,6 @@
 #scope_module
 
-make_entity_editor :: (entity: *Editor_Entity) {
+make_entity_editor :: (entity: *Editor_Entity, camera_position: Vector2) {
     PushID(
         tprint("%-%", entity.token.id, entity.token.generation)
     );
@@ -35,30 +35,23 @@ make_entity_editor :: (entity: *Editor_Entity) {
         }
     }
 
-    if IsItemHovered() {
-        if entity.was_hovered {
-            return;
-        }
+    if IsItemHovered() { // @Todo: do this when getting entities
+        draw_list := GetForegroundDrawList(); 
 
-        entity.was_hovered = true;
+        halved_display_size := editor.io.DisplaySize / 2;
+        halved_ppu := entity.sprite.pixels_per_unit / 2;
 
-        entity.sprite.color.x += HOVER_DELTA;
-        entity.sprite.color.y += HOVER_DELTA;
-        entity.sprite.color.z += HOVER_DELTA;
-        entity.sprite.color.w -= HOVER_DELTA;
-    } else {
-        if entity.was_hovered {
-            entity.sprite.color.x -= HOVER_DELTA;
-            entity.sprite.color.y -= HOVER_DELTA;
-            entity.sprite.color.z -= HOVER_DELTA;
-            entity.sprite.color.w += HOVER_DELTA;
+        x := halved_display_size.x + (entity.transform.position.x - camera_position.x) * halved_ppu;
+        y := halved_display_size.y - (entity.transform.position.y + camera_position.y) * halved_ppu;
 
-            entity.was_hovered = false;
-        }
+        draw_list.AddRect(
+            draw_list,
+            .{x - entity.transform.scale.x * halved_ppu / 2, y - entity.transform.scale. y * halved_ppu / 2},
+            .{x + entity.transform.scale.x * halved_ppu / 2, y + entity.transform.scale.y * halved_ppu / 2},
+            0xFFFF0000,
+        );
     }
 }
-
-HOVER_DELTA :: 0.3;
 
 #scope_file;
 
