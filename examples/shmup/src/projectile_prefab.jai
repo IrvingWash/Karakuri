@@ -19,9 +19,7 @@ projectile_prefab :: (
         name = "Projectile",
         transform = .{
             position = position,
-            scale = ifx behavior.speed > 0
-                then Vector2.{ 3, 3 }
-                else Vector2.{ -3, -3 },
+            scale = Vector2.{ 3, 3 },
         },
         sprite = .{
             texture_path = "examples/shmup/textures/projectile_1.png",
