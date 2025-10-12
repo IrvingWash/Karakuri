@@ -21,6 +21,7 @@ update_editor :: () {
     Begin("Editor");
 
     if editor.entities.count == 0 || has_world_changed() {
+        array_reset(*editor.entities);
         editor.entities = array_copy(get_world_entities());
     }
 

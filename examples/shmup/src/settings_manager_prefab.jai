@@ -1,5 +1,7 @@
 settings_manager_prefab :: () -> Karakuri.Entity_Params {
     return .{
+        name = "Settings Manager",
+
         on_start  = on_start,
         on_update = on_update,
     };
