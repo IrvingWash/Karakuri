@@ -7,4 +7,7 @@
 #load "src/world.jai";
 #load "src/screen.jai";
 #load "src/math.jai";
-#load "src/editor/editor.jai";
+
+#if EDITOR {
+    #load "src/editor/editor.jai";
+}
