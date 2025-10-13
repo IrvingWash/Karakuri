@@ -104,11 +104,23 @@ editor: Editor = ---;
 world_to_imgui :: (entity: *Editor_Entity, camera_position: Vector2) {
     halved_display_size := editor.io.DisplaySize / 2;
     halved_ppu := entity.sprite.pixels_per_unit / 2;
-    x := halved_display_size.x + (entity.transform.position.x - camera_position.x) * halved_ppu;
-    y := halved_display_size.y - (entity.transform.position.y - camera_position.y) * halved_ppu;
 
-    entity.top_left = Vector2.{x - entity.transform.scale.x * halved_ppu / 2, y - entity.transform.scale. y * halved_ppu / 2};
-    entity.bottom_right = Vector2.{x + entity.transform.scale.x * halved_ppu / 2, y + entity.transform.scale.y * halved_ppu / 2};
+    x := halved_display_size.x
+        + (entity.transform.position.x - camera_position.x)
+        * halved_ppu;
+    y := halved_display_size.y
+        - (entity.transform.position.y - camera_position.y)
+        * halved_ppu;
+
+    entity.top_left = Vector2.{
+        x - entity.transform.scale.x * halved_ppu / 2,
+        y - entity.transform.scale. y * halved_ppu / 2,
+    };
+
+    entity.bottom_right = Vector2.{
+        x + entity.transform.scale.x * halved_ppu / 2,
+        y + entity.transform.scale.y * halved_ppu / 2,
+    };
 }
 
 #import "Dear_ImGui";
