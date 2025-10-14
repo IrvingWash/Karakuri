@@ -8,6 +8,7 @@ init :: (title: string, vsync: bool) {
     GLFW.window_hint(.CONTEXT_VERSION_MINOR, 3);
     GLFW.window_hint(.OPENGL_PROFILE, .OPENGL_CORE_PROFILE);
     GLFW.window_hint(.FOCUS_ON_SHOW, .TRUE);
+    GLFW.window_hint(.RESIZABLE, .FALSE);
     #if OS == .MACOS {
         GLFW.window_hint(.OPENGL_FORWARD_COMPAT, .TRUE);
     }

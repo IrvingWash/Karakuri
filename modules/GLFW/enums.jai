@@ -4,10 +4,12 @@ Hint_Name :: enum_flags #specified {
     OPENGL_PROFILE        :: 0x00022008;
     OPENGL_FORWARD_COMPAT :: 0x00022006;
     FOCUS_ON_SHOW         :: 0x0002000C;
+    RESIZABLE             :: 0x00020003;
 }
 
 Hint_Value :: enum_flags #specified {
     OPENGL_CORE_PROFILE :: 0x00032001;
+    FALSE               :: 0;
     TRUE                :: 1;
 }
 
