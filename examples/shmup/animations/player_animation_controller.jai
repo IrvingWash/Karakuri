@@ -12,7 +12,7 @@ player_animation_controller :: () -> Karakuri.Animation_Controller {
     return animation_controller;
 }
 
-#scope_file;
+#scope_file
 
 PLAYER_ANIMATIONS :: Karakuri.Animation.[
     Karakuri.Animation.{

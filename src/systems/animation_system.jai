@@ -72,7 +72,7 @@ run_animation_system :: () {
     }
 }
 
-#scope_file;
+#scope_file
 
 Animation_System :: struct {
     entities: []*Entity;

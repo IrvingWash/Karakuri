@@ -1,4 +1,4 @@
-#scope_module;
+#scope_module
 
 GLFWvidmode :: struct {
     width:       s32;

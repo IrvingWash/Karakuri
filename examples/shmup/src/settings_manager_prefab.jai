@@ -7,7 +7,7 @@ settings_manager_prefab :: () -> Karakuri.Entity_Params {
     };
 }
 
-#scope_file;
+#scope_file
 
 on_start :: (self: *Karakuri.Entity) {
     Karakuri.set_windowed();

@@ -10,6 +10,7 @@ deinit :: () {
         destroy_texture(it);
     }
 
+    table_reset(*manager.textures);
     deinit(*manager.textures);
 }
 
@@ -32,7 +33,7 @@ get_texture :: (path: string) -> ok: bool, texture: Texture {
     return ok, texture;
 }
 
-#scope_module
+#scope_file
 
 Asset_Manager :: struct {
     textures: Table(string, Texture);

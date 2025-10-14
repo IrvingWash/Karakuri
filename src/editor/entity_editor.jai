@@ -81,7 +81,7 @@ make_entity_editor :: (
     }
 }
 
-#scope_file;
+#scope_file
 
 outline :: (entity: Editor_Entity) {
     draw_list := GetForegroundDrawList(); 

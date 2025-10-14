@@ -1,4 +1,4 @@
-#scope_module;
+#scope_module
 
 #load "entity_editor.jai";
 
@@ -90,7 +90,7 @@ Editor_Entity :: struct {
     is_selected:  bool;
 }
 
-#scope_file;
+#scope_file
 
 Editor :: struct {
     ctx:                  *ImGuiContext;
