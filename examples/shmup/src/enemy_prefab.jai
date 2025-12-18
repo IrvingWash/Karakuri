@@ -1,15 +1,15 @@
 enemy_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Enemy",
-        transform = .{
+        transform = {
             position = position,
-            scale = .{ 3, 3 },
+            scale = { 3, 3 },
         },
-        sprite = .{
+        sprite = {
             texture_path = "examples/shmup/textures/enemy_2_1.png",
         },
-        box_collider = .{
-            size = .{ 0.4, 0.3 },
+        box_collider = {
+            size = { 0.4, 0.3 },
         },
         behavior = New(Enemy),
 
@@ -40,7 +40,7 @@ on_start :: (self: *Karakuri.Entity) {
 
             Karakuri.spawn_entity_into_world(
                 projectile_prefab(
-                    self.transform.position - .{ 0, 1.0 },
+                    self.transform.position - { 0, 1.0 },
                     .ENEMY,
                 ),
             );

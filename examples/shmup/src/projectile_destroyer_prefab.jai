@@ -6,17 +6,17 @@ Projectile_Destroyer_Placement :: enum {
 projectile_destroyer_prefab :: (
     placement: Projectile_Destroyer_Placement
 ) -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Projectile Destroyer",
-        transform = .{
-            position = .{
+        transform = {
+            position = {
                 y = ifx placement == .TOP
                     then Karakuri.screen_top_to_world() + VERTICAL_OFFSET
                     else Karakuri.screen_bottom_to_world() - VERTICAL_OFFSET,
             },
         },
-        box_collider = .{
-            size = .{ 16, 1 },
+        box_collider = {
+            size = { 16, 1 },
         },
     };
 }

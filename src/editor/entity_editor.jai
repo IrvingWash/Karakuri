@@ -155,7 +155,7 @@ make_camera_editor :: (camera: *Camera) {
     color := float.[x, y, z, w];
     SetNextItemWidth((GetContentRegionAvail().x - GetStyle().ItemSpacing.y) * 0.4);
     if ColorPicker4("Color", *color, .NoOptions | .NoSmallPreview | .NoInputs) {
-        camera.color = .{ color[0], color[1], color[2], color[3] };
+        camera.color = { color[0], color[1], color[2], color[3] };
     }
 }
 
@@ -194,7 +194,7 @@ make_sprite_editor :: (sprite: *Sprite) {
     color := float.[x, y, z, w];
     SetNextItemWidth((GetContentRegionAvail().x - GetStyle().ItemSpacing.y) * 0.4);
     if ColorPicker4("Color", *color, .NoOptions | .NoSmallPreview | .NoInputs) {
-        sprite.color = .{ color[0], color[1], color[2], color[3] };
+        sprite.color = { color[0], color[1], color[2], color[3] };
     }
 }
 

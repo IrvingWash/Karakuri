@@ -4,14 +4,14 @@ init :: (target_fps: u32) {
     target_delta_time: float64 = 1.0 / target_fps;
     max_delta_time: float64 = target_delta_time * 2.0;
 
-    manager = .{
+    manager = {
         target_delta_time = target_delta_time,
         max_delta_time = max_delta_time,
     };
 }
 
 deinit :: () {
-    manager = .{};
+    manager = {};
 }
 
 cap_frame_rate :: () {

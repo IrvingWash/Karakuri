@@ -84,7 +84,7 @@ World :: struct {
 }
 
 init_world :: (entities: []Entity_Params) {
-    world = .{};
+    world = {};
 
     for entity: entities {
         spawn_entity(entity);
@@ -199,7 +199,7 @@ spawn_entity :: (params: Entity_Params) -> Entity_Token {
 
         world.entities[token.id] = create_entity(params, token);
     } else {
-        token = .{ id = xx world.entities.count };
+        token = { id = xx world.entities.count };
 
         array_add(
             *world.entities,

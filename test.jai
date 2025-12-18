@@ -14,7 +14,7 @@ DONE
 test_procs: [..] *Code_Procedure_Header;
 
 #run {
-    set_build_options_dc(.{
+    set_build_options_dc({
         do_output=false,
         write_added_strings = false,
     });

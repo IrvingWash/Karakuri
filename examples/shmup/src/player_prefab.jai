@@ -1,17 +1,17 @@
 #import "Hash_Table";
 
 player_prefab :: () -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Player",
-        transform = .{
-            position = .{ 0, Karakuri.screen_bottom_to_world() + 2 },
-            scale = .{ 3, 3 },
+        transform = {
+            position = { 0, Karakuri.screen_bottom_to_world() + 2 },
+            scale = { 3, 3 },
         },
         animation_controller = player_animation_controller(),
         behavior = New(Player),
-        box_collider = .{
-            size = .{ 0.2, 0.45 },
-            offset = .{ 0, 0.05 },
+        box_collider = {
+            size = { 0.2, 0.45 },
+            offset = { 0, 0.05 },
         },
 
         on_update    = on_update,
@@ -108,20 +108,20 @@ shoot :: (entity: *Karakuri.Entity) {
     if player.double {
         Karakuri.spawn_entity_into_world(
             projectile_prefab(
-                entity.transform.position + .{ 0.2, 1.0 },
+                entity.transform.position + { 0.2, 1.0 },
                 .PLAYER,
             ),
         );
         Karakuri.spawn_entity_into_world(
             projectile_prefab(
-                entity.transform.position + .{ -0.2, 1.0 },
+                entity.transform.position + { -0.2, 1.0 },
                 .PLAYER,
             ),
         );
     } else {
         Karakuri.spawn_entity_into_world(
             projectile_prefab(
-                entity.transform.position + .{ 0, 1.0 },
+                entity.transform.position + { 0, 1.0 },
                 .PLAYER,
             ),
         );

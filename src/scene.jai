@@ -7,7 +7,7 @@ DEFAULT_SCENE_LOADER: Scene : () -> [..]Entity_Params {
 
     array_add(
         *result,
-        .{
+        {
             name = "Camera",
             flags = .CAMERA,
         }

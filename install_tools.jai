@@ -9,7 +9,7 @@ HOOKS_SOURCE_PATH      :: #run tprint("%/hooks", TOOLS_PATH);
 HOOKS_DESTINATION_PATH :: "./.git/hooks";
 
 #run {
-    set_build_options_dc(.{
+    set_build_options_dc({
         do_output = false,
         write_added_strings = false,
     });

@@ -2,7 +2,7 @@
 #import "Sprite_Renderer";
 
 init :: () {
-    manager = .{};
+    manager = {};
 }
 
 deinit :: () {

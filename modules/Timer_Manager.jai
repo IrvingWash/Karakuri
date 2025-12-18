@@ -1,5 +1,5 @@
 init :: () {
-    manager = .{};
+    manager = {};
 }
 
 deinit :: () {
@@ -12,7 +12,7 @@ deinit :: () {
     table_reset(*manager.timers);
     deinit(*manager.timers);
 
-    manager = .{};
+    manager = {};
 }
 
 update :: (delta_time: float) {
@@ -45,7 +45,7 @@ set_timer :: (
     table_add(
         *manager.timers,
         manager.next_id,
-        .{
+        {
             id             = manager.next_id,
             start_time     = manager.current_time,
             duration       = seconds,

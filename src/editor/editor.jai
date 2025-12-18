@@ -3,7 +3,7 @@
 #load "entity_editor.jai";
 
 init_editor :: () {
-    editor = .{
+    editor = {
         ctx = CreateContext(),
         io = GetIO(),
     };
@@ -20,8 +20,8 @@ init_editor :: () {
 update_editor :: (camera_position: *Vector2) {
     start_frame();
 
-    SetNextWindowPos(.{ 0, 0 });
-    SetNextWindowSize(.{ 400, editor.io.DisplaySize.y });
+    SetNextWindowPos({ 0, 0 });
+    SetNextWindowSize({ 400, editor.io.DisplaySize.y });
     Begin("Entity Editor");
 
     Text(
@@ -37,7 +37,7 @@ update_editor :: (camera_position: *Vector2) {
         array_reset(*editor.entities);
 
         for entity: get_world_entities() {
-            editor_entity: Editor_Entity = .{ entity = entity };
+            editor_entity: Editor_Entity = { entity = entity };
             world_to_imgui(*editor_entity, camera_position);
 
             array_add(*editor.entities, editor_entity);

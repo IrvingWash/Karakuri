@@ -1,13 +1,13 @@
 background_prefab :: () -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Background",
-        transform = .{
-            scale = .{
+        transform = {
+            scale = {
                 Karakuri.screen_right_to_world(),
                 Karakuri.screen_top_to_world() / 2,
             },
         },
-        sprite = .{
+        sprite = {
             texture_path = "examples/shmup/textures/background.png",
         },
     };

@@ -10,7 +10,7 @@ Karakuri :: #import "Karakuri"()(DEBUG = true, EDITOR = false);
 main :: () {
     setup_formatting();
 
-    Karakuri.init(.{
+    Karakuri.init({
         title             = "Snakey",
         target_fps        = 120,
         initial_scene     = scene,

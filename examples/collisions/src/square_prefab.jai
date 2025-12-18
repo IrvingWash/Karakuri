@@ -4,20 +4,20 @@ square_prefab :: (controlled: bool) -> Karakuri.Entity_Params {
     behavior := New(Square);
     behavior.controlled = controlled;
 
-    return .{
+    return {
         name = "Square",
-        transform = .{
-            scale = .{ 3, 2 },
+        transform = {
+            scale = { 3, 2 },
         },
-        sprite = .{
+        sprite = {
             texture_path = "examples/collisions/textures/square.png",
             sorting_layer = ifx controlled
                 then 999
                 else 0,
         },
-        box_collider = .{
-            size = .{ 0.8, 0.8 },
-            offset = .{ 0.2, 0.2 },
+        box_collider = {
+            size = { 0.8, 0.8 },
+            offset = { 0.2, 0.2 },
         },
         behavior = behavior,
 
@@ -40,14 +40,14 @@ on_update :: (self: *Karakuri.Entity) {
         move(self);
     }
 
-    self.sprite.color = .{ 1, 1, 1, 1 };
+    self.sprite.color = { 1, 1, 1, 1 };
 }
 
 on_collision :: (self: *Karakuri.Entity, other: *Karakuri.Entity) {
     square := self.behavior.(*Square);
 
     if square.controlled {
-        self.sprite.color = .{ 1, 0, 0, 1 };
+        self.sprite.color = { 1, 0, 0, 1 };
     }
 }
 

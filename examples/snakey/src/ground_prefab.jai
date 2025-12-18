@@ -1,13 +1,13 @@
 ground_prefab :: (x: float, y: float) -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Ground",
-        transform = .{
-            position = .{ x, y },
-            scale = .{ 10, 1 },
+        transform = {
+            position = { x, y },
+            scale = { 10, 1 },
         },
-        sprite = .{
+        sprite = {
             texture_path = "examples/snakey/assets/square.png",
-            color = .{ 0, 154.0 / 255.0, 23.0 / 255.0, 1 },
+            color = { 0, 154.0 / 255.0, 23.0 / 255.0, 1 },
         },
         flags = .BOX_COLLIDER,
 

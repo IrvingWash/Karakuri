@@ -63,7 +63,7 @@ get_primary_monitor :: () -> *Monitor #foreign glfw "glfwGetPrimaryMonitor";
 get_video_mode :: (monitor: *Monitor) -> Video_Mode {
     using raw_video_mode := glfwGetVideoMode(monitor);
 
-    return .{
+    return {
         width        = xx width,
         height       = xx height,
         red_bits     = xx redBits,

@@ -5,16 +5,16 @@ test_deinit_world :: () {
     init_world(DEFAULT_SCENE_LOADER());
     defer deinit_world();
 
-    spawn_entity_into_world(.{});
-    spawn_entity_into_world(.{});
-    spawn_entity_into_world(.{});
+    spawn_entity_into_world({});
+    spawn_entity_into_world({});
+    spawn_entity_into_world({});
 
     update_world();
 
-    spawn_entity_into_world(.{});
-    spawn_entity_into_world(.{});
-    spawn_entity_into_world(.{});
-    despawn_entity_from_world(.{ id = 1, generation = 0 });
+    spawn_entity_into_world({});
+    spawn_entity_into_world({});
+    spawn_entity_into_world({});
+    despawn_entity_from_world({ id = 1, generation = 0 });
 } @Test
 
 test_world :: () {
@@ -22,22 +22,22 @@ test_world :: () {
     defer deinit_world();
 
     spawn_entity_into_world(create_mario_params());
-    spawn_entity_into_world(.{
+    spawn_entity_into_world({
         name = "Luigi",
         flags = .SPRITE,
-        transform = .{
-            position = .{ 30, 25 },
-            scale = .{ 3, 3 },
+        transform = {
+            position = { 30, 25 },
+            scale = { 3, 3 },
             rotation = 0,
         },
-        sprite = .{},
+        sprite = {},
     });
 
     update_world();
 
     assert(get_world_entities().count == 3);
 
-    despawn_entity_from_world(.{ 1, 0 });
+    despawn_entity_from_world({ 1, 0 });
 
     update_world();
 
@@ -46,7 +46,7 @@ test_world :: () {
     peach_tags: [..]string;
     array_add(*peach_tags, "humanoid");
 
-    spawn_entity_into_world(.{
+    spawn_entity_into_world({
         name = "Peach",
         flags = .SPRITE,
         tags = peach_tags,
@@ -64,7 +64,7 @@ test_world :: () {
     assert(entities[1].generation == 1);
 
     spawn_entity_into_world(create_mario_params());
-    spawn_entity_into_world(.{ name = "Finish Line" });
+    spawn_entity_into_world({ name = "Finish Line" });
 
     update_world();
 

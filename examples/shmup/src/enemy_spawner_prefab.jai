@@ -1,5 +1,5 @@
 enemy_spawner_prefab :: () -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Enemy_Spawner",
         behavior = New(Enemy_Spawner),
 
@@ -21,7 +21,7 @@ on_start :: (self: *Karakuri.Entity) {
     enemy_spawner.spawn_timer_id = Karakuri.Timer_Manager.set_timer(
         1,
         (data: *void) {
-            Karakuri.spawn_entity_into_world(enemy_prefab(.{
+            Karakuri.spawn_entity_into_world(enemy_prefab({
                 Karakuri.random_in_range(-5, 5),
                 Karakuri.random_in_range(2, 5)
             }));

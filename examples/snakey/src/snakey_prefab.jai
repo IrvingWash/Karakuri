@@ -6,7 +6,7 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
     table_add(
         *animation_controller.animations,
         "run",
-        .{
+        {
             name         = "run",
             texture_path = "examples/snakey/assets/snakey_run.png",
             frame_count  = 3,
@@ -17,7 +17,7 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
     table_add(
         *animation_controller.animations,
         "idle",
-        .{
+        {
             name         = "idle",
             texture_path = "examples/snakey/assets/snakey_idle.png",
             frame_count  = 3,
@@ -26,15 +26,15 @@ snakey_prefab :: () -> Karakuri.Entity_Params {
         },
     );
 
-    return .{
+    return {
         name = "Player",
-        transform = .{
-            position = .{ -9, 0 },
+        transform = {
+            position = { -9, 0 },
         },
         animation_controller = animation_controller,
-        box_collider = .{
-            size = .{ 1.6, 2.65 },
-            offset = .{ 0, -0.07 },
+        box_collider = {
+            size = { 1.6, 2.65 },
+            offset = { 0, -0.07 },
         },
         behavior = New(Snakey),
         flags = .RIGID_BODY,

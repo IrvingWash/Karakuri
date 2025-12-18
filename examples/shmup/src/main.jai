@@ -17,7 +17,7 @@ Karakuri :: #import "Karakuri"()(DEBUG = true, EDITOR = true);
 main :: () {
     setup_formatting();
 
-    Karakuri.init(.{
+    Karakuri.init({
         title         = "Shmup",
         target_fps    = 60,
         initial_scene = scene,

@@ -15,18 +15,18 @@ projectile_prefab :: (
         behavior.speed = -10;
     }
 
-    return .{
+    return {
         name = "Projectile",
-        transform = .{
+        transform = {
             position = position,
             scale = Vector2.{ 3, 3 },
         },
-        sprite = .{
+        sprite = {
             texture_path = "examples/shmup/textures/projectile_1.png",
         },
         behavior = behavior,
-        box_collider = .{
-            size = .{ 0.1, 0.3 },
+        box_collider = {
+            size = { 0.1, 0.3 },
         },
 
         on_update = on_projectile_update,

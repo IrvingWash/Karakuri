@@ -1,5 +1,5 @@
 gravity_affecter_prefab :: () -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Physics Affecter",
 
         on_update = on_update,

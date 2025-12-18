@@ -33,7 +33,7 @@ create_shader :: (vertex_src: string, fragment_src: string) -> Shader {
     glLinkProgram(shader_program);
     check_linking_error(shader_program);
 
-    return .{ program_id = shader_program };
+    return { program_id = shader_program };
 }
 
 use_shader :: (shader: Shader) {

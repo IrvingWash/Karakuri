@@ -9,7 +9,7 @@ GLFW :: #import "GLFW";
 #load "fragment_shader.jai";
 
 init :: (window: *GLFW.Window, pixels_per_unit: u32) {
-    renderer = .{
+    renderer = {
         window          = window,
         quad_mesh       = create_quad_mesh(),
         shader          = create_shader(VERTEX_SHADER, FRAGMENT_SHADER),
@@ -28,7 +28,7 @@ deinit :: () {
     table_reset(*renderer.sprite_batches);
     deinit(*renderer.sprite_batches);
 
-    renderer = .{};
+    renderer = {};
 }
 
 start_drawing :: (
@@ -114,7 +114,7 @@ draw :: (
     texture:         Texture
 ) {
     batch := table_find_pointer(*renderer.sprite_batches, texture.id);
-    payload: Sprite_Instance = .{
+    payload: Sprite_Instance = {
         position        = position,
         scale           = scale,
         rotation        = rotation,
@@ -132,7 +132,7 @@ draw :: (
         table_add(
             *renderer.sprite_batches,
             texture.id,
-            .{
+            {
                 texture = texture,
                 sprites = sprites,
                 pixels_per_unit = pixels_per_unit,
@@ -187,13 +187,13 @@ make_view_matrix :: (
     camera_up:       Vector3,
     camera_size:     float
 ) -> Matrix4 {
-    position_3d: Vector3 = .{
+    position_3d: Vector3 = {
         camera_position.x,
         camera_position.y,
         0,
     };
 
-    camera_scale := make_scale_matrix4(.{ camera_size, camera_size, 1 });
+    camera_scale := make_scale_matrix4({ camera_size, camera_size, 1 });
 
     return camera_scale * make_look_at_matrix(
         position_3d,

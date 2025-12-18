@@ -1,15 +1,15 @@
 powerup_prefab :: (position: Vector2) -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Powerup",
-        transform = .{
+        transform = {
             position = position,
-            scale = .{ 2, 2 },
+            scale = { 2, 2 },
         },
-        sprite = .{
+        sprite = {
             texture_path = "examples/shmup/textures/icon-powerup.png",
         },
-        box_collider = .{
-            size = .{ 0.2, 0.2 },
+        box_collider = {
+            size = { 0.2, 0.2 },
         },
 
         on_update = on_update,

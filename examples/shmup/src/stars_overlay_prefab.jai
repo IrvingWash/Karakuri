@@ -1,13 +1,13 @@
 stars_overlay_prefab :: () -> Karakuri.Entity_Params {
-    return .{
+    return {
         name = "Stars Overlay",
-        transform = .{
-            scale = .{
+        transform = {
+            scale = {
                 Karakuri.screen_right_to_world(),
                 Karakuri.screen_top_to_world() / 2,
             },
         },
-        sprite = .{
+        sprite = {
             texture_path = "examples/shmup/textures/stars.png",
         },
     };

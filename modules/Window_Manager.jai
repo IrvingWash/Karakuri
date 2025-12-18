@@ -43,7 +43,7 @@ deinit :: () {
     ok := GLFW.terminate();
     assert(ok, "Failed to terminate GLFW");
 
-    manager = .{};
+    manager = {};
 }
 
 should_window_close :: inline () -> bool {

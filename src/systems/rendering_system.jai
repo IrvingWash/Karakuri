@@ -3,7 +3,7 @@
 #import "IntroSort";
 
 init_rendering_system :: () {
-    system = .{};
+    system = {};
 }
 
 deinit_rendering_system :: () {
@@ -13,7 +13,7 @@ deinit_rendering_system :: () {
         array_reset(*system.box_colliders);
     }
 
-    system = .{};
+    system = {};
 }
 
 run_rendering_system :: () {
@@ -118,5 +118,5 @@ Rendering_System :: struct {
 system: Rendering_System = ---;
 
 #if DEBUG {
-    BOX_COLLIDER_COLOR: Vector4 : .{ 0, 1, 0, 0.2 };
+    BOX_COLLIDER_COLOR: Vector4 : { 0, 1, 0, 0.2 };
 }

@@ -1,14 +1,14 @@
 #scope_module
 
 init_physics_system :: () {
-    system = .{};
+    system = {};
 }
 
 deinit_physics_system :: () {
     array_reset(*system.box_colliders);
     array_reset(*system.rigid_bodies);
 
-    system = .{};
+    system = {};
 }
 
 run_physics_system :: () {

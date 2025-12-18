@@ -31,13 +31,13 @@ stop_animation :: (entity: *Entity) {
 #scope_module
 
 init_animation_system :: () {
-    system = .{};
+    system = {};
 }
 
 deinit_animation_system :: () {
     array_reset(*system.entities);
 
-    system = .{};
+    system = {};
 }
 
 run_animation_system :: () {
@@ -63,8 +63,8 @@ run_animation_system :: () {
             * cast(float)(animation.frame_rate)
         ) % animation.frame_count;
 
-        sprite.clip = .{ 1.0 / animation.frame_count, 1 }; // @TODO 1 is hardcoded
-        sprite.offset = .{ sprite.clip.x * animation.current_frame, 0 }; // @TODO 0 is hardcoded
+        sprite.clip = { 1.0 / animation.frame_count, 1 }; // @TODO 1 is hardcoded
+        sprite.offset = { sprite.clip.x * animation.current_frame, 0 }; // @TODO 0 is hardcoded
 
         if sprite.texture_path != animation.texture_path {
             sprite.texture_path = animation.texture_path;

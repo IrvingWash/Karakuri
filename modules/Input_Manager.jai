@@ -5,7 +5,7 @@ Key :: GLFW.Key;
 Key_State :: GLFW.Key_Action;
 
 init :: (window: *GLFW.Window, pixels_per_unit: u32) {
-    manager = .{
+    manager = {
         window     = window,
         halved_ppu = pixels_per_unit / 2,
     };
@@ -17,7 +17,7 @@ init :: (window: *GLFW.Window, pixels_per_unit: u32) {
 deinit :: () {
     GLFW.set_key_callback(manager.window, null);
 
-    manager = .{};
+    manager = {};
 }
 
 is_key_pressed :: (key: Key) -> bool {

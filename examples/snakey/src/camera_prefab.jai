@@ -1,5 +1,5 @@
 camera_prefab :: () -> Karakuri.Entity_Params {
-    return .{
+    return {
         name     = "Camera",
         flags    = .CAMERA,
         behavior = New(Camera),
