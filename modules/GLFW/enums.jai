@@ -22,7 +22,7 @@ Input_Mode_Value :: enum_flags #specified {
 }
 
 Key :: enum #specified {
-    SPACE :: 32;
+    SPACE       :: 32;
     A           :: 65;
     B           :: 66;
     C           :: 67;

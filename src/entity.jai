@@ -45,10 +45,6 @@ is_alive :: inline (using entity: Entity) -> bool {
     return flags & .ALIVE != 0;
 }
 
-entity_has_flags :: inline (entity: Entity, flags: Entity_Flags) -> bool {
-    return (flags & entity.flags) == flags;
-}
-
 entity_has_flags :: inline (
     entity: Entity_Params,
     flags: Entity_Flags
